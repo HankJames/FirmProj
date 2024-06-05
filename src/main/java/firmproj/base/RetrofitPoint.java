@@ -3,6 +3,8 @@ package firmproj.base;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import soot.SootMethod;
+import soot.Value;
+import soot.Local;
 import soot.tagkit.*;
 
 import java.util.*;
@@ -13,6 +15,7 @@ public class RetrofitPoint {
     private final SootMethod method;
     private final List<AnnotationTag> methodAnnotations;
     private final List<AnnotationTag> parameterAnnotations;
+    //private final HashSet<Value> interestingVariables;
 
 
     private static List<AnnotationTag> extractMethodAnnotations(SootMethod method) {
@@ -42,6 +45,9 @@ public class RetrofitPoint {
         }
         return pAn;
     }
+
+
+
     public RetrofitPoint(SootMethod method){
         this(method, extractMethodAnnotations(method), extractParameterAnnotations(method));
     }

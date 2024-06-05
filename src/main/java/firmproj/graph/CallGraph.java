@@ -63,6 +63,9 @@ public class CallGraph {
                     if (body == null)
                         continue;
                     for (Unit unit : body.getUnits()) {
+                        if(sootMethod.getDeclaringClass().getName()== "com.liesheng.haylou.net.HttpUrl"){
+                            LOGGER.info(unit.toString());
+                        }
                         if (unit instanceof ReturnStmt){
                             ReturnStmt returnStmt = (ReturnStmt) unit;
                             Value retValue = returnStmt.getOp();
@@ -93,11 +96,14 @@ public class CallGraph {
                                             }
                                             else if(rightOp instanceof InstanceFieldRef){
                                                 //TODO
-                                                addValue(methodToString, sootMethod, "$"+((InstanceFieldRef) rightOp).getField().getName());
+                                                //addValue(methodToString, sootMethod, "$"+((InstanceFieldRef) rightOp).getField().getName());
                                             }
                                         }
                                     }
                                 }
+                            }
+                            if(retValue instanceof Constant){
+                                addValue(methodToString, sootMethod, ((Constant)retValue).toString());
                             }
 
                         }
@@ -110,6 +116,7 @@ public class CallGraph {
                                 }
                             }
                             if (unit instanceof AssignStmt && ((AssignStmt) unit).getLeftOp() instanceof FieldRef){
+
                                 FieldRef fieldRef = (FieldRef) ((AssignStmt) unit).getLeftOp();
                                 SootField field = fieldRef.getField();
                                 Value rightOP = ((AssignStmt) unit).getRightOp();
@@ -180,6 +187,73 @@ public class CallGraph {
         fromNode.addCallTo(toNode);
         toNode.addCallBy(fromNode);
 
+    }
+
+    public List<String> GetMethodToString(SootMethod sootMethod){
+        List<String> mstrs = new ArrayList<>();
+        Body body = null;
+        try {
+            body = sootMethod.retrieveActiveBody();
+        } catch (Exception e) {
+            LOGGER.error("Could not retrieved the active body {} because {}", sootMethod, e.getLocalizedMessage());
+        }
+        for(Unit unit: body.getUnits()) {
+            if (unit instanceof ReturnStmt) {
+                ReturnStmt returnStmt = (ReturnStmt) unit;
+                Value retValue = returnStmt.getOp();
+                if (retValue instanceof Local) {
+                    Local local = (Local) retValue;
+                    for (Unit u : body.getUnits()) {
+                        if (u instanceof AssignStmt) {
+                            AssignStmt assignStmt = (AssignStmt) u;
+                            if (assignStmt.getLeftOp().equals(local)) {
+                                Value rightOp = assignStmt.getRightOp();
+                                if (rightOp instanceof StaticFieldRef) {
+                                    StaticFieldRef fieldRef = (StaticFieldRef) rightOp;
+                                    if (fieldRef.getField() == null || fieldRef.getField().getDeclaringClass() == null) {
+                                        continue;
+                                    }
+                                    if (fieldRef.getField().getDeclaringClass().isApplicationClass()) {
+                                        SootField field = fieldRef.getField();
+                                        if (!methodToFieldString.containsKey(sootMethod)) {
+                                            methodToFieldString.put(sootMethod, field.toString());
+                                            LOGGER.info("New Method ret field: " + sootMethod.toString() + ":" + field.toString());
+                                            if (fieldToString.containsKey(field.toString())) {
+                                                List<String> strs = fieldToString.get(field.toString());
+                                                methodToString.put(sootMethod, strs);
+                                                mstrs.addAll(strs);
+                                                LOGGER.info("New Method To String: " + sootMethod.getName() + ":" + strs.toString() + ";" + methodToString.get(sootMethod).toString());
+                                                return mstrs;
+                                            }
+                                        }
+                                    }
+                                } else if (rightOp instanceof InstanceFieldRef) {
+                                    //TODO
+                                    //addValue(methodToString, sootMethod, "$"+((InstanceFieldRef) rightOp).getField().getName());
+                                    return mstrs;
+                                } else if (rightOp instanceof InvokeExpr) {
+                                    mstrs.addAll(GetMethodToString(((InvokeExpr) rightOp).getMethod()));
+                                    if(mstrs.size() > 0){
+                                        for(String item : mstrs) {
+                                            addValue(methodToString, sootMethod, item);
+                                        }
+                                    }
+                                    return mstrs;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (retValue instanceof Constant) {
+                    String str = ((Constant) retValue).toString();
+                    addValue(methodToString, sootMethod, str);
+                    mstrs.add(str);
+                    return mstrs;
+                }
+
+            }
+        }
+        return mstrs;
     }
 
     /**
