@@ -1,8 +1,9 @@
 package firmproj.utility;
 
+import org.apache.commons.logging.Log;
 import org.javatuples.Pair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import soot.Body;
 import soot.toolkits.graph.Block;
 import soot.toolkits.graph.CompleteBlockGraph;
@@ -13,7 +14,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class BlockGenerator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BlockGenerator.class);
+    private static final Logger LOGGER = LogManager.getLogger(BlockGenerator.class);
 
     private static final BlockGenerator blockGenerator = new BlockGenerator();
 

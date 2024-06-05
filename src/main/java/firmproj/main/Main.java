@@ -8,8 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+
 import soot.PackManager;
 import soot.Scene;
 import soot.SootClass;
@@ -164,7 +163,7 @@ public class Main {
         Options.v().set_whole_program(true);
         Options.v().set_allow_phantom_refs(true);
         //switch to output jimple
-        Options.v().set_output_dir("jimple/");
+        Options.v().set_output_dir("/data/wenzhi/jimple/"+apkContext.getPackageName().replace(".","_") + "_jimple/");
 
         if (outputJimpleFiles) {
             Options.v().set_output_format(Options.output_format_jimple);

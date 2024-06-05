@@ -2,14 +2,14 @@ package firmproj.utility;
 
 
 import firmproj.main.Config;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * TimeWatcher to stop the execution if it runs out of the configured time
  */
 public class TimeWatcher implements Runnable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TimeWatcher.class);
+    private static final Logger LOGGER = LogManager.getLogger(TimeWatcher.class);
 
     private boolean timeoutBackwardIsUp = false;
     //flags that the timeout was used

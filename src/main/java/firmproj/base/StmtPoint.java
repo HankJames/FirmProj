@@ -4,9 +4,10 @@ import firmproj.graph.CallGraph;
 import firmproj.graph.CallGraphNode;
 import firmproj.main.Config;
 import firmproj.utility.BlockGenerator;
+import org.apache.commons.logging.Log;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import soot.*;
 import soot.jimple.FieldRef;
 import soot.jimple.Stmt;
@@ -20,7 +21,7 @@ import java.util.*;
 
 public class StmtPoint {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StmtPoint.class);
+    private static final Logger LOGGER = LogManager.getLogger(StmtPoint.class);
 
     private final SootMethod methodLocation;
     private final Block blockLocation;

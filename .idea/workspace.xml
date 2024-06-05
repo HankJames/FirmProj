@@ -9,9 +9,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="New changelist">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/error.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/info.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/warn.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/StmtPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/StmtPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/main/ApkContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/main/ApkContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/BlockGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/BlockGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/JarUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/JarUtility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/TimeWatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/TimeWatcher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
     </list>
     <list id="28af94af-eb16-46e5-bd45-48575d194720" name="New changelist" comment="New changelist" />
@@ -67,9 +76,10 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main/java/FirmProj/base/RetrofitPoint.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/FirmProj/base/StmtPoint.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/FirmProj/main/Main.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/firmproj/base/StmtPoint.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraph.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />
@@ -82,23 +92,23 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build FirmProj.executor": "Run",
-    "Gradle.FirmProj [:Main.main()].executor": "Run",
-    "Java Scratch.Java.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/data/wenzhi/FirmProj/src",
-    "onboarding.tips.debug.path": "D:/BaiduSyncdisk/Iot/FirmProj/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.19157721",
-    "settings.editor.selected.configurable": "vcs.Git"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build FirmProj.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.FirmProj [:Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Java Scratch.Java.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/data/wenzhi/FirmProj/src&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;D:/BaiduSyncdisk/Iot/FirmProj/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.19157721&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main" />
@@ -122,8 +132,7 @@
       <output_file path="$PROJECT_DIR$/logs/1.log" />
       <option name="MAIN_CLASS_NAME" value="firmproj.main.Main" />
       <module name="FirmProj.main" />
-      <option name="PROGRAM_PARAMETERS" value="-oj -p libs/android.jar -o results -a apks/1.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
-      <option name="VM_PARAMETERS" value="-Dlog4j2.debug " />
+      <option name="PROGRAM_PARAMETERS" value="-oj -p libs/android.jar -o results -a $PROJECT_DIR$/../APKS/2.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -156,6 +165,15 @@
       <option name="presentableId" value="Default" />
       <updated>1717124143372</updated>
     </task>
+    <task id="LOCAL-00001" summary="New changelist">
+      <option name="closed" value="true" />
+      <created>1717490381743</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1717490381743</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
