@@ -1,5 +1,7 @@
 package firmproj.utility;
 
+import soot.*;
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 public class FirmwareRelated {
@@ -10,4 +12,5 @@ public class FirmwareRelated {
         Matcher matcher = FIRM_RELATED_PATTERN.matcher(methodString);
         return matcher.find();
     }
+
 }
