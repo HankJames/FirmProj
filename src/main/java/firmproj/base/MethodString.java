@@ -74,6 +74,8 @@ public class MethodString {
                 }
             }
         }
+        LOGGER.info("SIZE: " + methodToFieldString.size() + " "+ fieldToString.size());
+        //TODO If there is a Method to field But no field to string, just Method to field string "$fieldName";
     }
     private static List<String> unsolvedMethodString;
     private static final HashSet<String> visitedMethod = new HashSet<>();

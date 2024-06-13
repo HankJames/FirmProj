@@ -1,5 +1,6 @@
 package firmproj.main;
 
+import firmproj.base.MethodString;
 import firmproj.base.RetrofitPoint;
 import firmproj.graph.CallGraph;
 import firmproj.utility.*;
@@ -207,6 +208,7 @@ public class Main {
 
         LOGGER.info("initialisation of the call graph");
         CallGraph.init();
+        MethodString.init();
         return t;
     }
 
