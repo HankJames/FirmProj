@@ -5,15 +5,13 @@ import soot.SootClass;
 import soot.SootField;
 import soot.SootMethod;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class HashmapClz implements AbstractClz{
 
     private final SootClass currentClass;
     private final SootMethod ParentMethod;
-    private final HashMap<SootField, String> result = new HashMap<>();
+    private final HashMap<String, String> result = new HashMap<>();
     private final List<ValueContext> valueContexts = new ArrayList<>();
 
     public HashmapClz(SootClass currentClass, SootMethod method){
@@ -34,6 +32,11 @@ public class HashmapClz implements AbstractClz{
     @Override
     public void init() {
 
+    }
+
+    @Override
+    public void addValueContexts(ValueContext valueContext) {
+        this.valueContexts.add(valueContext);
     }
 
     @Override
@@ -58,6 +61,17 @@ public class HashmapClz implements AbstractClz{
 
     @Override
     public String toString() {
-        return "";
+        StringBuilder result = new StringBuilder();
+        result.append("HashMapClz: ");
+        result.append(this.currentClass.toString());
+        result.append("\nParent Method: ");
+        result.append(this.ParentMethod);
+        result.append("\nMap Entry: \n");
+        for(Map.Entry<String, String> entry: this.result.entrySet()){
+            result.append(entry.toString());
+            result.append("\n");
+        }
+        result.append("============\n");
+        return result.toString();
     }
 }

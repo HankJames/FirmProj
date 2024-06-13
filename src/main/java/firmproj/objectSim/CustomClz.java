@@ -4,24 +4,26 @@ import firmproj.base.ValueContext;
 import soot.SootClass;
 import soot.SootField;
 import soot.SootMethod;
+import soot.tagkit.AnnotationTag;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class CommonClz implements AbstractClz{
+public class CustomClz implements AbstractClz{
 
     private final SootClass currentClass;
     private final SootMethod ParentMethod;
     private final HashMap<SootField, String> fieldString = new HashMap<>();
     private final List<ValueContext> valueContexts = new ArrayList<>();
 
-    public CommonClz(SootClass currentClass, SootMethod method){
+    public CustomClz(SootClass currentClass, SootMethod method){
         this.currentClass = currentClass;
         this.ParentMethod = method;
     }
 
-    public CommonClz(SootClass currentClass, SootMethod method, List<ValueContext> values){
+    public CustomClz(SootClass currentClass, SootMethod method, List<ValueContext> values){
         this(currentClass, method);
         this.valueContexts.addAll(values);
     }
@@ -34,6 +36,11 @@ public class CommonClz implements AbstractClz{
     @Override
     public void solve() {
 
+    }
+
+    @Override
+    public void addValueContexts(ValueContext valueContext) {
+        this.valueContexts.add(valueContext);
     }
 
     @Override
@@ -58,6 +65,17 @@ public class CommonClz implements AbstractClz{
 
     @Override
     public String toString() {
-        return "";
+        StringBuilder result = new StringBuilder();
+        result.append("CustomClz: ");
+        result.append(this.currentClass.toString());
+        result.append("\nParent Method: ");
+        result.append(this.ParentMethod);
+        result.append("\nFieldStrings: \n");
+        for(Map.Entry<SootField, String> entry: this.fieldString.entrySet()){
+            result.append(entry.toString());
+            result.append("\n");
+        }
+        result.append("============\n");
+        return result.toString();
     }
 }

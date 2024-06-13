@@ -13,6 +13,8 @@ public interface AbstractClz {
 
     void init();
 
+    void addValueContexts(ValueContext valueContext);
+
     SootMethod getParentMethod();
 
     SootClass getCurrentClass();
