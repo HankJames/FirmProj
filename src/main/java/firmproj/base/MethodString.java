@@ -58,6 +58,9 @@ public class MethodString {
                                         }
                                     }
                                 }
+                                else{
+                                    //TODO Static hashmap
+                                }
                             }
                         }
                     }

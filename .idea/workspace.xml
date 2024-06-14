@@ -9,18 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="add MethodString">
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/ValueContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/AbstractClz.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CommonClass.java" afterDir="false" />
+    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="MethodLocal">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/SimulateUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results-com.ledvance.smartplus.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resultscom.ledvance.smartplus.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" afterDir="false" />
     </list>
     <list id="28af94af-eb16-46e5-bd45-48575d194720" name="New changelist" comment="New changelist" />
@@ -101,6 +96,7 @@
     "Java Scratch.Java.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/data/wenzhi/FirmProj/src",
@@ -134,7 +130,7 @@
       <output_file path="$PROJECT_DIR$/logs/1.log" />
       <option name="MAIN_CLASS_NAME" value="firmproj.main.Main" />
       <module name="FirmProj.main" />
-      <option name="PROGRAM_PARAMETERS" value="-oj -p libs/android.jar -o results -a $PROJECT_DIR$/../APKS/qingniu.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
+      <option name="PROGRAM_PARAMETERS" value="-oj -p libs/android.jar -o results -a $PROJECT_DIR$/../APKS/gooclient.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -199,7 +195,23 @@
       <option name="project" value="LOCAL" />
       <updated>1718073434089</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="add MethodString">
+      <option name="closed" value="true" />
+      <created>1718263621808</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1718263621808</updated>
+    </task>
+    <task id="LOCAL-00006" summary="MethodLocal">
+      <option name="closed" value="true" />
+      <created>1718279436648</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1718279436648</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -218,7 +230,8 @@
     <MESSAGE value="GET ALL field string map to Method" />
     <MESSAGE value="add recursion" />
     <MESSAGE value="add MethodString" />
-    <option name="LAST_COMMIT_MESSAGE" value="add MethodString" />
+    <MESSAGE value="MethodLocal" />
+    <option name="LAST_COMMIT_MESSAGE" value="MethodLocal" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

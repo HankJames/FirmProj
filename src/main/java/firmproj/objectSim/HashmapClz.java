@@ -61,6 +61,7 @@ public class HashmapClz implements AbstractClz{
 
     @Override
     public String toString() {
+        solve();
         StringBuilder result = new StringBuilder();
         result.append("HashMapClz: ");
         result.append(this.currentClass.toString());

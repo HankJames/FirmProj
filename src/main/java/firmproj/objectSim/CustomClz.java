@@ -65,6 +65,7 @@ public class CustomClz implements AbstractClz{
 
     @Override
     public String toString() {
+        solve();
         StringBuilder result = new StringBuilder();
         result.append("CustomClz: ");
         result.append(this.currentClass.toString());
