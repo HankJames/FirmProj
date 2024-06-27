@@ -9,8 +9,6 @@ import soot.Unit;
 import soot.Value;
 import soot.jimple.*;
 
-import soot.jimple.internal.AbstractFloatBinopExpr;
-
 import java.util.*;
 
 public class MethodLocal {
@@ -22,14 +20,15 @@ public class MethodLocal {
     private final HashMap<Value, List<String>> LocalToString = new HashMap<>();
     private final HashMap<Value, Integer> LocalFromParams = new HashMap<>();
 
-    private final HashMap<Value, Integer> ArrayRefLocal = new HashMap<>();
+    private final HashMap<Value, Integer> ArrayRefLocal = new HashMap<>();// ArrayValue and Size
 
     private ValueContext ParentValueContext;
     private HashMap<Integer, List<String>> ParamsToString = new HashMap<>();
 
-    private final List<ValueContext> ChildValueContext = new ArrayList<>();
     private final List<String> returnValues = new ArrayList<>();
 
+    private final HashMap<String, List<Integer>> InterestingInvoke = new HashMap<>();
+    private final HashMap<Integer, List<String>> InterestingParamString = new HashMap<>();
 
     //private List<String> unsolvedLocals = new ArrayList<>();
 
@@ -37,6 +36,7 @@ public class MethodLocal {
         this.sootMethod = Method;
     }
 
+    //forward new
     public MethodLocal(SootMethod Method, ValueContext Values){
         this(Method);
         ParentValueContext = Values;
@@ -60,7 +60,13 @@ public class MethodLocal {
         }
     }
 
-    public List<MethodLocal> doAnalysis(){
+    //backward new
+    public MethodLocal(SootMethod Method, HashMap<String, List<Integer>> IntereInvoke){
+        this(Method);
+        this.InterestingInvoke.putAll(IntereInvoke);
+    }
+
+    public void doAnalysis(){
         Body body = null;
         try{
             body = this.sootMethod.retrieveActiveBody();
@@ -68,7 +74,7 @@ public class MethodLocal {
         catch(Exception e){
             LOGGER.error(e);
         }
-        if(body == null) return new ArrayList<>();
+        if(body == null) return;
         for(Unit unit : body.getUnits()){
             Stmt stmt = (Stmt) unit;
             if(stmt instanceof AssignStmt){
@@ -84,7 +90,6 @@ public class MethodLocal {
                 caseReturnStmt((ReturnStmt) stmt);
             }
         }
-        return new ArrayList<>();
     }
 
     private void caseReturnStmt(ReturnStmt stmt) {
@@ -99,12 +104,18 @@ public class MethodLocal {
         HashSet<?> result = null;
         boolean arrayRef = false;
         int arrayIndex = -1;
+        Value arrayBase = null;
+        List<String> arrayString = null;
         if (leftOperation instanceof Local || leftOperation instanceof ArrayRef) {
             if(leftOperation instanceof ArrayRef) {
                 arrayRef = true;
                 ArrayRef array = (ArrayRef) leftOperation;
+                arrayBase = array.getBase();
                 Integer index = (Integer) SimulateUtil.getConstant(array.getIndex());
                 if(index!=null) arrayIndex = index;
+                if(ArrayRefLocal.containsKey(arrayBase)) arrayString = LocalToString.get(arrayBase);
+                //TODO List<List<String>>
+                else arrayString = new ArrayList<>();
                 //TODO array Ref.
             }
             if (rightOperation instanceof InstanceInvokeExpr) {
@@ -142,6 +153,7 @@ public class MethodLocal {
                     InterestingVariables.add(leftOperation);
 
             } else if (rightOperation instanceof NewExpr) {
+                //Todo NewExpr params.
                 NewExpr newExpr = (NewExpr) rightOperation;
                 String className = newExpr.getClass().getName();
                 if(isCommonClz(className)){
@@ -164,7 +176,7 @@ public class MethodLocal {
                     String simResult = SimulateUtil.getSimClassValue(valuecontext);
                     if(!simResult.isEmpty()) addLocalTOString(leftOperation, List.of(simResult));
                 }
-                addChildValueContext(valuecontext);
+                //addChildValueContext(valuecontext);
                 MethodLocal nextMethodLocal = new MethodLocal(invokeExpr.getMethod(), valuecontext);
 
             }
@@ -172,7 +184,27 @@ public class MethodLocal {
 
             }
             else if (rightOperation instanceof FieldRef) {
+                SootField field = ((FieldRef) rightOperation).getField();
+                if(rightOperation instanceof InstanceFieldRef){
+                    Value base = ((InstanceFieldRef) rightOperation).getBase();
+                    if(LocalToClz.containsKey(base)){
 
+                    }
+                    else{
+
+                    }
+                }
+                else{
+                    if(MethodString.getFieldToString().containsKey(field.toString())){
+                        List<String> fieldStr = MethodString.getFieldToString().get(field.toString());
+                        if(arrayRef){
+                            arrayString.set(arrayIndex, fieldStr.get(0));
+                        }
+                        else{
+                            addLocalTOString(leftOperation, fieldStr);
+                        }
+                    }
+                }
             }
             else if (rightOperation instanceof NewArrayExpr) {
                 NewArrayExpr newArray = (NewArrayExpr)rightOperation;
@@ -185,26 +217,58 @@ public class MethodLocal {
                 if(!LocalToString.containsKey(leftOperation))LocalToString.put(leftOperation, arrayList);
                 ArrayRefLocal.put(leftOperation,index);
                 this.InterestingVariables.add(leftOperation);
+
             }
             else if (rightOperation instanceof BinopExpr) {
 
             }
-            else if (rightOperation instanceof ParameterRef){
-                //Impossible, just goto identityStmt.
-            }
             else if (rightOperation instanceof Local){
-                if(!LocalFromParams.containsKey(leftOperation)){
-                    if(LocalToString.containsKey(rightOperation)){
+                if(arrayRef) leftOperation = arrayBase;
+                if(LocalFromParams.containsKey(rightOperation)){
+                    LocalFromParams.put(leftOperation, LocalFromParams.get(rightOperation));
+                }
+                if(LocalToClz.containsKey(rightOperation)){
+                    LocalToClz.put(leftOperation, LocalToClz.get(rightOperation));
+                }
+                else if(ArrayRefLocal.containsKey(rightOperation)){
+                    ArrayRefLocal.put(leftOperation, ArrayRefLocal.get(rightOperation));
+                    addLocalTOString(leftOperation, new ArrayList<>(LocalToString.get(rightOperation)));
+                }
+                else if(LocalToString.containsKey(rightOperation)){
+                    if(arrayRef) arrayString.set(arrayIndex, LocalToString.get(rightOperation).get(0));
+                    else{
                         addLocalTOString(leftOperation, LocalToString.get(rightOperation));
-                        this.InterestingVariables.add(leftOperation);
                     }
+                    this.InterestingVariables.add(leftOperation);
                 }
             }
-            else if(rightOperation instanceof CastExpr || rightOperation instanceof ArrayRef) {
-
+            else if(rightOperation instanceof CastExpr) {
+                if(arrayRef) leftOperation = arrayBase;
+                Value localOp =((CastExpr) rightOperation).getOp();
+                if(LocalToString.containsKey(localOp)){
+                    if(arrayRef){
+                        arrayString.set(arrayIndex, LocalToString.get(localOp).get(0));
+                    }
+                    else{
+                        addLocalTOString(leftOperation, LocalToString.get(localOp));
+                    }
+                }
+                //TODO cast type is retrofit class.
             }
             else if(rightOperation instanceof Constant){
-
+                Object constValue = SimulateUtil.getConstant(rightOperation);
+                if(arrayRef && arrayBase !=null){
+                    Integer Len = 0;
+                    if(ArrayRefLocal.containsKey(arrayBase)) Len = ArrayRefLocal.get(arrayBase);
+                    if(arrayIndex >=0 && arrayIndex < Len){
+                        if(constValue != null && arrayString != null)
+                            arrayString.set(arrayIndex, constValue.toString());
+                    }
+                }
+                else{
+                    if(constValue != null)
+                        addLocalTOString(leftOperation, List.of(constValue.toString()));
+                }
             }
         } else {
             LOGGER.warn(String.format("[%s] [SIMULATE][left unknown]: %s (%s)", this.hashCode(), stmt, leftOperation.getClass()));
@@ -215,14 +279,13 @@ public class MethodLocal {
     public void caseInvokeStmt(InvokeStmt stmt) {
         String signature = stmt.getInvokeExpr().getMethod().toString();
         InvokeExpr invokeExpr = stmt.getInvokeExpr();
-        Value base = null;
+        Value base;
         if (invokeExpr instanceof InstanceInvokeExpr) {
             base = ((InstanceInvokeExpr) invokeExpr).getBase();
             HashMap<Value, List<String>> valueString = getInvokeExprValues(invokeExpr);
             ValueContext valueContext = new ValueContext(this.sootMethod, stmt, valueString);
             if(LocalToClz.containsKey(base)) LocalToClz.get(base).addValueContexts(valueContext);
         }
-        return;
     }
 
     public void caseIdentityStmt(IdentityStmt stmt){
@@ -249,16 +312,19 @@ public class MethodLocal {
         }
     }
 
-    private void addChildValueContext(ValueContext vc){
-        this.ChildValueContext.add(vc);
-    }
 
     private void addLocalTOString(Value local, List<String> string){
         if(ArrayRefLocal.containsKey(local)){
             LocalToString.get(local).addAll(string);
         }
         else{
-            LocalToString.put(local, string);
+            List<String> LocalStr = new ArrayList<>();
+            if(LocalToString.containsKey(local)) LocalStr = LocalToString.get(local);
+            if(LocalStr.isEmpty()) LocalToString.put(local, string);
+            else if(LocalStr.get(0).length() < string.get(0).length()) LocalToString.put(local, string);
+            else{
+                LocalToString.get(local).addAll(string);
+            }
         }
     }
 
@@ -273,7 +339,6 @@ public class MethodLocal {
                     valueString.put(value, LocalToString.get(value));
                 }
                 else if(LocalToString.containsKey(value)) valueString.put(value,LocalToString.get(value));
-
             }
         }
         return valueString;
@@ -297,8 +362,12 @@ public class MethodLocal {
         return ParamsToString;
     }
 
-    public List<ValueContext> getChildValueContext() {
-        return ChildValueContext;
+    public HashMap<Integer, List<String>> getInterestingParamString() {
+        return InterestingParamString;
+    }
+
+    public HashMap<String, List<Integer>> getInterestingInvoke() {
+        return InterestingInvoke;
     }
 
     public AbstractClz CreateCommonClz(SootClass clz, SootMethod currentMethod){

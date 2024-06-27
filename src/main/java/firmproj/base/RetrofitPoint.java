@@ -2,6 +2,7 @@ package firmproj.base;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import soot.SootClass;
 import soot.SootMethod;
 import soot.Value;
 import soot.Local;
@@ -12,6 +13,7 @@ import java.util.*;
 public class RetrofitPoint {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RetrofitPoint.class);
+    private final SootClass Currentclass;
     private final SootMethod method;
     private final List<AnnotationTag> methodAnnotations;
     private final List<AnnotationTag> parameterAnnotations;
@@ -46,16 +48,23 @@ public class RetrofitPoint {
         return pAn;
     }
 
-
-
     public RetrofitPoint(SootMethod method){
-        this(method, extractMethodAnnotations(method), extractParameterAnnotations(method));
+        this(method, method.getDeclaringClass());
     }
 
-    public RetrofitPoint(SootMethod method, List<AnnotationTag> mAn, List<AnnotationTag> pAn){
+    public RetrofitPoint(SootMethod method, SootClass clas){
+        this(method, clas, extractMethodAnnotations(method), extractParameterAnnotations(method));
+    }
+
+    public RetrofitPoint(SootMethod method, SootClass clas,List<AnnotationTag> mAn, List<AnnotationTag> pAn){
         this.method = method;
+        this.Currentclass = clas;
         this.methodAnnotations = mAn;
         this.parameterAnnotations = pAn;
+    }
+
+    public SootClass getCurrentclass() {
+        return Currentclass;
     }
 
     public SootMethod getMethod(){

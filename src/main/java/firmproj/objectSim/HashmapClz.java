@@ -1,9 +1,11 @@
 package firmproj.objectSim;
 
 import firmproj.base.ValueContext;
-import soot.SootClass;
-import soot.SootField;
-import soot.SootMethod;
+import soot.*;
+import soot.jimple.AssignStmt;
+import soot.jimple.Constant;
+import soot.jimple.InvokeExpr;
+import soot.jimple.InvokeStmt;
 
 import java.util.*;
 
@@ -26,7 +28,34 @@ public class HashmapClz implements AbstractClz{
 
     @Override
     public void solve() {
+        HashMap<List<String>,List<String>> tmpResult = new HashMap<>();
+        for(ValueContext vc : valueContexts){
+            Unit u = vc.getCurrentUnit();
+            if(u instanceof AssignStmt){
 
+            }
+            else if (u instanceof InvokeStmt){
+                InvokeExpr invokeExpr = ((InvokeStmt) u).getInvokeExpr();
+                SootMethod method = ((InvokeStmt) u).getInvokeExpr().getMethod();
+                if(method.getSignature().contains("Map: java.lang.Object put(java.lang.Object,java.lang.Object)>")){
+                    HashMap<Value, List<String>> currentValues = vc.getCurrentValues();
+                    int argIndex = 0;
+                    List<List<String>> args = new ArrayList<>();
+                    for(Value value: invokeExpr.getArgs()){
+                        if(value instanceof Constant) {
+                            Object constObj = SimulateUtil.getConstant(value);
+                            if(constObj != null)
+                                args.set(argIndex,List.of(constObj.toString()));
+                        }
+                        else{
+                            args.set(argIndex,currentValues.get(value));
+                        }
+                        argIndex++;
+                    }
+                    tmpResult.put(args.get(0), args.get(1));
+                }
+            }
+        }
     }
 
     @Override
@@ -55,7 +84,7 @@ public class HashmapClz implements AbstractClz{
     }
 
     @Override
-    public HashMap<?, ?> getResult() {
+    public HashMap<String, String> getResult() {
         return result;
     }
 

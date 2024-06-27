@@ -220,12 +220,17 @@ public class Main {
         Thread t = initTool(apk, exclusionList, true, outputPath, cmd);
         //Soot configuration and call graph initialisation
         long initTime = System.currentTimeMillis();
-        List<RetrofitPoint> allMethod = GetFirmRelatedMethod(GetAllRetrofitAnnotationMethod());
-        LOGGER.info("GetAllfirmMethod: " + allMethod.size());
+        HashSet<SootClass> allRetrofitInterface = new HashSet<>();
+
+        List<RetrofitPoint> allMethod = GetAllRetrofitAnnotationMethod();
+        allRetrofitInterface.addAll(GetRetrofitClass(allMethod));
+
+        List<RetrofitPoint> firmMethod = GetFirmRelatedMethod(allMethod);
+        LOGGER.info("GetAllfirmMethod: " + firmMethod.size());
         //List<ValuePoint> allValuePoints = getAllSolvedValuePoints(targetMethods, t, apk);
         long endTime = System.currentTimeMillis();
         TimeWatcher timeWatcher = TimeWatcher.getTimeWatcher();
-        writeRetrofitOut(allMethod, outputPath);
+        writeRetrofitOut(firmMethod, outputPath);
         //writeOutput(timeWatcher, startTime, initTime, endTime, apk, allValuePoints, outputPath);
 
         if (Options.v().output_format() == 1) {
@@ -255,6 +260,15 @@ public class Main {
         }
         return result;
     }
+
+    public static HashSet<SootClass> GetRetrofitClass(List<RetrofitPoint> methods){
+        HashSet<SootClass> result = new HashSet<>();
+        for(RetrofitPoint point: methods){
+            result.add(point.getCurrentclass());
+        }
+        return result;
+    }
+
 
     public static List<RetrofitPoint> GetAllRetrofitAnnotationMethod(){
         List<RetrofitPoint> result = new ArrayList<RetrofitPoint>();

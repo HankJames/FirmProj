@@ -35,7 +35,7 @@ public class CustomClz implements AbstractClz{
 
     @Override
     public void solve() {
-
+// the @param solve.
     }
 
     @Override

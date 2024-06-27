@@ -9,12 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="MethodLocal">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/SimulateUtil.java" afterDir="false" />
+    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="MethodLocal incomplete">
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitBuildPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/AbstactHttpClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/HttpClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/HttpClientFind.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/Interceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/RetrofitBuildFind.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" afterDir="false" />
     </list>
@@ -58,6 +63,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -211,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718279436648</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="MethodLocal incomplete">
+      <option name="closed" value="true" />
+      <created>1718371379937</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1718371379937</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -231,7 +245,8 @@
     <MESSAGE value="add recursion" />
     <MESSAGE value="add MethodString" />
     <MESSAGE value="MethodLocal" />
-    <option name="LAST_COMMIT_MESSAGE" value="MethodLocal" />
+    <MESSAGE value="MethodLocal incomplete" />
+    <option name="LAST_COMMIT_MESSAGE" value="MethodLocal incomplete" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
