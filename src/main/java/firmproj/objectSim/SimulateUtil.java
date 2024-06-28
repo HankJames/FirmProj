@@ -28,7 +28,18 @@ public class SimulateUtil {
             return ((DoubleConstant) value).value;
         } else if (value instanceof LongConstant) {
             return ((LongConstant) value).value;
-        } else if (value instanceof NullConstant) {
+        } else if (value instanceof ClassConstant) {
+            String className = ((ClassConstant) value).getValue();
+            if (className.length() > 1) {
+                int indexSemicolon = className.indexOf(";");
+                if (indexSemicolon > 1) {
+                    className = className.substring(1, indexSemicolon);
+                }
+                className = className.replace("/", ".");
+                return className;
+            }
+        }
+        else if (value instanceof NullConstant) {
             return null;
         }
         return null;

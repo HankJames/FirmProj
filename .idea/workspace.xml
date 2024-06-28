@@ -9,19 +9,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="MethodLocal incomplete">
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitBuildPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/AbstactHttpClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/HttpClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/HttpClientFind.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/Interceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/RetrofitBuildFind.java" afterDir="false" />
+    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="new client, more Methodlocal">
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomHttpClz.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/RetrofitClz.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/okHttpClz.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/okHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/okHttpClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/SimulateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/SimulateUtil.java" afterDir="false" />
     </list>
     <list id="28af94af-eb16-46e5-bd45-48575d194720" name="New changelist" comment="New changelist" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,8 +59,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -122,6 +119,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="firmproj.objectSim" />
       <recent name="FirmProj.base" />
       <recent name="FirmProj.graph" />
     </key>
@@ -225,7 +223,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718371379937</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="new client, more Methodlocal">
+      <option name="closed" value="true" />
+      <created>1719488118909</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1719488118909</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -246,7 +252,8 @@
     <MESSAGE value="add MethodString" />
     <MESSAGE value="MethodLocal" />
     <MESSAGE value="MethodLocal incomplete" />
-    <option name="LAST_COMMIT_MESSAGE" value="MethodLocal incomplete" />
+    <MESSAGE value="new client, more Methodlocal" />
+    <option name="LAST_COMMIT_MESSAGE" value="new client, more Methodlocal" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

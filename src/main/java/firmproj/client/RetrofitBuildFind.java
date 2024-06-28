@@ -1,23 +1,20 @@
 package firmproj.client;
 
+import firmproj.base.RetrofitPoint;
+import firmproj.objectSim.SimulateUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import soot.*;
-import soot.jimple.AssignStmt;
-import soot.jimple.NewExpr;
-import soot.jimple.Stmt;
+import soot.jimple.*;
 import soot.util.Chain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class RetrofitBuildFind {
 
-    private static final HashMap<String,List<RetrofitBuildPoint>> findResult = new HashMap<>();
-
-    private static HashSet<SootClass>  RetrofitClasses = new HashSet<>();
+    public static final HashMap<String,List<RetrofitBuildPoint>> findResult = new HashMap<>(); //Return Api method's Name To RetrofitBuildPoint
+    public static final HashMap<String,List<RetrofitBuildPoint>> RetrofitClassToBuildPoint = new HashMap<>();
+    public static final HashMap<SootClass, List<RetrofitPoint>> RetrofitClassesWithMethods = new HashMap<>();
 
     private static final Logger LOGGER = LogManager.getLogger(RetrofitBuildFind.class);
 
@@ -31,36 +28,14 @@ public class RetrofitBuildFind {
             for (SootMethod sootMethod : clone(sootClass.getMethods())) {
                 if (!sootMethod.isConcrete())
                     continue;
-                Body body = null;
-                try {
-                    body = sootMethod.retrieveActiveBody();
-                } catch (Exception e) {
-                    //LOGGER.error("Could not retrieved the active body {} because {}", sootMethod, e.getLocalizedMessage());
-                }
-                if (body == null)
-                    continue;
-                Type ret = sootMethod.getReturnType();
-                if(!checkReturnType(ret)) continue;
-                for (Unit unit : body.getUnits()) {
-                    Stmt stmt = (Stmt) unit;
-                    if(stmt instanceof AssignStmt){
-                        Value rightOp = ((AssignStmt) stmt).getRightOp();
-                        if(rightOp instanceof NewExpr){
-                            NewExpr newExpr = (NewExpr) rightOp;
-                            String clsName = newExpr.getBaseType().getClassName();
-                            if(clsName.equals("retrofit2.Retrofit$Builder")){
-                                findResult.put(sootMethod.getSignature(), List.of(new RetrofitBuildPoint()));
-                                break;
-                            }
-                        }
-                    }
-                }
+                findRetrofitBuildMethod(sootMethod);
             }
         }
     }
 
-    public static void findRetrofitBuildMethod(SootMethod sootMethod){
-        if (!sootMethod.isConcrete()) return;
+    public static List<RetrofitBuildPoint> findRetrofitBuildMethod(SootMethod sootMethod){
+        List<RetrofitBuildPoint> result = new ArrayList<>();
+        if (!sootMethod.isConcrete()) return result;
         Body body = null;
         try {
             body = sootMethod.retrieveActiveBody();
@@ -68,39 +43,112 @@ public class RetrofitBuildFind {
             //LOGGER.error("Could not retrieved the active body {} because {}", sootMethod, e.getLocalizedMessage());
         }
         if (body == null)
-            return;
+            return result;
         Type ret = sootMethod.getReturnType();
-        if(!checkReturnType(ret)) return;
+        HashMap<Value, List<RetrofitBuildPoint>> localToPoint = new HashMap<>();
+        if(!checkReturnType(ret)) return result;
         for (Unit unit : body.getUnits()) {
             Stmt stmt = (Stmt) unit;
             if(stmt instanceof AssignStmt){
+                Value leftOp = ((AssignStmt) stmt).getLeftOp();
                 Value rightOp = ((AssignStmt) stmt).getRightOp();
                 if(rightOp instanceof NewExpr){
                     NewExpr newExpr = (NewExpr) rightOp;
                     String clsName = newExpr.getBaseType().getClassName();
                     if(clsName.equals("retrofit2.Retrofit$Builder")){
-                        findResult.put(sootMethod.getSignature(), List.of(new RetrofitBuildPoint()));
-                        break;
+                        RetrofitBuildPoint point = new RetrofitBuildPoint(unit);
+                        addValue(localToPoint, leftOp, point);
+                        result.add(point);
+                        tryToAddResult(sootMethod, point);
+                    }
+                }
+                if(rightOp instanceof InvokeExpr) {
+                    SootMethod invokeMethod = ((InvokeExpr) rightOp).getMethod();
+                    Type invokeRet = invokeMethod.getReturnType();
+                    if(checkReturnType(invokeRet)){
+                        List<RetrofitBuildPoint> points = findRetrofitBuildMethod(invokeMethod);
+                        if(!points.isEmpty()){
+                            result.addAll(points);
+                            for(RetrofitBuildPoint pt : points)
+                                addValue(localToPoint, leftOp, pt);
+                            tryToAddResult(sootMethod, points);
+                        }
+                    }
+
+                    if (rightOp instanceof InstanceInvokeExpr) {
+                        Value base = ((InstanceInvokeExpr) rightOp).getBase();
+                        InvokeExpr invokeExpr = (InstanceInvokeExpr) rightOp;
+                        String sig = ((InstanceInvokeExpr) rightOp).getMethod().getSignature();
+                        if (localToPoint.containsKey(base)) {
+                            if (sig.contains("retrofit2.Retrofit: java.lang.Object create(java.lang.Class)")) {
+                                Value arg = invokeExpr.getArg(0);
+                                if (arg instanceof Constant) {
+                                    String clsName = (String) SimulateUtil.getConstant(arg);
+                                    List<RetrofitBuildPoint> localPoints = localToPoint.get(base);
+                                    for(RetrofitBuildPoint lp: localPoints){
+                                        if(lp.getCreateClass()==null) {
+                                            lp.setCreateClass(clsName);
+                                            addValue(RetrofitClassToBuildPoint, clsName, lp);
+                                        }
+                                    }
+
+                                }
+                                tryToAddResult(sootMethod, localToPoint.get(base));
+                                //TODO local
+                            } else if (sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder baseUrl(java.lang.String)")) {
+                                Value arg = invokeExpr.getArg(0);
+                                if (arg instanceof Constant) {
+                                    String baseUrl = (String) SimulateUtil.getConstant(arg);
+                                    List<RetrofitBuildPoint> localPoints = localToPoint.get(base);
+                                    for(RetrofitBuildPoint lp: localPoints){
+                                        if(lp.getBaseUrl()==null)
+                                            lp.setBaseUrl(baseUrl);
+                                    }
+                                }
+                                //TODO local
+                            } else if (sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder client")) {
+                                //TODO client
+                                Value arg = invokeExpr.getArg(0);
+                                if (arg instanceof Local) {
+                                    //
+                                }
+                            } else if (sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder addConverterFactory")) {
+                                //TODO converterFactory
+                            }
+                        }
                     }
                 }
             }
+        }
+        return result;
+    }
+
+    private static void tryToAddResult(SootMethod sootMethod, RetrofitBuildPoint point){
+        addValue(findResult, sootMethod.getSignature(), point);
+    }
+
+    private static void tryToAddResult(SootMethod sootMethod, List<RetrofitBuildPoint> points){
+        for (RetrofitBuildPoint point : points)
+            addValue(findResult, sootMethod.getSignature(), point);
+    }
+
+    public static <K, V> void addValue(Map<K, List<V>> map, K key, V value) {
+        map.computeIfAbsent(key, k -> new ArrayList<>());
+        List<V> values = map.get(key);
+        if(!values.contains(value)){
+            values.add(value);
         }
     }
 
     public static boolean checkReturnType(Type v){
         String typeClz = v.toString();
-        for(SootClass clz : RetrofitClasses){
+        for(SootClass clz : RetrofitClassesWithMethods.keySet()){
             if(typeClz.equals(clz.getName()))
                 return true;
         }
         return typeClz.equals("java.lang.Object") || typeClz.equals("retrofit2.Retrofit");
     }
 
-
-
-    public static void setRetrofitClasses(HashSet<SootClass> clz){
-        RetrofitClasses = clz;
-    }
 
     public static <T> List<T> clone(List<T> ls) {
         return new ArrayList<T>(ls);

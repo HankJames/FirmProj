@@ -2,6 +2,7 @@ package firmproj.main;
 
 import firmproj.base.MethodString;
 import firmproj.base.RetrofitPoint;
+import firmproj.client.RetrofitBuildFind;
 import firmproj.graph.CallGraph;
 import firmproj.utility.*;
 
@@ -220,10 +221,12 @@ public class Main {
         Thread t = initTool(apk, exclusionList, true, outputPath, cmd);
         //Soot configuration and call graph initialisation
         long initTime = System.currentTimeMillis();
-        HashSet<SootClass> allRetrofitInterface = new HashSet<>();
+        HashMap<SootClass, List<RetrofitPoint>> allRetrofitInterface;
 
         List<RetrofitPoint> allMethod = GetAllRetrofitAnnotationMethod();
-        allRetrofitInterface.addAll(GetRetrofitClass(allMethod));
+        allRetrofitInterface = GetRetrofitClass(allMethod);
+        RetrofitBuildFind.RetrofitClassesWithMethods.putAll(allRetrofitInterface);
+        RetrofitBuildFind.findAllRetrofitBuildMethod();
 
         List<RetrofitPoint> firmMethod = GetFirmRelatedMethod(allMethod);
         LOGGER.info("GetAllfirmMethod: " + firmMethod.size());
@@ -261,10 +264,10 @@ public class Main {
         return result;
     }
 
-    public static HashSet<SootClass> GetRetrofitClass(List<RetrofitPoint> methods){
-        HashSet<SootClass> result = new HashSet<>();
+    public static HashMap<SootClass, List<RetrofitPoint>> GetRetrofitClass(List<RetrofitPoint> methods){
+        HashMap<SootClass, List<RetrofitPoint>> result = new HashMap<>();
         for(RetrofitPoint point: methods){
-            result.add(point.getCurrentclass());
+            addValue(result, point.getCurrentclass(), point);
         }
         return result;
     }
@@ -344,6 +347,7 @@ public class Main {
         }
         return result;
     }
+
     private static void initDirs(String outputPath) {
         File tmp = new File(outputPath);
         if (!tmp.exists()) {
@@ -355,6 +359,14 @@ public class Main {
         tmp = new File(Config.LOGDIR);
         if (!tmp.exists())
             tmp.mkdir();
+    }
+
+    public static <K, V> void addValue(Map<K, List<V>> map, K key, V value) {
+        map.computeIfAbsent(key, k -> new ArrayList<>());
+        List<V> values = map.get(key);
+        if(!values.contains(value)){
+            values.add(value);
+        }
     }
 
 }
