@@ -1,4 +1,6 @@
 package firmproj.base;
+import firmproj.graph.CallGraph;
+import firmproj.graph.CallGraphNode;
 import firmproj.objectSim.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +30,7 @@ public class MethodLocal {
     private final List<String> returnValues = new ArrayList<>();
 
     private final HashMap<String, List<Integer>> InterestingInvoke = new HashMap<>();
-    private final HashMap<Integer, List<String>> InterestingParamString = new HashMap<>();
+    private final HashMap<String, HashMap<Integer, List<String>> > InterestingParamString = new HashMap<>();
 
     //private List<String> unsolvedLocals = new ArrayList<>();
 
@@ -139,14 +141,14 @@ public class MethodLocal {
                     addLocalTOString(leftOperation, MethodString.GetMethodToString(invokeMethod));
                 }
                 else{
-                    //TODO Invoke Return.
-                    MethodLocal nextMethod = new MethodLocal(invokeMethod, valueContext);
-                    nextMethod.doAnalysis();
-                    List<String> ret = nextMethod.getReturnValues();
-                    if(!ret.isEmpty()) {
-                        addLocalTOString(leftOperation, ret);
-                        InterestingTransfer = true;
-                    }
+                    //TODO Invoke Return. client, retrofit, encryption.
+//                    MethodLocal nextMethod = new MethodLocal(invokeMethod, valueContext);
+//                    nextMethod.doAnalysis();
+//                    List<String> ret = nextMethod.getReturnValues();
+//                    if(!ret.isEmpty()) {
+//                        addLocalTOString(leftOperation, ret);
+//                        InterestingTransfer = true;
+//                    }
                 }
 
                 if(InterestingTransfer)
@@ -176,9 +178,11 @@ public class MethodLocal {
                     String simResult = SimulateUtil.getSimClassValue(valuecontext);
                     if(!simResult.isEmpty()) addLocalTOString(leftOperation, List.of(simResult));
                 }
+                else{
+                    //TODO localFromParam Transfer.
+                }
                 //addChildValueContext(valuecontext);
-                MethodLocal nextMethodLocal = new MethodLocal(invokeExpr.getMethod(), valuecontext);
-
+                //MethodLocal nextMethodLocal = new MethodLocal(invokeExpr.getMethod(), valuecontext);
             }
             else if (rightOperation instanceof ArrayRef){
 
@@ -187,6 +191,7 @@ public class MethodLocal {
                 SootField field = ((FieldRef) rightOperation).getField();
                 if(rightOperation instanceof InstanceFieldRef){
                     Value base = ((InstanceFieldRef) rightOperation).getBase();
+                    //TODO field TO Client.
                     if(LocalToClz.containsKey(base)){
 
                     }
@@ -330,16 +335,57 @@ public class MethodLocal {
 
     public HashMap<Value, List<String>> getInvokeExprValues(InvokeExpr invokeExpr){
         HashMap<Value, List<String>> valueString = new HashMap<>();
+        HashMap<Integer, List<String>> interestingParamString = new HashMap<>();
+        String invokeSIg = invokeExpr.getMethod().getSignature();
+        List<Integer> interestingParam = new ArrayList<>();
+        if(getInterestingInvoke().containsKey(invokeSIg)){
+            interestingParam = getInterestingInvoke().get(invokeSIg);
+        }
+        int i = 0;
+        HashMap<String, List<Integer>> intereInvoke = new HashMap<>();
+        intereInvoke.put(invokeSIg, List.of());
         for(Value value: invokeExpr.getArgs()){
-            if(value instanceof Constant) continue;
-            if(value instanceof Local) {
+            if(value instanceof Constant) {
+                Object ob = SimulateUtil.getConstant(value);
+                if(ob!= null) {
+                    if (interestingParam.contains(i)) {
+                        if(!interestingParamString.containsKey(i))
+                            interestingParamString.put(i,List.of());
+                        interestingParamString.get(i).add(ob.toString());
+                    }
+                }
+            }
+            else if(value instanceof Local) {
                 if(LocalToClz.containsKey(value)){
                     String Clzstring = LocalToClz.get(value).toString();
                     addLocalTOString(value, List.of(Clzstring));
-                    valueString.put(value, LocalToString.get(value));
                 }
-                else if(LocalToString.containsKey(value)) valueString.put(value,LocalToString.get(value));
+                if(LocalToString.containsKey(value)) {
+                    valueString.put(value, LocalToString.get(value));
+                    if(interestingParam.contains(i)) {
+                        List<String> paramValue = new ArrayList<>();
+                        if(LocalToString.get(value).get(0).equals("@Param")){
+                            if(LocalFromParams.containsKey(value))
+                                intereInvoke.get(invokeSIg).add(LocalFromParams.get(value));
+                            HashSet<CallGraphNode> callByNodes = CallGraph.getNode(sootMethod.toString()).getCallBy();
+                            for(CallGraphNode node : callByNodes){
+                                MethodLocal newMethodLocal = new MethodLocal(node.getSootMethod(), intereInvoke);
+                            }
+                        }
+                        else paramValue.addAll(LocalToString.get(value));
+
+                        if(!interestingParamString.containsKey(i))
+                            interestingParamString.put(i,List.of());
+                        interestingParamString.get(i).addAll(paramValue);
+                    }
+                }
             }
+            i++;
+        }
+        if(!interestingParamString.isEmpty()){
+            if(!getInterestingParamString().containsKey(invokeSIg))
+                getInterestingParamString().put(invokeSIg, new HashMap<>());
+            getInterestingParamString().get(invokeSIg).putAll(interestingParamString);
         }
         return valueString;
     }
@@ -362,7 +408,7 @@ public class MethodLocal {
         return ParamsToString;
     }
 
-    public HashMap<Integer, List<String>> getInterestingParamString() {
+    public HashMap<String, HashMap<Integer, List<String>> > getInterestingParamString() {
         return InterestingParamString;
     }
 

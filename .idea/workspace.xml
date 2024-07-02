@@ -9,16 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="new client, more Methodlocal">
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomHttpClz.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/RetrofitClz.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/okHttpClz.java" afterDir="false" />
+    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="new RetrofitbuildPoint">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildPoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/okHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/okHttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/SimulateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/SimulateUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" afterDir="false" />
     </list>
     <list id="28af94af-eb16-46e5-bd45-48575d194720" name="New changelist" comment="New changelist" />
     <option name="SHOW_DIALOG" value="false" />
@@ -134,7 +131,7 @@
       <output_file path="$PROJECT_DIR$/logs/1.log" />
       <option name="MAIN_CLASS_NAME" value="firmproj.main.Main" />
       <module name="FirmProj.main" />
-      <option name="PROGRAM_PARAMETERS" value="-oj -p libs/android.jar -o results -a $PROJECT_DIR$/../APKS/gooclient.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
+      <option name="PROGRAM_PARAMETERS" value="-oj -p libs/android.jar -o results -a $PROJECT_DIR$/../APKS/yamahaHpc.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -231,7 +228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719488118909</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="new RetrofitbuildPoint">
+      <option name="closed" value="true" />
+      <created>1719571329836</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1719571329836</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -253,7 +258,8 @@
     <MESSAGE value="MethodLocal" />
     <MESSAGE value="MethodLocal incomplete" />
     <MESSAGE value="new client, more Methodlocal" />
-    <option name="LAST_COMMIT_MESSAGE" value="new client, more Methodlocal" />
+    <MESSAGE value="new RetrofitbuildPoint" />
+    <option name="LAST_COMMIT_MESSAGE" value="new RetrofitbuildPoint" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,4 +1,5 @@
 package firmproj.base;
+import firmproj.objectSim.SimulateUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import soot.*;
@@ -15,6 +16,8 @@ public class MethodString {
     private static final HashMap<String, List<String>> fieldToString = new HashMap<>();
 
     private static final HashMap<SootMethod, List<String>> methodToString = new HashMap<>();
+
+    private static final HashMap<SootClass, HashMap<SootMethod, HashMap<SootField, Integer>>> allClzWithSetFieldMethod = new HashMap<>();
 
     public static void init(){
         Chain<SootClass> classes = Scene.v().getClasses();
@@ -77,7 +80,10 @@ public class MethodString {
                 }
             }
         }
-        LOGGER.info("SIZE: " + methodToFieldString.size() + " "+ fieldToString.size());
+
+        GetAllMethodSetField();
+
+        LOGGER.info("SIZE: " + methodToFieldString.size() + " "+ fieldToString.size() + " " + allClzWithSetFieldMethod.size());
         //TODO If there is a Method to field But no field to string, just Method to field string "$fieldName";
     }
     private static List<String> unsolvedMethodString;
@@ -128,8 +134,8 @@ public class MethodString {
                                 AssignStmt assignStmt = (AssignStmt) u;
                                 if (assignStmt.getLeftOp().equals(local)) {
                                     Value rightOp = assignStmt.getRightOp();
-                                    if (rightOp instanceof StaticFieldRef) {
-                                        StaticFieldRef fieldRef = (StaticFieldRef) rightOp;
+                                    if (rightOp instanceof FieldRef) {
+                                        FieldRef fieldRef = (FieldRef) rightOp;
                                         if (fieldRef.getField() == null || fieldRef.getField().getDeclaringClass() == null) {
                                             continue;
                                         }
@@ -198,6 +204,156 @@ public class MethodString {
         return mstrs;
     }
 
+    public static void GetAllMethodSetField(){
+        //TODO
+        Chain<SootClass> classes = Scene.v().getClasses();
+        for (SootClass sootClass : classes) {
+            HashMap<SootMethod, HashMap<SootField, Integer>> clzResult;
+            clzResult = GetMethodSetField(sootClass);
+            if(!clzResult.isEmpty()){
+                LOGGER.info("GetMethodSetField: {}--{}", sootClass, clzResult);
+            }
+        }
+        return ;
+    }
+
+    public static HashMap<SootMethod, HashMap<SootField, Integer>> GetMethodSetField(SootClass clz){
+        String headString = clz.getName().split("\\.")[0];
+        if (headString.contains("android") || headString.contains("kotlin") || headString.contains("java"))
+            return new HashMap<>();
+
+        if(!allClzWithSetFieldMethod.containsKey(clz))
+            allClzWithSetFieldMethod.put(clz, new HashMap<>());
+        else{
+            return allClzWithSetFieldMethod.get(clz);
+        }
+        HashMap<SootMethod, HashMap<SootField, Integer>> result = allClzWithSetFieldMethod.get(clz);
+        for(SootMethod sootMethod : clz.getMethods()){
+            HashMap<SootField, Integer> fieldWithParam = GetSetField(sootMethod);
+            if(!fieldWithParam.isEmpty()) {
+                result.put(sootMethod, fieldWithParam);
+                LOGGER.info("220: GetSetField: {}--{}--{}",clz, sootMethod, fieldWithParam);
+            }
+
+        }
+        return result;
+    }
+
+    public static HashMap<SootField, Integer> GetSetField(SootMethod sootMethod){
+
+        SootClass clz = sootMethod.getDeclaringClass();
+        HashMap<SootMethod, HashMap<SootField, Integer>> clzMethod = allClzWithSetFieldMethod.get(clz);
+
+        if(!clzMethod.containsKey(sootMethod))
+            clzMethod.put(sootMethod, new HashMap<>());
+        else
+            return clzMethod.get(sootMethod);
+
+        HashMap<SootField, Integer> fieldWithParam = clzMethod.get(sootMethod);
+        if(isStandardLibraryClass(clz)) return fieldWithParam;
+
+        HashMap<Value, Integer> localFromParam = new HashMap<>();
+
+        //if(visitedMethod.contains(sootMethod.getSignature())) return mstrs;
+        //visitedMethod.add(sootMethod.getSignature());
+
+        Body body = null;
+        try {
+            body = sootMethod.retrieveActiveBody();
+        } catch (Exception e) {
+            //LOGGER.error("Could not retrieved the active body {} because {}", sootMethod, e.getLocalizedMessage());
+        }
+        LOGGER.info("THE METHOD NOW: {}", sootMethod);
+        if(body != null) {
+            for (Unit unit : body.getUnits()) {
+                Stmt stmt = (Stmt) unit;
+                if(stmt instanceof IdentityStmt){
+                    Value rightOp = ((IdentityStmt) stmt).getRightOp();
+                    Value leftOp = ((IdentityStmt) stmt).getLeftOp();
+                    if(rightOp instanceof ParameterRef){
+                        int index = ((ParameterRef) rightOp).getIndex();
+                        localFromParam.put(leftOp, index);
+                        LOGGER.info("275: localFromParam : {}-{}", leftOp, index);
+                    }
+                }
+                else if(stmt instanceof AssignStmt){
+                    Value rightOp = ((AssignStmt) stmt).getRightOp();
+                    Value leftOp = ((AssignStmt) stmt).getLeftOp();
+                    if(leftOp instanceof FieldRef){
+                        FieldRef leftFiledRef = (FieldRef)leftOp;
+                        SootField leftField = leftFiledRef.getField();
+                        if(localFromParam.containsKey(rightOp)){
+                            fieldWithParam.put(leftField, localFromParam.get(rightOp));
+                            // Maybe array TODO
+                        }
+                    }
+                }
+                else if(stmt instanceof InvokeStmt){
+                    LOGGER.info("291: Invoke: {}", stmt);
+                    boolean isFromParam = false;
+                    HashMap<Integer, Constant> paramWithConstant = new HashMap<>();
+                    //TODO check method solved.
+                    HashMap<Value, Integer> localToParam = new HashMap<>();
+                    int index = 0;
+                    for(Value param: stmt.getInvokeExpr().getArgs()){
+                        if(localFromParam.containsKey(param)) {
+                            isFromParam = true;
+                            localToParam.put(param, index);
+                            LOGGER.info("301: localFromParam: {},{}", param, index);
+                        }
+                        if(param instanceof Constant){
+                            paramWithConstant.put(index, (Constant) param);
+                            LOGGER.info("304: param constant: {}-{}",param, index);
+                            isFromParam = true;
+                        }
+                        index++;
+                    }
+                    //TODO constant param, set to field.
+                    if(isFromParam) {
+                        SootMethod invokeMethod = stmt.getInvokeExpr().getMethod();
+                        HashMap<SootField, Integer> invokeResult;
+                        if (invokeMethod.getDeclaringClass().equals(clz)) {
+                            LOGGER.info("311: Go to Invoke: {}", invokeMethod);
+                            invokeResult = GetSetField(invokeMethod);
+                            LOGGER.info("313: Get Invoke result: {}", invokeResult);
+                        } else {
+                            HashMap<SootMethod, HashMap<SootField, Integer>> invokeClzResult;
+                            LOGGER.info("316: Go to Clz :{}", invokeMethod.getDeclaringClass().getName());
+                            invokeClzResult = GetMethodSetField(invokeMethod.getDeclaringClass());
+                            invokeResult = invokeClzResult.get(invokeMethod);
+                            LOGGER.info("319: Get Clz result:{}", invokeResult);
+                        }
+                        if(invokeResult != null){
+                            if (!invokeResult.isEmpty() && !localToParam.isEmpty()){
+                                for(Integer id: localToParam.values()){
+                                    if(invokeResult.containsValue(id)){
+                                        fieldWithParam.put(getKeyByValue(invokeResult, id), localFromParam.get(getKeyByValue(localToParam, id)));
+                                        LOGGER.info("309: GetSetField: {}--{}--{}",clz, invokeMethod, fieldWithParam);
+                                    }
+                                }
+                            }
+                            if(!paramWithConstant.isEmpty()){
+                                LOGGER.info("331: COnstant param: Method: {}-- Result: {}-- constant: {}", invokeMethod,invokeResult, paramWithConstant);
+                                for(Integer constIndex: paramWithConstant.keySet()){
+                                    if(invokeResult.containsValue(constIndex)){
+                                        SootField field= getKeyByValue(invokeResult, constIndex);
+                                        Object constObj = SimulateUtil.getConstant(paramWithConstant.get(constIndex));
+                                        if(field!=null && constObj!=null){
+                                            addValue(fieldToString,field.toString(),constObj.toString());
+                                            LOGGER.info("320: New Field with String: " + field + ":" + constObj + ";" + fieldToString.get(field.toString()).toString());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return fieldWithParam;
+
+    }
+
     public static boolean isCommonType(Type type) {
         if (type.equals(IntType.v()) ||
                 type.equals(BooleanType.v()) ||
@@ -222,7 +378,7 @@ public class MethodString {
         return false;
     }
 
-    private static boolean isStandardLibraryClass(SootClass sc) {
+    public static boolean isStandardLibraryClass(SootClass sc) {
         String packageName = sc.getPackageName();
         return packageName.startsWith("java.") || packageName.startsWith("javax.")
                 || packageName.startsWith("android.") || packageName.startsWith("kotlin.");

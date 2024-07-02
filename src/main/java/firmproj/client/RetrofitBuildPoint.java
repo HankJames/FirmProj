@@ -20,6 +20,11 @@ public class RetrofitBuildPoint {
         this.createUnit = unit;
     }
 
+    public RetrofitBuildPoint(SootMethod method, Unit unit){
+        this(unit);
+        currentMethod = method;
+    }
+
     public Unit getCreateUnit(){
         return this.createUnit;
     }
@@ -33,10 +38,23 @@ public class RetrofitBuildPoint {
     }
 
     public void setBaseUrl(String url){
-        this.baseUrl.add(url);
+        if(!this.baseUrl.contains(url))
+            this.baseUrl.add(url);
     }
 
     public void setCreateClass(String createClass) {
         this.createClass = createClass;
+    }
+
+    @Override
+    public String toString() {
+        return "RetrofitBuildPoint{" +
+                "baseUrl=" + baseUrl +
+                //", converterFactory=" + converterFactory +
+                //", client=" + client +
+                ", currentMethod=" + currentMethod.getSignature() +
+                ", createUnit=" + createUnit +
+                ", createClass='" + createClass + '\'' +
+                '}';
     }
 }

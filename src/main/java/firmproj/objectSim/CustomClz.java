@@ -30,6 +30,7 @@ public class CustomClz implements AbstractClz{
 
     @Override
     public void init() {
+        //TODO get all class field, and the ret field method, set field method.
 
     }
 
