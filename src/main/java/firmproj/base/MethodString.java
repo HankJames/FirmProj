@@ -4,9 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import soot.*;
 import soot.jimple.*;
+import soot.jimple.toolkits.annotation.logic.Loop;
 import soot.util.Chain;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MethodString {
     private static final Logger LOGGER = LogManager.getLogger(MethodString.class);
@@ -17,7 +20,7 @@ public class MethodString {
 
     private static final HashMap<SootMethod, List<String>> methodToString = new HashMap<>();
 
-    private static final HashMap<SootClass, HashMap<SootMethod, HashMap<SootField, Integer>>> allClzWithSetFieldMethod = new HashMap<>();
+    private static final HashMap<SootClass, HashMap<SootMethod, HashMap<Integer, SootField>>> allClzWithSetFieldMethod = new HashMap<>();
 
     public static void init(){
         Chain<SootClass> classes = Scene.v().getClasses();
@@ -118,9 +121,6 @@ public class MethodString {
                         addValue(methodToString, sootMethod, str);
                         LOGGER.info("266:New Method To String: " + sootMethod.getName() + ":" + str + ";" + methodToString.get(sootMethod).toString());
                         mstrs.add(str);
-                        if(sootMethod.getName().contains("buildGenericInfo")){
-                            LOGGER.info("Now!!!");
-                        }
                         //return mstrs;
                     }
                     else if (retValue instanceof Local) {
@@ -143,7 +143,7 @@ public class MethodString {
                                             SootField field = fieldRef.getField();
                                             if (!methodToFieldString.containsKey(sootMethod)) {
                                                 methodToFieldString.put(sootMethod, field.toString());
-                                                LOGGER.info("New Method ret field: " + sootMethod + ":" + field);
+                                                //LOGGER.info("New Method ret field: " + sootMethod + ":" + field);
                                                 if (fieldToString.containsKey(field.toString())) {
                                                     List<String> strs = fieldToString.get(field.toString());
                                                     if (!methodToString.containsKey(sootMethod))
@@ -208,16 +208,16 @@ public class MethodString {
         //TODO
         Chain<SootClass> classes = Scene.v().getClasses();
         for (SootClass sootClass : classes) {
-            HashMap<SootMethod, HashMap<SootField, Integer>> clzResult;
+            HashMap<SootMethod, HashMap<Integer, SootField>> clzResult;
             clzResult = GetMethodSetField(sootClass);
             if(!clzResult.isEmpty()){
-                LOGGER.info("GetMethodSetField: {}--{}", sootClass, clzResult);
+                //LOGGER.info("GetMethodSetField: {}--{}", sootClass, clzResult);
             }
         }
         return ;
     }
 
-    public static HashMap<SootMethod, HashMap<SootField, Integer>> GetMethodSetField(SootClass clz){
+    public static HashMap<SootMethod, HashMap<Integer, SootField>> GetMethodSetField(SootClass clz){
         String headString = clz.getName().split("\\.")[0];
         if (headString.contains("android") || headString.contains("kotlin") || headString.contains("java"))
             return new HashMap<>();
@@ -227,44 +227,48 @@ public class MethodString {
         else{
             return allClzWithSetFieldMethod.get(clz);
         }
-        HashMap<SootMethod, HashMap<SootField, Integer>> result = allClzWithSetFieldMethod.get(clz);
+        HashMap<SootMethod, HashMap<Integer, SootField>> result = allClzWithSetFieldMethod.get(clz);
         for(SootMethod sootMethod : clz.getMethods()){
-            HashMap<SootField, Integer> fieldWithParam = GetSetField(sootMethod);
+            HashMap<Integer, SootField> fieldWithParam = GetSetField(sootMethod);
             if(!fieldWithParam.isEmpty()) {
                 result.put(sootMethod, fieldWithParam);
-                LOGGER.info("220: GetSetField: {}--{}--{}",clz, sootMethod, fieldWithParam);
+                //LOGGER.info("220: GetSetField: {}--{}--{}",clz, sootMethod, fieldWithParam);
             }
 
         }
         return result;
     }
 
-    public static HashMap<SootField, Integer> GetSetField(SootMethod sootMethod){
+    public static HashMap<Integer, SootField> GetSetField(SootMethod sootMethod){
 
         SootClass clz = sootMethod.getDeclaringClass();
-        HashMap<SootMethod, HashMap<SootField, Integer>> clzMethod = allClzWithSetFieldMethod.get(clz);
+        HashMap<SootMethod, HashMap<Integer, SootField>> clzMethod = allClzWithSetFieldMethod.get(clz);
 
         if(!clzMethod.containsKey(sootMethod))
             clzMethod.put(sootMethod, new HashMap<>());
         else
             return clzMethod.get(sootMethod);
 
-        HashMap<SootField, Integer> fieldWithParam = clzMethod.get(sootMethod);
+        HashMap<Integer, SootField> fieldWithParam = clzMethod.get(sootMethod);
         if(isStandardLibraryClass(clz)) return fieldWithParam;
 
-        HashMap<Value, Integer> localFromParam = new HashMap<>();
+        HashMap<Integer, Value> localFromParam = new HashMap<>();
+        HashMap<Value, List<String>> localToString = new HashMap<>();
 
         //if(visitedMethod.contains(sootMethod.getSignature())) return mstrs;
         //visitedMethod.add(sootMethod.getSignature());
 
         Body body = null;
+
+
         try {
             body = sootMethod.retrieveActiveBody();
         } catch (Exception e) {
             //LOGGER.error("Could not retrieved the active body {} because {}", sootMethod, e.getLocalizedMessage());
         }
-        LOGGER.info("THE METHOD NOW: {}", sootMethod);
+        //LOGGER.info("THE METHOD NOW: {}", sootMethod);
         if(body != null) {
+            HashMap<Value, List<List<String>>> localArray = new HashMap<>();
             for (Unit unit : body.getUnits()) {
                 Stmt stmt = (Stmt) unit;
                 if(stmt instanceof IdentityStmt){
@@ -272,75 +276,186 @@ public class MethodString {
                     Value leftOp = ((IdentityStmt) stmt).getLeftOp();
                     if(rightOp instanceof ParameterRef){
                         int index = ((ParameterRef) rightOp).getIndex();
-                        localFromParam.put(leftOp, index);
-                        LOGGER.info("275: localFromParam : {}-{}", leftOp, index);
+                        localFromParam.put(index, leftOp);
+                       // LOGGER.info("275: localFromParam : {}-{}", leftOp, index);
                     }
                 }
                 else if(stmt instanceof AssignStmt){
                     Value rightOp = ((AssignStmt) stmt).getRightOp();
                     Value leftOp = ((AssignStmt) stmt).getLeftOp();
-                    if(leftOp instanceof FieldRef){
+                    if(rightOp instanceof NewArrayExpr){
+                        NewArrayExpr arrayExpr = (NewArrayExpr) rightOp;
+                        Integer index = (Integer) SimulateUtil.getConstant(arrayExpr.getSize());
+                        if(index != null && index > 0 && index < 100){
+                            List<List<String>> arrayList = new ArrayList<>();
+                            int i = 0;
+                            while(i < index) {
+                                arrayList.add(new ArrayList<>());
+                                i++;
+                            }
+                            localArray.put(leftOp, arrayList);
+                            //LOGGER.info("297: New local Array: {}, {}, {},{}", stmt, leftOp, arrayList, index);
+                        }
+                    }
+                    else if(leftOp instanceof Local){
+                        if(localFromParam.containsValue(rightOp)) {
+                            List<Integer> keys = getAllKeyByValue(localFromParam, rightOp);
+                            for(int key: keys)
+                                localFromParam.put(key, leftOp);
+                        }
+                        if(rightOp instanceof ArrayRef) {
+                            ArrayRef arrayRef = (ArrayRef) rightOp;
+                            Value arrayBase = arrayRef.getBase();
+                            Object obj = SimulateUtil.getConstant(arrayRef.getIndex());
+                            if (obj != null) {
+                                int arrayIndex = (Integer) obj;
+                                if (localArray.containsKey(arrayBase)) {
+                                    try{
+                                    List<String> arrayValue = localArray.get(arrayBase).get(arrayIndex);
+                                    int arrayID = getArrayFieldIndex(arrayValue);
+                                    if (arrayID > -1) {
+                                        int fromId = Integer.parseInt(arrayValue.get(arrayID).substring(1));
+                                        localFromParam.put(fromId, leftOp);
+                                    } else {
+                                        localToString.put(leftOp, arrayValue);
+                                    }}
+                                    catch (Exception e){
+                                        //LOGGER.error("325: array index over, {},{},{},{}", clz, sootMethod, unit, localArray.get(arrayBase));
+                                    }
+                                }
+                            }
+                        }
+                        else if(rightOp instanceof Constant){
+                            Object obj = SimulateUtil.getConstant(rightOp);
+                            if(obj != null) {
+                                if (!localToString.containsKey(leftOp))
+                                    localToString.put(leftOp, new ArrayList<>());
+                                localToString.get(leftOp).add(obj.toString());
+                            }
+                        }
+                        if(localArray.containsKey(leftOp)){ // localArray Value assigned new value
+                            localArray.remove(leftOp);
+                            continue;
+                            //todo right is fieldREF, right is staticinvoke,.
+                        }
+
+                    }
+                    else if(leftOp instanceof FieldRef){
                         FieldRef leftFiledRef = (FieldRef)leftOp;
                         SootField leftField = leftFiledRef.getField();
-                        if(localFromParam.containsKey(rightOp)){
-                            fieldWithParam.put(leftField, localFromParam.get(rightOp));
-                            // Maybe array TODO
+                        if(localFromParam.containsValue(rightOp)){
+                            List<Integer> indexes = getAllKeyByValue(localFromParam, rightOp);
+                            for(Integer index: indexes)
+                                fieldWithParam.put(index, leftField);
+                        }
+                        if(localArray.containsKey(rightOp)){
+                            if(!fieldToString.containsKey(leftField.toString()))
+                                fieldToString.put(leftField.toString(), new ArrayList<>());
+                            addArrayStringTo(localArray.get(rightOp), fieldToString.get(leftField.toString()));
+                            LOGGER.info("337: New Field with Array String: {}==>{}--{}", localArray.get(rightOp), leftField, fieldToString.get(leftField.toString()));
+                        }
+                    }
+                    else if(leftOp instanceof ArrayRef){
+                        ArrayRef arrayRef = (ArrayRef) leftOp;
+                        Integer arrayIndex = (Integer) SimulateUtil.getConstant(arrayRef.getIndex());
+                        Value base = arrayRef.getBase();
+                        if(localArray.containsKey(base)) {
+                            if (arrayIndex != null) {
+                                try {List<String> arrayValue = localArray.get(base).get(arrayIndex);
+
+                                if (rightOp instanceof Constant) {
+                                    Object obj = SimulateUtil.getConstant(rightOp);
+                                    if(obj != null)
+                                        arrayValue.add(obj.toString());
+                                }
+                                if (localFromParam.containsValue(rightOp)) {
+                                    arrayValue.add("$"+getKeyByValue(localFromParam, rightOp));
+                                    localFromParam.put(getKeyByValue(localFromParam, rightOp), base);
+                                }}
+                                catch (Exception e){
+                                    LOGGER.error("348: array index over, {},{},{},{}", clz, sootMethod, unit, localArray.get(base));
+                                }
+                            }
                         }
                     }
                 }
                 else if(stmt instanceof InvokeStmt){
-                    LOGGER.info("291: Invoke: {}", stmt);
-                    boolean isFromParam = false;
+                    //LOGGER.info("291: Invoke: {}", stmt);
+                    boolean isNeedInvoke = false;
                     HashMap<Integer, Constant> paramWithConstant = new HashMap<>();
                     //TODO check method solved.
-                    HashMap<Value, Integer> localToParam = new HashMap<>();
+                    HashMap<Integer, Value> localToParam = new HashMap<>();
                     int index = 0;
                     for(Value param: stmt.getInvokeExpr().getArgs()){
-                        if(localFromParam.containsKey(param)) {
-                            isFromParam = true;
-                            localToParam.put(param, index);
-                            LOGGER.info("301: localFromParam: {},{}", param, index);
+                        if(localFromParam.containsValue(param)) {
+                            isNeedInvoke = true;
+                            localToParam.put(index, param);
+                            //LOGGER.info("301: localFromParam: {},{}", param, index);
+                        }
+                        else if (localToString.containsKey(param)){
+                            isNeedInvoke = true;
+                            localToParam.put(index, param);
+                            paramWithConstant.put(index, null);
                         }
                         if(param instanceof Constant){
                             paramWithConstant.put(index, (Constant) param);
-                            LOGGER.info("304: param constant: {}-{}",param, index);
-                            isFromParam = true;
+                            //LOGGER.info("304: param constant: {}--{}-{}",stmt.getInvokeExpr(),param, index);
+                            isNeedInvoke = true;
                         }
                         index++;
                     }
-                    //TODO constant param, set to field.
-                    if(isFromParam) {
+
+                    if(isNeedInvoke) {
                         SootMethod invokeMethod = stmt.getInvokeExpr().getMethod();
-                        HashMap<SootField, Integer> invokeResult;
+                        HashMap<Integer, SootField> invokeResult;
                         if (invokeMethod.getDeclaringClass().equals(clz)) {
-                            LOGGER.info("311: Go to Invoke: {}", invokeMethod);
+                            //LOGGER.info("311: Go to Invoke: {}", invokeMethod);
                             invokeResult = GetSetField(invokeMethod);
-                            LOGGER.info("313: Get Invoke result: {}", invokeResult);
+                            //LOGGER.info("313: Get Invoke result: {}", invokeResult);
                         } else {
-                            HashMap<SootMethod, HashMap<SootField, Integer>> invokeClzResult;
-                            LOGGER.info("316: Go to Clz :{}", invokeMethod.getDeclaringClass().getName());
+                            HashMap<SootMethod, HashMap<Integer, SootField>> invokeClzResult;
+                            //LOGGER.info("316: Go to Clz :{}", invokeMethod.getDeclaringClass().getName());
                             invokeClzResult = GetMethodSetField(invokeMethod.getDeclaringClass());
                             invokeResult = invokeClzResult.get(invokeMethod);
-                            LOGGER.info("319: Get Clz result:{}", invokeResult);
+                            //LOGGER.info("319: Get Clz result:{}", invokeResult);
                         }
                         if(invokeResult != null){
                             if (!invokeResult.isEmpty() && !localToParam.isEmpty()){
-                                for(Integer id: localToParam.values()){
-                                    if(invokeResult.containsValue(id)){
-                                        fieldWithParam.put(getKeyByValue(invokeResult, id), localFromParam.get(getKeyByValue(localToParam, id)));
-                                        LOGGER.info("309: GetSetField: {}--{}--{}",clz, invokeMethod, fieldWithParam);
+                                for(Integer id: localToParam.keySet()){
+                                    if(invokeResult.containsKey(id)){
+                                        List<Integer> indexes = getAllKeyByValue(localFromParam, localToParam.get(id));
+                                        for(Integer paramIndex : indexes)
+                                            fieldWithParam.put(paramIndex, invokeResult.get(id));
+                                        //LOGGER.info("309: GetSetField: {}--{}--{}",clz, invokeMethod, fieldWithParam);
                                     }
                                 }
                             }
                             if(!paramWithConstant.isEmpty()){
-                                LOGGER.info("331: COnstant param: Method: {}-- Result: {}-- constant: {}", invokeMethod,invokeResult, paramWithConstant);
+                                //LOGGER.info("331: Constant param: Method: {}-- Result: {}-- constant: {}", invokeMethod,invokeResult, paramWithConstant);
                                 for(Integer constIndex: paramWithConstant.keySet()){
-                                    if(invokeResult.containsValue(constIndex)){
-                                        SootField field= getKeyByValue(invokeResult, constIndex);
-                                        Object constObj = SimulateUtil.getConstant(paramWithConstant.get(constIndex));
-                                        if(field!=null && constObj!=null){
-                                            addValue(fieldToString,field.toString(),constObj.toString());
-                                            LOGGER.info("320: New Field with String: " + field + ":" + constObj + ";" + fieldToString.get(field.toString()).toString());
+                                    if(invokeResult.containsKey(constIndex)){
+                                        SootField field = invokeResult.get(constIndex);
+                                        if (paramWithConstant.get(constIndex) == null) {
+                                            for (String str : localToString.get(localToParam.get(constIndex))) {
+                                                addValue(fieldToString, field.toString(), str);
+                                                LOGGER.info("434: New Array Constant To field: {}, {}", field.toString(), str);
+                                            }
+                                        } else {
+                                            Object constObj = SimulateUtil.getConstant(paramWithConstant.get(constIndex));
+                                            if (field != null && constObj != null) {
+                                                if(!fieldToString.containsKey(field.toString()))
+                                                    fieldToString.put(field.toString(), new ArrayList<>());
+                                                List<String> fieldValues = fieldToString.get(field.toString());
+                                                int arrayID = getArrayFieldIndex(fieldValues);
+                                                if (arrayID > -1) {
+                                                    int fromId = Integer.parseInt(fieldValues.get(arrayID).substring(1));
+                                                    if (constIndex.equals(fromId)) {
+                                                        fieldValues.set(arrayID, constObj.toString());
+                                                        LOGGER.info("445: New Array Param To field: {}, {}", fieldValues, arrayID);
+                                                    }
+                                                } else addValue(fieldToString, field.toString(), constObj.toString());
+                                                LOGGER.info("320: New Field with String: " + field + ":" + constObj + ";" + fieldToString.get(field.toString()).toString());
+                                            }
                                         }
                                     }
                                 }
@@ -391,6 +506,48 @@ public class MethodString {
             }
         }
         return null;
+    }
+
+    public static <K, V> List<K> getAllKeyByValue(Map<K, V> map, V value) {
+        List<K> result = new ArrayList<>();
+        for (Map.Entry<K, V> entry : map.entrySet()) {
+            if (value.equals(entry.getValue())) {
+                result.add(entry.getKey());
+            }
+        }
+        return result;
+    }
+
+    public static int getArrayFieldIndex(List<String> values){
+        String regex = "^\\$[1-9]\\d*$|^\\$0$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher;
+        int i = 0;
+        for(String value: values) {
+            matcher = pattern.matcher(value);
+            if(matcher.matches())
+                return i;
+            i++;
+        }
+        return -1;
+    }
+
+    public static void addArrayStringTo(List<List<String>> arrayString, List<String> value){
+        int max = 0;
+        for(List<String> list: arrayString){
+            if(list.size() > max)
+                max = list.size();
+        }
+        for(int i=0; i< max; i++){
+            for(List<String> list: arrayString){
+                if(i<list.size()){
+                    value.add(list.get(i));
+                }
+                else{
+                    value.add("");
+                }
+            }
+        }
     }
 
     public static HashMap<SootMethod,List<String>> getMethodToString(){

@@ -35,11 +35,11 @@ public class RetrofitPoint {
         List<AnnotationTag> pAn = new ArrayList<>();
         for (Tag tag : method.getTags()) {
             if (tag instanceof VisibilityParameterAnnotationTag) {
-                LOGGER.info(tag.toString());
+                //LOGGER.info(tag.toString());
                 VisibilityParameterAnnotationTag parameterAnnotationTag = (VisibilityParameterAnnotationTag) tag;
                 for (VisibilityAnnotationTag vtag : parameterAnnotationTag.getVisibilityAnnotations()) {
                     if(vtag == null) break;
-                    LOGGER.info("vtag: " + vtag.toString());
+                    //LOGGER.info("vtag: " + vtag.toString());
                     if(vtag.hasAnnotations())
                         pAn.addAll(vtag.getAnnotations());
                 }
@@ -83,7 +83,7 @@ public class RetrofitPoint {
         StringBuilder result = new StringBuilder();
         result.append("RetrofitPoint: ");
         result.append(getMethod().toString());
-        result.append("======\nMethod Anno:");
+        result.append("\n======\nMethod Anno:");
         for(AnnotationTag tag: getMethodAnnotations()){
             result.append(tag.toString());
         }

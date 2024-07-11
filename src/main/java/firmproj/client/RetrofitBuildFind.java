@@ -15,9 +15,9 @@ import java.util.*;
 public class RetrofitBuildFind {
 
     public static final HashMap<String,List<RetrofitBuildPoint>> findResult = new HashMap<>(); //Return Api method's Name To RetrofitBuildPoint
-    public static final HashMap<String,List<RetrofitBuildPoint>> RetrofitClassToBuildPoint = new HashMap<>();
-    public static final HashMap<SootClass, List<RetrofitPoint>> RetrofitClassesWithMethods = new HashMap<>();
-    public static final HashMap<FieldRef, List<RetrofitBuildPoint>> FieldToBuildPoint = new HashMap<>();
+    public static final HashMap<String,List<RetrofitBuildPoint>> RetrofitClassToBuildPoint = new HashMap<>(); //Retrofit create api -> class.
+    public static final HashMap<SootClass, List<RetrofitPoint>> RetrofitClassesWithMethods = new HashMap<>(); //Retrofit Interface Class -> all the class Retrofit Point.
+    public static final HashMap<SootField, List<RetrofitBuildPoint>> FieldToBuildPoint = new HashMap<>(); //SootField related to the RetrofitBuildPoint
 
     private static final Logger LOGGER = LogManager.getLogger(RetrofitBuildFind.class);
     private static final HashSet<String> visitedMethod = new HashSet<>();
@@ -32,13 +32,14 @@ public class RetrofitBuildFind {
             for (SootMethod sootMethod : clone(sootClass.getMethods())) {
                 if (!sootMethod.isConcrete())
                     continue;
-                findRetrofitBuildMethod(sootMethod, new HashMap<>());
+                findRetrofitBuildMethod(sootMethod);
             }
         }
         LOGGER.info("All retrofitResult: {}",findResult.toString());
+        LOGGER.info("ALL Field with retrofitBuildPoint: {}", FieldToBuildPoint);
     }
 
-    public static List<RetrofitBuildPoint> findRetrofitBuildMethod(SootMethod sootMethod, HashMap<Integer,String> clsStr){
+    public static List<RetrofitBuildPoint> findRetrofitBuildMethod(SootMethod sootMethod){
         String methodSig = sootMethod.getSignature();
         if(findResult.containsKey(methodSig)) return findResult.get(methodSig);
 
@@ -81,10 +82,9 @@ public class RetrofitBuildFind {
                 if(rightOp instanceof InvokeExpr) {
                     SootMethod invokeMethod = ((InvokeExpr) rightOp).getMethod();
                     Type invokeRet = invokeMethod.getReturnType();
-                    HashMap<Integer,String> args = checkArgType((InvokeExpr) rightOp);
                     if(checkReturnType(invokeRet) && !invokeMethod.getDeclaringClass().getName().equals("retrofit2.Retrofit")){
                         if(!invokeMethod.getSignature().contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit build()")) {
-                            List<RetrofitBuildPoint> points = findRetrofitBuildMethod(invokeMethod,args);
+                            List<RetrofitBuildPoint> points = findRetrofitBuildMethod(invokeMethod);
                             if (!points.isEmpty()) {
                                 result.addAll(points);
                                 for (RetrofitBuildPoint pt : points) {
@@ -94,6 +94,7 @@ public class RetrofitBuildFind {
                                 tryToAddResult(sootMethod, points);
                             }
                         }
+                        //TODO return okhttp client method.
                     }
 
                     if (rightOp instanceof InstanceInvokeExpr) {
@@ -118,7 +119,7 @@ public class RetrofitBuildFind {
                                     //TODO local
                                     if(!currentValues.containsKey(sig)) {
                                         HashMap<String, List<Integer>> intereInvoke = new HashMap<>();
-                                        intereInvoke.put(sig, List.of(0));
+                                        intereInvoke.put(sig, new ArrayList<>(List.of(0)));
                                         MethodLocal methodLocal = new MethodLocal(sootMethod, intereInvoke);
                                         methodLocal.doAnalysis();
                                         currentValues.putAll(methodLocal.getInterestingParamString());
@@ -126,25 +127,32 @@ public class RetrofitBuildFind {
                                     if (currentValues.containsKey(sig)){
                                         List<String> clsNames = currentValues.get(sig).get(0);
                                         int i=0;
-                                        if(localPoints.size() < clsNames.size()) {
-                                            for(RetrofitBuildPoint lp: localPoints){
-                                                if(lp.getCreateClass() == null) {
-                                                    lp.setCreateClass(clsNames.get(i));
-                                                    addValue(RetrofitClassToBuildPoint, clsNames.get(i), lp);
+                                        if(clsNames != null) {
+                                            if (localPoints.size() < clsNames.size()) {
+                                                for (RetrofitBuildPoint lp : localPoints) {
+                                                    if (lp.getCreateClass() == null) {
+                                                        lp.setCreateClass(clsNames.get(i));
+                                                        addValue(RetrofitClassToBuildPoint, clsNames.get(i), lp);
+                                                    }
+                                                    i++;
                                                 }
-                                                i++;
-                                            }
-                                        }
-                                        else{
-                                            for(String clsName: clsNames){
-                                                if(localPoints.get(i).getCreateClass() == null) {
-                                                    localPoints.get(i).setCreateClass(clsName);
-                                                    addValue(RetrofitClassToBuildPoint, clsNames.get(i), localPoints.get(i));
+                                            } else {
+                                                for (String clsName : clsNames) {
+                                                    if (localPoints.get(i).getCreateClass() == null) {
+                                                        localPoints.get(i).setCreateClass(clsName);
+                                                        addValue(RetrofitClassToBuildPoint, clsNames.get(i), localPoints.get(i));
+                                                    }
+                                                    i++;
                                                 }
-                                                i++;
                                             }
                                         }
                                     }
+                                }
+                                if(leftOp instanceof Local){
+                                    localToPoint.put(leftOp, localToPoint.remove(base));
+                                }
+                                else if(leftOp instanceof FieldRef){
+                                    FieldToBuildPoint.put(((FieldRef) leftOp).getField(), localToPoint.get(base));
                                 }
 
                             } else if (sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder baseUrl(java.lang.String)")) {
@@ -152,23 +160,26 @@ public class RetrofitBuildFind {
                                 if (arg instanceof Constant) {
                                     String baseUrl = (String) SimulateUtil.getConstant(arg);
                                     for(RetrofitBuildPoint lp: localPoints){
-                                        if(lp.getBaseUrl()==null)
-                                            lp.setBaseUrl(baseUrl);
+                                        lp.setBaseUrl(baseUrl);
                                     }
                                 }
                                 else if(arg instanceof Local){
                                     if(!currentValues.containsKey(sig)) {
                                         HashMap<String, List<Integer>> intereInvoke = new HashMap<>();
-                                        intereInvoke.put(sig, List.of(0));
+                                        intereInvoke.put(sig, new ArrayList<>(List.of(0)));
                                         MethodLocal methodLocal = new MethodLocal(sootMethod, intereInvoke);
                                         methodLocal.doAnalysis();
                                         currentValues.putAll(methodLocal.getInterestingParamString());
+                                        LOGGER.info("166: Do MethodLocal result: {}", currentValues.get(sig));
                                     }
                                     if (currentValues.containsKey(sig)){
                                         List<String> baseUrls = currentValues.get(sig).get(0);
-                                        for(String baseUrl: baseUrls){
-                                            for(RetrofitBuildPoint lp: localPoints){
-                                                lp.setBaseUrl(baseUrl);
+                                        LOGGER.info("169: Do MethodLocal result: {}", currentValues.get(sig));
+                                        if(baseUrls != null) {
+                                            for (String baseUrl : baseUrls) {
+                                                for (RetrofitBuildPoint lp : localPoints) {
+                                                    lp.setBaseUrl(baseUrl);
+                                                }
                                             }
                                         }
 
@@ -181,22 +192,28 @@ public class RetrofitBuildFind {
                                 //TODO client
                                 Value arg = invokeExpr.getArg(0);
                                 if (arg instanceof Local) {
-                                    //
+                                    // TODO if local from okhttp build, then get result of this method
+                                    // else if local from return okhttp client method, then get result of the return method.
                                 }
                             } else if (sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder addConverterFactory")) {
                                 //TODO converterFactory
                             }
                         }
                     }
-                }
-                else if(rightOp instanceof Local && localToPoint.containsKey(rightOp)){
+                } else if (rightOp instanceof CastExpr) {
+                    Value op = ((CastExpr) rightOp).getOp();
+                    if(localToPoint.containsKey(op)){
+                        if(leftOp instanceof Local)
+                            localToPoint.put(leftOp, localToPoint.get(op));
+                    }
+                } else if(rightOp instanceof Local && localToPoint.containsKey(rightOp)){
                     if(leftOp instanceof FieldRef){
-                        FieldToBuildPoint.put((FieldRef) leftOp, localToPoint.get(rightOp));
+                        FieldToBuildPoint.put(((FieldRef) leftOp).getField(), localToPoint.get(rightOp));
                     }
                 }
-                else if(rightOp instanceof FieldRef && FieldToBuildPoint.containsKey((FieldRef) rightOp)){
+                else if(rightOp instanceof FieldRef && FieldToBuildPoint.containsKey(((FieldRef) rightOp).getField())){
                     if(leftOp instanceof Local){
-                        localToPoint.put(leftOp, FieldToBuildPoint.get((FieldRef) rightOp));
+                        localToPoint.put(leftOp, FieldToBuildPoint.get(((FieldRef) rightOp).getField()));
                     }
                 }
             }
@@ -221,20 +238,20 @@ public class RetrofitBuildFind {
         }
     }
 
-    public static HashMap<Integer, String> checkArgType(InvokeExpr invokeExpr){
-        List<Value> args = invokeExpr.getArgs();
-        HashMap<Integer, String> result = new HashMap<>();
-        String clsString = "";
-        int i = 0;
-        for(Value arg : args){
-            if(arg instanceof ClassConstant){
-                clsString = (String)SimulateUtil.getConstant(arg);
-                result.put(i,clsString);
-            }
-            i++;
-        }
-        return result;
-    }
+//    public static HashMap<Integer, String> checkArgType(InvokeExpr invokeExpr){
+//        List<Value> args = invokeExpr.getArgs();
+//        HashMap<Integer, String> result = new HashMap<>();
+//        String clsString = "";
+//        int i = 0;
+//        for(Value arg : args){
+//            if(arg instanceof ClassConstant){
+//                clsString = (String)SimulateUtil.getConstant(arg);
+//                result.put(i,clsString);
+//            }
+//            i++;
+//        }
+//        return result;
+//    }
 
     public static boolean checkReturnType(Type v){
         String typeClz = v.toString();

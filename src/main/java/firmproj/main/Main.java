@@ -2,6 +2,7 @@ package firmproj.main;
 
 import firmproj.base.MethodString;
 import firmproj.base.RetrofitPoint;
+import firmproj.client.HttpClientFind;
 import firmproj.client.RetrofitBuildFind;
 import firmproj.graph.CallGraph;
 import firmproj.utility.*;
@@ -225,6 +226,10 @@ public class Main {
 
         List<RetrofitPoint> allMethod = GetAllRetrofitAnnotationMethod();
         allRetrofitInterface = GetRetrofitClass(allMethod);
+
+        HttpClientFind.findAllInterceptorClasses();
+        HttpClientFind.findAllHttpClientBuildMethod();
+
         RetrofitBuildFind.RetrofitClassesWithMethods.putAll(allRetrofitInterface);
         RetrofitBuildFind.findAllRetrofitBuildMethod();
 
@@ -292,7 +297,7 @@ public class Main {
                                 break;
                             }
                             else{
-                                LOGGER.warn("not match type:" + type + " method: " + method);
+                                //LOGGER.warn("not match type:" + type + " method: " + method);
                             }
                         }
                     }
@@ -300,7 +305,7 @@ public class Main {
                 if(isRetrofitI) {
                     RetrofitPoint m = new RetrofitPoint(method);
                     result.add(m);
-                    LOGGER.info("Match New Method: " + m.toString());
+                    LOGGER.info("Match New Method: " + method);
                 }
             }
         }

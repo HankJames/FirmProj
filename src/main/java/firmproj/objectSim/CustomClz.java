@@ -72,12 +72,11 @@ public class CustomClz implements AbstractClz{
         result.append(this.currentClass.toString());
         result.append("\nParent Method: ");
         result.append(this.ParentMethod);
-        result.append("\nFieldStrings: \n");
+        result.append("\nFieldStrings: ");
         for(Map.Entry<SootField, String> entry: this.fieldString.entrySet()){
             result.append(entry.toString());
-            result.append("\n");
+            result.append(";");
         }
-        result.append("============\n");
         return result.toString();
     }
 }
