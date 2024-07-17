@@ -98,6 +98,7 @@ public class MethodLocal {
         Value value = stmt.getOp();
         if(LocalToString.containsKey(value)) returnValues.addAll(LocalToString.get(value));
         else if(value instanceof Constant) returnValues.add(value.toString());
+        //TODO localTOClz
     }
 
     public void caseAssignStmt(AssignStmt stmt) {

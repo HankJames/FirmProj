@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import soot.*;
 import soot.jimple.*;
-import soot.jimple.toolkits.annotation.logic.Loop;
 import soot.util.Chain;
 
 import java.util.*;
@@ -159,10 +158,6 @@ public class MethodString {
                                                 }
                                             }
                                         }
-                                    } else if (rightOp instanceof InstanceFieldRef) {
-                                        //TODO
-                                        //addValue(methodToString, sootMethod, "$"+((InstanceFieldRef) rightOp).getField().getName());
-                                        //return mstrs;
                                     } else if (rightOp instanceof InvokeExpr) {
                                         List<String> strs = new ArrayList<>();
                                         SootMethod nextMethod = ((InvokeExpr) rightOp).getMethod();
@@ -333,6 +328,24 @@ public class MethodString {
                                 localToString.get(leftOp).add(obj.toString());
                             }
                         }
+                        else if(rightOp instanceof FieldRef){
+                            localToString.put(leftOp, new ArrayList<>(List.of(((FieldRef) rightOp).getField().toString())));
+                            if(MethodString.getFieldToString().containsKey(((FieldRef) rightOp).getField().toString()))
+                                localToString.get(leftOp).addAll(MethodString.getFieldToString().get(((FieldRef) rightOp).getField().toString()));
+                        }
+                        else if(rightOp instanceof InvokeExpr){
+                            try{SootMethod method = ((InvokeExpr) rightOp).getMethod();
+
+                            if(MethodString.getMethodToFieldString().containsKey(method)){
+                                localToString.put(leftOp, new ArrayList<>(List.of(MethodString.getMethodToFieldString().get(((InvokeExpr) rightOp).getMethod()))));
+                            }
+                            if(MethodString.getMethodToString().containsKey(((InvokeExpr) rightOp).getMethod())){
+                                if(!localToString.containsKey(leftOp))
+                                    localToString.put(leftOp, new ArrayList<>());
+                                localToString.get(leftOp).addAll(MethodString.getMethodToString().get(((InvokeExpr) rightOp).getMethod()));
+                            }}
+                            catch (Exception ignored){};
+                        }
                         if(localArray.containsKey(leftOp)){ // localArray Value assigned new value
                             localArray.remove(leftOp);
                             continue;
@@ -399,7 +412,7 @@ public class MethodString {
                         }
                         if(param instanceof Constant){
                             paramWithConstant.put(index, (Constant) param);
-                            //LOGGER.info("304: param constant: {}--{}-{}",stmt.getInvokeExpr(),param, index);
+                            LOGGER.info("304: param constant: {}--{}-{}",stmt.getInvokeExpr(),param, index);
                             isNeedInvoke = true;
                         }
                         index++;

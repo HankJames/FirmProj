@@ -1,6 +1,5 @@
 package firmproj.client;
 
-import firmproj.base.MethodLocal;
 import firmproj.base.MethodString;
 import firmproj.objectSim.SimulateUtil;
 import org.apache.logging.log4j.LogManager;
@@ -12,13 +11,13 @@ import soot.util.Chain;
 import java.util.*;
 
 public class HttpClientFind {
-    private static final HashMap<String, List<AbstactHttpClient>> findResult = new HashMap<>();
+    public static final HashMap<String, List<AbstractHttpClient>> findResult = new HashMap<>();
 
     private static final HashMap<String, Interceptor> allInterceptorClasses = new HashMap<>();
 
     private static final Logger LOGGER = LogManager.getLogger(HttpClientFind.class);
 
-    public static final HashMap<SootField, List<AbstactHttpClient>> FieldToClientPoint = new HashMap<>();
+    public static final HashMap<SootField, List<AbstractHttpClient>> FieldToClientPoint = new HashMap<>();
 
     private static final HashSet<String> visitedMethod = new HashSet<>();
 
@@ -60,11 +59,11 @@ public class HttpClientFind {
         //LOGGER.info("ALL Field with retrofitBuildPoint: {}", );
     }
 
-    public static List<AbstactHttpClient> findHttpClientBuildMethod(SootMethod sootMethod){
+    public static List<AbstractHttpClient> findHttpClientBuildMethod(SootMethod sootMethod){
         String methodSig = sootMethod.getSignature();
         if(findResult.containsKey(methodSig)) return findResult.get(methodSig);
 
-        List<AbstactHttpClient> result = new ArrayList<>();
+        List<AbstractHttpClient> result = new ArrayList<>();
 
         if(!sootMethod.isConcrete() || !sootMethod.getDeclaringClass().isApplicationClass() || MethodString.isStandardLibraryClass(sootMethod.getDeclaringClass())) return result;
         Body body = null;
@@ -79,7 +78,7 @@ public class HttpClientFind {
 
         if(visitedMethod.contains(methodSig)) return result;
 
-        HashMap<Value, List<AbstactHttpClient>> localToPoint = new HashMap<>();
+        HashMap<Value, List<AbstractHttpClient>> localToPoint = new HashMap<>();
         HashMap<Value, List<String>> localToString = new HashMap<>();
         HashMap<Value, Interceptor> localToInterceptor = new HashMap<>();
         HashMap<Value, HashMap<String, List<String>>> localToRequestBuilder = new HashMap<>();
@@ -108,7 +107,7 @@ public class HttpClientFind {
                     NewExpr newExpr = (NewExpr) rightOp;
                     String clsName = newExpr.getBaseType().getClassName();
                     if(clsName.equals("okhttp3.OkHttpClient$Builder")){
-                        AbstactHttpClient point = new okHttpClient(sootMethod, unit);
+                        AbstractHttpClient point = new okHttpClient(sootMethod, unit);
                         addValue(localToPoint, leftOp, point);
                         result.add(point);
                         tryToAddResult(sootMethod, point);
@@ -126,18 +125,21 @@ public class HttpClientFind {
                     Type invokeRet = invokeMethod.getReturnType();
                     if(checkReturnType(invokeRet) && !invokeMethod.getDeclaringClass().getName().equals("okhttp3.OkHttpClient")){
                         if(!invokeMethod.getSignature().contains("okhttp3.OkHttpClient$Builder: okhttp3.OkHttpClient build()")) {
-                            List<AbstactHttpClient> points = findHttpClientBuildMethod(invokeMethod);
+                            List<AbstractHttpClient> points = findHttpClientBuildMethod(invokeMethod);
                             if (!points.isEmpty()) {
                                 result.addAll(points);
                                 if(sootMethod.getReturnType().toString().equals("okhttp3.OkHttpClient")) {
-                                    for (AbstactHttpClient pt : points) {
+                                    for (AbstractHttpClient pt : points) {
                                         //TODO request body param trans.
-                                        addValue(localToPoint, leftOp, new okHttpClient((okHttpClient) pt));
+                                        okHttpClient newClient = (okHttpClient) pt;
+                                        newClient.setLocalValue(leftOp);
+                                        addValue(localToPoint, leftOp, newClient);
+
                                         LOGGER.info("108: Method: {} , From Method: {}, new Client: {}", methodSig, invokeMethod.getSignature(), pt.toString());
                                     }
                                 }
                                 else {
-                                    for (AbstactHttpClient pt : points) {
+                                    for (AbstractHttpClient pt : points) {
                                         addValue(localToPoint, leftOp, pt);
                                         LOGGER.info("114: Method: {} , From Method: {}, new Client: {}", methodSig, invokeMethod.getSignature(), pt.toString());
                                     }
@@ -156,18 +158,22 @@ public class HttpClientFind {
                         InvokeExpr invokeExpr = (InstanceInvokeExpr) rightOp;
                         String sig = ((InstanceInvokeExpr) rightOp).getMethod().getSignature();
                         if (localToPoint.containsKey(base)) {
-                            List<AbstactHttpClient> localPoints = localToPoint.get(base);
+                            List<AbstractHttpClient> localPoints = localToPoint.get(base);
                             if (sig.contains("okhttp3.OkHttpClient$Builder: okhttp3.OkHttpClient$Builder addInterceptor")||
                                     sig.contains("okhttp3.OkHttpClient$Builder: okhttp3.OkHttpClient$Builder addNetworkInterceptor")) {
                                 Value arg = invokeExpr.getArg(0);
                                 if(localToInterceptor.containsKey(arg)){
-                                    for(AbstactHttpClient client:  localToPoint.get(leftOp)) {
-                                        okHttpClient okHttpClient = (okHttpClient) client;
+                                    for(AbstractHttpClient client:  localPoints) {
+                                        okHttpClient okHttpClient = (firmproj.client.okHttpClient) client;
                                         okHttpClient.setInterceptors(localToInterceptor.get(arg));
                                     }
                                 }
                             } else if(sig.contains("okhttp3.OkHttpClient$Builder: okhttp3.OkHttpClient build()")){
                                 localToPoint.put(leftOp, localToPoint.remove(base));
+                                for(AbstractHttpClient client : localToPoint.get(leftOp)){
+                                    okHttpClient newClient = (okHttpClient) client;
+                                    newClient.setLocalValue(leftOp);
+                                }
                             } else if(sig.contains("okhttp3.OkHttpClient: okhttp3.Call newCall")){
                                 localToPoint.put(leftOp, localToPoint.remove(base));
                                 Value arg0 = invokeExpr.getArg(0);
@@ -178,8 +184,8 @@ public class HttpClientFind {
                                 else if(localToRequestBuilder.containsKey(arg0)){
                                     newCallParam.putAll(localToRequestBuilder.get(arg0));
                                 }
-                                for(AbstactHttpClient client:  localToPoint.get(leftOp)) {
-                                    okHttpClient okHttpClient = (okHttpClient) client;
+                                for(AbstractHttpClient client:  localToPoint.get(leftOp)) {
+                                    okHttpClient okHttpClient = (firmproj.client.okHttpClient) client;
                                     okHttpClient.setNeedRequestContent(true);
                                     okHttpClient.requestContentFromParams.putAll(newCallParam);
                                 }
@@ -283,12 +289,12 @@ public class HttpClientFind {
         return result;
     }
 
-    private static void tryToAddResult(SootMethod sootMethod, AbstactHttpClient point){
+    private static void tryToAddResult(SootMethod sootMethod, AbstractHttpClient point){
         addValue(findResult, sootMethod.getSignature(), point);
     }
 
-    private static void tryToAddResult(SootMethod sootMethod, List<AbstactHttpClient> points){
-        for (AbstactHttpClient point : points)
+    private static void tryToAddResult(SootMethod sootMethod, List<AbstractHttpClient> points){
+        for (AbstractHttpClient point : points)
             addValue(findResult, sootMethod.getSignature(), point);
     }
 
@@ -317,7 +323,11 @@ public class HttpClientFind {
 
     public static boolean checkReturnType(Type v){
         String typeClz = v.toString();
-        return typeClz.equals("void") ||typeClz.equals("java.lang.Object") || typeClz.contains("okhttp3.OkHttpClient");
+        for(SootClass clz : RetrofitBuildFind.RetrofitClassesWithMethods.keySet()){
+            if(typeClz.equals(clz.getName()))
+                return true;
+        }
+        return typeClz.equals("void") ||typeClz.equals("java.lang.Object") || typeClz.contains("okhttp3.OkHttpClient") || typeClz.contains("retrofit2.Retrofit");
     }
 
     public static boolean checkReturnInterceptor(Type v){
