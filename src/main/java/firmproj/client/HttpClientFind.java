@@ -25,7 +25,7 @@ public class HttpClientFind {
         Chain<SootClass> classes = Scene.v().getClasses();
         for (SootClass sootClass : classes) {
             String headString = sootClass.getName().split("\\.")[0];
-            if (headString.contains("android") || headString.contains("kotlin") || headString.contains("java"))
+            if (headString.contains("android") || headString.contains("kotlin") || headString.contains("java") || headString.contains("thingClips"))
                 continue;
             for (SootMethod sootMethod : clone(sootClass.getMethods())) {
                 if (!sootMethod.isConcrete())
@@ -42,7 +42,7 @@ public class HttpClientFind {
         for (SootClass sootClass : classes) {
             String headString = sootClass.getName().split("\\.")[0];
             String INTERCEPTOR = "okhttp3.Interceptor";
-            if (headString.contains("android") || headString.contains("kotlin") || headString.contains("java"))
+            if (headString.contains("android") || headString.contains("kotlin") || headString.contains("java") || headString.contains("thingClips"))
                 continue;
             Chain<SootClass> interfaceCls = sootClass.getInterfaces();
             for(SootClass clz : interfaceCls){
@@ -273,6 +273,9 @@ public class HttpClientFind {
                     if(localToPoint.containsKey(op)){
                         if(leftOp instanceof Local)
                             localToPoint.put(leftOp, localToPoint.get(op));
+                    }
+                    else if(localToInterceptor.containsKey(op)){
+                        localToInterceptor.put(leftOp, localToInterceptor.get(op));
                     }
                 } else if(rightOp instanceof Local && localToPoint.containsKey(rightOp)){
                     if(leftOp instanceof FieldRef){

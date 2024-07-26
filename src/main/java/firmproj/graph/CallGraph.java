@@ -1,9 +1,12 @@
 package firmproj.graph;
 
+import firmproj.base.MethodString;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import soot.*;
 import soot.jimple.*;
+import soot.tagkit.InnerClassTag;
+import soot.tagkit.Tag;
 import soot.util.Chain;
 import java.util.*;
 
@@ -17,6 +20,8 @@ public class CallGraph {
     //Key the string of the soot method
     // map with the sootMethod name and the CallGraphNode of the sootMethod
     private static final Hashtable<String, CallGraphNode> nodes = new Hashtable<>();
+
+    public static final HashMap<String, List<SootClass>> OuterInnerClasses = new HashMap<>();
 
     // Maps Soot Field String to the soot Methods it is referenced
     private static final Hashtable<String, HashSet<SootMethod>> fieldSetters = new Hashtable<>();
@@ -45,6 +50,27 @@ public class CallGraph {
 
             LOGGER.debug("[CG time]: " + (System.currentTimeMillis() - startTime));
             for (SootClass sootClass : classes) {
+                //LOGGER.warn(sootClass.getName());
+                if(sootClass.hasTag("InnerClassTag") && !MethodString.isStandardLibraryClass(sootClass)){
+                    Tag tag = sootClass.getTag("InnerClassTag");
+                    if(tag instanceof InnerClassTag){
+                        if(((InnerClassTag) tag).getOuterClass() != null){
+                            String outerClass = ((InnerClassTag) tag).getOuterClass().replace('/','.');
+                            if(!OuterInnerClasses.containsKey(outerClass))
+                                OuterInnerClasses.put(outerClass, new ArrayList<>());
+                            if(!OuterInnerClasses.get(outerClass).contains(sootClass)) {
+                                OuterInnerClasses.get(outerClass).add(sootClass);
+                                if(!MethodString.classWithOuterInnerFields.containsKey(outerClass))
+                                    MethodString.classWithOuterInnerFields.put(outerClass, new ArrayList<>());
+                                List<SootField> fields = MethodString.classWithOuterInnerFields.get(outerClass);
+                                for(SootField field: sootClass.getFields()) {
+                                    if(!fields.contains(field))
+                                        fields.add(field);
+                                }
+                            }
+                        }
+                    }
+                }
                 for (SootMethod sootMethod : clone(sootClass.getMethods())) {
                     if (!sootMethod.isConcrete())
                         continue;

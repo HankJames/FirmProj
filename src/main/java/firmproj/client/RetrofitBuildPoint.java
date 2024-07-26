@@ -12,11 +12,26 @@ public class RetrofitBuildPoint {
     private final List<okHttpClient> okHttpClients = new ArrayList<>();
 
     private SootMethod currentMethod;
-    private final Unit createUnit;
+    private Unit createUnit;
     private String createClass;
+
+    public boolean classFromParam = false;
+    public boolean urlFromParam = false;
+
+    public Integer classParam = -1;
+    public Integer urlParam = -1;
 
     public RetrofitBuildPoint(Unit unit){
         this.createUnit = unit;
+    }
+
+    public RetrofitBuildPoint(RetrofitBuildPoint old){
+        this.baseUrl.addAll(old.baseUrl);
+        this.converterFactory.addAll(old.converterFactory);
+        this.okHttpClients.addAll(old.okHttpClients);
+        this.createClass = old.createClass;
+        this.createUnit = old.createUnit;
+        this.currentMethod = old.currentMethod;
     }
 
     public RetrofitBuildPoint(SootMethod method, Unit unit){
@@ -32,8 +47,20 @@ public class RetrofitBuildPoint {
         return baseUrl;
     }
 
+    public SootMethod getCurrentMethod() {
+        return currentMethod;
+    }
+
     public String getCreateClass() {
         return createClass;
+    }
+
+    public void setCurrentMethod(SootMethod currentMethod) {
+        this.currentMethod = currentMethod;
+    }
+
+    public void setCreateUnit(Unit createUnit) {
+        this.createUnit = createUnit;
     }
 
     public void setBaseUrl(String url){
@@ -59,13 +86,16 @@ public class RetrofitBuildPoint {
 
     @Override
     public String toString() {
-        return "RetrofitBuildPoint{" +
-                "baseUrl=" + baseUrl +
-                //", converterFactory=" + converterFactory +
-                //", client=" + client +
-                ", currentMethod=" + currentMethod.getSignature() +
-                ", createUnit=" + createUnit +
+        return "---RetrofitBuildPoint{" +
+                "currentMethod=" + currentMethod +
+                ", baseUrl=" + baseUrl +
                 ", createClass='" + createClass + '\'' +
-                '}';
+                ", urlParam=" + urlParam +
+                ", urlFromParam=" + urlFromParam +
+                ", classParam=" + classParam +
+                ", classFromParam=" + classFromParam +
+                ", createUnit=" + createUnit +
+                ", okHttpClients=" + okHttpClients+
+                "}---";
     }
 }

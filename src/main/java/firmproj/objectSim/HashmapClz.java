@@ -13,7 +13,7 @@ public class HashmapClz implements AbstractClz{
 
     private final SootClass currentClass;
     private final SootMethod ParentMethod;
-    private final HashMap<String, String> result = new HashMap<>();
+    private final HashMap<List<String>, List<String>> result = new HashMap<>();
     private final List<ValueContext> valueContexts = new ArrayList<>();
 
     public HashmapClz(SootClass currentClass, SootMethod method){
@@ -32,7 +32,27 @@ public class HashmapClz implements AbstractClz{
         for(ValueContext vc : valueContexts){
             Unit u = vc.getCurrentUnit();
             if(u instanceof AssignStmt){
-
+                Value rightOp = ((AssignStmt) u).getRightOp();
+                if(rightOp instanceof InvokeExpr){
+                    SootMethod method = ((InvokeStmt) u).getInvokeExpr().getMethod();
+                    if(method.getSignature().contains("Map: java.lang.Object put(java.lang.Object,java.lang.Object)")){
+                        HashMap<Value, List<String>> currentValues = vc.getCurrentValues();
+                        int argIndex = 0;
+                        List<List<String>> args = new ArrayList<>();
+                        for(Value value: invokeExpr.getArgs()){
+                            if(value instanceof Constant) {
+                                Object constObj = SimulateUtil.getConstant(value);
+                                if(constObj != null)
+                                    args.set(argIndex,List.of(constObj.toString()));
+                            }
+                            else{
+                                args.set(argIndex,currentValues.get(value));
+                            }
+                            argIndex++;
+                        }
+                        tmpResult.put(args.get(0), args.get(1));
+                    }
+                }
             }
             else if (u instanceof InvokeStmt){
                 InvokeExpr invokeExpr = ((InvokeStmt) u).getInvokeExpr();
@@ -54,8 +74,12 @@ public class HashmapClz implements AbstractClz{
                     }
                     tmpResult.put(args.get(0), args.get(1));
                 }
+                else if(method.getSignature().contains("Map: void putAll")){
+
+                }
             }
         }
+        result.putAll(tmpResult);
     }
 
     @Override
@@ -84,7 +108,7 @@ public class HashmapClz implements AbstractClz{
     }
 
     @Override
-    public HashMap<String, String> getResult() {
+    public HashMap<List<String>, List<String>> getResult() {
         return result;
     }
 
@@ -92,16 +116,11 @@ public class HashmapClz implements AbstractClz{
     public String toString() {
         solve();
         StringBuilder result = new StringBuilder();
-        result.append("HashMapClz: ");
-        result.append(this.currentClass.toString());
-        result.append("\nParent Method: ");
-        result.append(this.ParentMethod);
         result.append("\nMap Entry: \n");
-        for(Map.Entry<String, String> entry: this.result.entrySet()){
+        for(Map.Entry<List<String>, List<String>> entry: this.result.entrySet()){
             result.append(entry.toString());
             result.append("\n");
         }
-        result.append("============\n");
         return result.toString();
     }
 }

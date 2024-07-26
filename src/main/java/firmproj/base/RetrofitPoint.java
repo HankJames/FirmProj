@@ -1,5 +1,6 @@
 package firmproj.base;
 
+import firmproj.client.RetrofitBuildPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import soot.SootClass;
@@ -15,6 +16,11 @@ public class RetrofitPoint {
     private static final Logger LOGGER = LoggerFactory.getLogger(RetrofitPoint.class);
     private final SootClass Currentclass;
     private final SootMethod method;
+
+    public RetrofitBuildPoint retrofitBuildPoint;
+    public SootClass callBackClass;
+    public List<SootMethod> callByMethod;
+
     private final List<AnnotationTag> methodAnnotations;
     private final List<AnnotationTag> parameterAnnotations;
     //private final HashSet<Value> interestingVariables;

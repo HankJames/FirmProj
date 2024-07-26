@@ -56,7 +56,6 @@ public class Interceptor {
                 HashMap<Value, HashMap<List<String>, List<String>>> localToMap = new HashMap<>();
                 HashMap<Value, List<String>> localToString = new HashMap<>();
                 for (Unit unit : body.getUnits()) {
-
                     if (unit instanceof AssignStmt){
                         Value rightOp = ((AssignStmt) unit).getRightOp();
                         Value leftOp = ((AssignStmt) unit).getLeftOp();
@@ -76,6 +75,10 @@ public class Interceptor {
                                 else{
                                     localToString.put(leftOp, List.of("&FILED", ((FieldRef) rightOp).getField().toString()));
                                 }
+                            }else if(rightOp instanceof Constant){
+                                Object obj = SimulateUtil.getConstant((Constant)rightOp);
+                                if(obj != null)
+                                    localToString.put(leftOp, List.of(obj.toString()));
                             }
                             else if(rightOp instanceof InvokeExpr){
                                 InvokeExpr invokeExpr = (InvokeExpr)rightOp;
@@ -89,17 +92,17 @@ public class Interceptor {
                                     else if(localToString.containsKey(base))
                                         localToString.put(leftOp, localToString.get(base));
                                 }
-                                else if(MethodString.getMethodToFieldString().containsKey(method)){
-                                    localToString.put(leftOp, List.of(MethodString.getMethodToFieldString().get(method)));
-                                }
-                                else if(MethodString.getMethodToString().containsKey(method)){
-                                    localToString.put(leftOp, MethodString.getMethodToString().get(method));
-                                }
                                 else if(method.getSignature().contains("internal.Boxing") || method.getName().contains("valueOf")){
                                     if(localToString.containsKey(invokeExpr.getArg(0)))
                                         localToString.put(leftOp, localToString.get(invokeExpr.getArg(0)));
                                 }
-                                else if(method.getSignature().contains("okhttp3.Request$Builder: okhttp3.Request$Builder addHeader")){
+                                else if(MethodString.getMethodToFieldString().containsKey(method)){
+                                    localToString.put(leftOp, List.of(MethodString.getMethodToFieldString().get(method)));
+                                }
+                                if(MethodString.getMethodToString().containsKey(method)){
+                                    localToString.put(leftOp, MethodString.getMethodToString().get(method));
+                                }
+                                if(method.getSignature().contains("okhttp3.Request$Builder: okhttp3.Request$Builder addHeader")){
                                     List<List<String>> argString = new ArrayList<>();
                                     for(int i=0;i<2;i++){
                                         Value arg = invokeExpr.getArg(i);

@@ -31,10 +31,12 @@ public class QueryJson {
     }
 
     public static void test(){
-        String clsName = "com.ruochan.dabai.netcore.encrypt.B.CustomResponseBodyConverter";
-        String methodSubSig = "java.lang.Object convert(okhttp3.ResponseBody)";
-        List<List<String>> params= new ArrayList<>(List.of(List.of("RequestBody")));
-        List<String> otherMethods = new ArrayList<>(List.of("<com.ruochan.dabai.netcore.encrypt.B.CustomResponseBodyConverter: java.lang.String generateResponse(okhttp3.MediaType,java.lang.String)>","<com.ruochan.utils.CXAESUtil: java.lang.String Decrypt(java.lang.String,java.lang.String,java.lang.String)>"));
+        String clsName = "com.gooclient.anycam.activity.settings.update.MyHttp";
+        String methodSubSig = "java.lang.String[] parseJSONDecryption(java.lang.String,java.lang.String,java.lang.String[])";
+        List<List<String>> params= new ArrayList<>(List.of(List.of("Goolink2014"),List.of("&GetHttpResult"), List.of("{re,downurl,version,md5}")));
+        List<String> otherMethods = new ArrayList<>(List.of("<com.gooclient.anycam.activity.settings.update.MyHttp: java.lang.String decryption(java.lang.String,java.lang.String)>",
+                "<com.gooclient.anycam.utils.Base64: byte[] decode(byte[])>","<com.gooclient.anycam.utils.RC4Test: byte[] RC4(byte[],java.lang.String)>"));
+
         GenerateJson(clsName, methodSubSig, params, otherMethods);
     }
 
@@ -48,6 +50,9 @@ public class QueryJson {
         // 获取目标类
         SootClass targetClass = Scene.v().loadClassAndSupport(targetClassName);
         targetClass.setApplicationClass();
+        for(SootMethod method: targetClass.getMethods()){
+            System.out.println(method.getSubSignature());
+        }
 
         // 找到目标方法
         SootMethod targetMethod = targetClass.getMethod(targetMethodSubSIg);
@@ -93,10 +98,10 @@ public class QueryJson {
         }
         targetMethodObject.put("Related Methods", relatedMethodsObject);
 
-        jsonObject.put(targetMethodSubSIg, targetMethodObject);
+        jsonObject.put(targetMethod.getSignature(), targetMethodObject);
 
         // 输出JSON字符串到文件
-        String fileName = "./Query/query_" +
+        String fileName = "./LLM-Query/query_" +
                 targetClassName +
                 "_" +
                 targetMethodSubSIg +

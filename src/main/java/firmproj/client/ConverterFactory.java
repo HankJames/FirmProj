@@ -6,7 +6,7 @@ import soot.util.Chain;
 
 import java.util.List;
 
-public class ConverterFactory{
+public class ConverterFactory implements AbstractFactory{
     public SootClass currentClass;
     public ConverterClass requestBodyConverter;
     public ConverterClass responseBodyConverter;

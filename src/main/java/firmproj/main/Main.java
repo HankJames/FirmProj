@@ -1,6 +1,10 @@
 package firmproj.main;
 
+import firmproj.base.MethodString;
 import firmproj.base.RetrofitPoint;
+import firmproj.client.HttpClientFind;
+import firmproj.client.RetrofitBuildFind;
+import firmproj.graph.CallGraph;
 import firmproj.utility.*;
 
 import org.json.JSONArray;
@@ -205,8 +209,8 @@ public class Main {
         t.start();
 
         LOGGER.info("initialisation of the call graph");
-        //CallGraph.init();
-        //MethodString.init();
+        CallGraph.init();
+        MethodString.init();
         return t;
     }
 
@@ -218,25 +222,24 @@ public class Main {
         Thread t = initTool(apk, exclusionList, true, outputPath, cmd);
         //Soot configuration and call graph initialisation
         long initTime = System.currentTimeMillis();
-//        HashMap<SootClass, List<RetrofitPoint>> allRetrofitInterface;
-//
-//        List<RetrofitPoint> allMethod = GetAllRetrofitAnnotationMethod();
-//        allRetrofitInterface = GetRetrofitClass(allMethod);
-//
-//        HttpClientFind.findAllInterceptorClasses();
-//        HttpClientFind.findAllHttpClientBuildMethod();
-//
-//        RetrofitBuildFind.RetrofitClassesWithMethods.putAll(allRetrofitInterface);
-//        RetrofitBuildFind.findAllRetrofitBuildMethod();
-//
-//        List<RetrofitPoint> firmMethod = GetFirmRelatedMethod(allMethod);
-//        LOGGER.info("GetAllfirmMethod: " + firmMethod.size());
-        QueryJson.test();
+        HashMap<SootClass, List<RetrofitPoint>> allRetrofitInterface;
+
+        List<RetrofitPoint> allMethod = GetAllRetrofitAnnotationMethod();
+        allRetrofitInterface = GetRetrofitClass(allMethod);
+        List<RetrofitPoint> firmMethod = GetFirmRelatedMethod(allMethod);
+        LOGGER.info("GetAllfirmMethod: " + firmMethod.size());
+
+        HttpClientFind.findAllInterceptorClasses();
+        HttpClientFind.findAllHttpClientBuildMethod();
+
+        RetrofitBuildFind.RetrofitClassesWithMethods.putAll(allRetrofitInterface);
+        RetrofitBuildFind.findAllRetrofitBuildMethod();
+        //QueryJson.test();
         //List<ValuePoint> allValuePoints = getAllSolvedValuePoints(targetMethods, t, apk);
         long endTime = System.currentTimeMillis();
         TimeWatcher timeWatcher = TimeWatcher.getTimeWatcher();
 
-        //writeRetrofitOut(firmMethod, outputPath);
+        writeRetrofitOut(firmMethod, outputPath);
 
         //writeOutput(timeWatcher, startTime, initTime, endTime, apk, allValuePoints, outputPath);
 

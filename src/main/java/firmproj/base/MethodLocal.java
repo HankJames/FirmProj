@@ -96,7 +96,7 @@ public class MethodLocal {
 
     private void caseReturnStmt(ReturnStmt stmt) {
         Value value = stmt.getOp();
-        if(LocalToString.containsKey(value)) returnValues.addAll(LocalToString.get(value));
+        if(LocalToString.containsKey(value)) addValue(returnValues,LocalToString.get(value));
         else if(value instanceof Constant) returnValues.add(value.toString());
         //TODO localTOClz
     }
@@ -139,9 +139,22 @@ public class MethodLocal {
                 }
                 if(MethodString.getMethodToString().containsKey(invokeMethod)) {
                     InterestingTransfer = true;
-                    addLocalTOString(leftOperation, MethodString.GetMethodToString(invokeMethod));
+                    addLocalTOString(leftOperation, MethodString.getMethodToString().get(invokeMethod));
                 }
                 else{
+                    if(MethodString.classMaybeCache.containsKey(invokeMethod.getDeclaringClass())){
+                        HashMap<String,List<String>> cache = MethodString.classMaybeCache.get(invokeMethod.getDeclaringClass());
+                        if(instanceInvokeExpr.getArgs().size() ==1 && instanceInvokeExpr.getArg(0) instanceof Constant){
+                            Object obj = SimulateUtil.getConstant(instanceInvokeExpr.getArg(0));
+                            if(obj!=null) {
+                                String stringKey = obj.toString();
+                                if (cache.containsKey(stringKey)) {
+                                    addLocalTOString(leftOperation, cache.get(stringKey));
+                                    LOGGER.warn("[FIND CACHE VALUE] : {} - > {}", leftOperation, cache.get(stringKey));
+                                }
+                            }
+                        }
+                    }
                     //TODO Invoke Return. client, retrofit, encryption.
 //                    MethodLocal nextMethod = new MethodLocal(invokeMethod, valueContext);
 //                    nextMethod.doAnalysis();
@@ -319,7 +332,9 @@ public class MethodLocal {
                     }
                     InterestingVariables.add(leftOperation);
                 }
-                else if (MethodString.isCommonType(ref.getType())) {
+                else
+                    //if (MethodString.isCommonType(ref.getType()))
+                {
                     addLocalTOString(leftOperation, new ArrayList<>(List.of("@Param", ref.getType().toString())));
                     LocalFromParams.put(leftOperation, ref.getIndex());
                     InterestingVariables.add(leftOperation);
@@ -331,16 +346,18 @@ public class MethodLocal {
 
     private void addLocalTOString(Value local, List<String> string){
         if(ArrayRefLocal.containsKey(local)){
-            LocalToString.get(local).addAll(string);
+            addValue(LocalToString.get(local),string);
         }
         else{
             List<String> LocalStr = new ArrayList<>();
             if(LocalToString.containsKey(local)) LocalStr = LocalToString.get(local);
-            if(LocalStr.isEmpty()) LocalToString.put(local, string);
-            else if(LocalStr.get(0).length() < string.get(0).length()) LocalToString.put(local, string);
+            if(LocalStr.isEmpty())
+                LocalToString.put(local, string);
+            else if(LocalStr.get(0).length() < string.get(0).length())
+                LocalToString.put(local, string);
             else{
                 //LOGGER.info("341: List: {}", string);
-                LocalToString.get(local).addAll(string);
+                addValue(LocalToString.get(local),string);
             }
         }
     }
@@ -349,12 +366,16 @@ public class MethodLocal {
         HashMap<Value, List<String>> valueString = new HashMap<>();
         HashMap<Integer, List<String>> interestingParamString = new HashMap<>();
         String invokeSIg = invokeExpr.getMethod().getSignature();
-        //LOGGER.warn("[SIMULATE]: Get Values for Invoke: {}",invokeSIg);
+        LOGGER.warn("[SIMULATE]: Get Values for Invoke: {}",invokeSIg);
         List<Integer> interestingParam = new ArrayList<>();
-        HashMap<String, List<Integer>> intereInvoke = new HashMap<>();
+
+        //HashMap<String, List<Integer>> intereInvoke = new HashMap<>();
+
+        boolean isInterestingInvoke = false;
         if(getInterestingInvoke().containsKey(invokeSIg)){
+            isInterestingInvoke = true;
             interestingParam = getInterestingInvoke().get(invokeSIg);
-            //LOGGER.warn("[SIMULATE]: Find Interesting Invoke sig: {}=>{}", invokeSIg, interestingParam);
+            LOGGER.warn("[SIMULATE]: Find Interesting Invoke sig: {}=>{}", invokeSIg, interestingParam);
         }
         int i = 0;
         HashMap<String, List<Integer>> nextInvokeParam = new HashMap<>();
@@ -363,11 +384,11 @@ public class MethodLocal {
             if(value instanceof Constant) {
                 Object ob = SimulateUtil.getConstant(value);
                 if(ob!= null) {
-                    if (interestingParam.contains(i)) {
-                        //LOGGER.warn("[SIMULATE]: Find Interesting Constant invoke value: {}=>{}", i, ob.toString());
+                    if (isInterestingInvoke && interestingParam.contains(i)) {
+                        LOGGER.warn("[SIMULATE]: Find Interesting Constant invoke value: {}=>{}", i, ob.toString());
                         if(!interestingParamString.containsKey(i))
                             interestingParamString.put(i,new ArrayList<>());
-                        interestingParamString.get(i).add(ob.toString());
+                        addValue(interestingParamString,i,ob.toString());
                     }
                 }
             }
@@ -381,49 +402,86 @@ public class MethodLocal {
                     //LOGGER.warn("[SIMULATE]: Find Local Value for Invoke: {}", LocalToString.get(value));
 
                     List<String> paramValue = new ArrayList<>();
-                    if(LocalToString.get(value).get(0).equals("@Param")){
+                    if(!LocalToString.get(value).isEmpty() && LocalToString.get(value).get(0).equals("@Param")){
                         //LOGGER.warn("[SIMULATE]: Find Local Value From Param: {}", LocalToString.get(value));
-                        if(LocalFromParams.containsKey(value)) {
-                            intereInvoke.put(invokeSIg, new ArrayList<>());
-                            intereInvoke.get(invokeSIg).add(LocalFromParams.get(value));
-                        }
+
                         //TODO delete @Param;
                         HashSet<CallGraphNode> callByNodes = CallGraph.getNode(sootMethod.toString()).getCallBy();
-                        nextInvokeParam.get(sootMethod.getSignature()).add(LocalFromParams.get(value));
-                        for(CallGraphNode node : callByNodes){
-                            //LOGGER.warn("[SIMULATE]: Get Call By Nodes, {}==>{}", node.getSootMethod(), nextInvokeParam);
-                            MethodLocal newMethodLocal = new MethodLocal(node.getSootMethod(), nextInvokeParam);
-                            newMethodLocal.doAnalysis();
-                            //TODO put all intere param, then do methodlocal.
-                            if(newMethodLocal.getInterestingParamString().containsKey(sootMethod.getSignature())) {
-                                if (newMethodLocal.getInterestingParamString().get(sootMethod.getSignature()).containsKey(LocalFromParams.get(value)))
-                                    paramValue.addAll(newMethodLocal.getInterestingParamString().get(sootMethod.getSignature()).get(LocalFromParams.get(value)));
+                        if(!nextInvokeParam.get(sootMethod.getSignature()).contains(LocalFromParams.get(value))){
+                            nextInvokeParam.get(sootMethod.getSignature()).add(LocalFromParams.get(value));
+                            for(CallGraphNode node : callByNodes){
+                                //LOGGER.warn("[SIMULATE]: Get Call By Nodes, {}==>{}", node.getSootMethod(), nextInvokeParam);
+                                MethodLocal newMethodLocal = new MethodLocal(node.getSootMethod(), nextInvokeParam);
+                                newMethodLocal.doAnalysis();
+                                //TODO put all intere param, then do methodlocal.
+                                if(newMethodLocal.getInterestingParamString().containsKey(sootMethod.getSignature())) {
+                                    if (newMethodLocal.getInterestingParamString().get(sootMethod.getSignature()).containsKey(LocalFromParams.get(value))) {
+                                        addValue(paramValue, newMethodLocal.getInterestingParamString().get(sootMethod.getSignature()).get(LocalFromParams.get(value)));
+                                        valueString.put(value, paramValue);
+                                    }
+                                }
                             }
                         }
                     }
                     else {
                         LOGGER.warn("[SIMULATE]: Find Interesting Solved Local Value: {}", LocalToString.get(value));
-                        paramValue.addAll(LocalToString.get(value));
+                        addValue(paramValue,LocalToString.get(value));
+                        valueString.put(value, paramValue);
                     }
 
-                    if(!interestingParamString.containsKey(i))
-                        interestingParamString.put(i,new ArrayList<>());
-                    interestingParamString.get(i).addAll(paramValue);
-
+                    if (isInterestingInvoke && interestingParam.contains(i)) {
+                        LOGGER.warn("[SIMULATE]: Find Interesting Local invoke value: {}=>{}", i, paramValue.toString());
+                        if(!interestingParamString.containsKey(i))
+                            interestingParamString.put(i,new ArrayList<>());
+                        addValue(interestingParamString,i,paramValue);
+                    }
                 }
             }
             i++;
         }
-        if(!getInterestingParamString().containsKey(invokeSIg))
-            getInterestingParamString().put(invokeSIg, new HashMap<>());
-        if(!interestingParamString.isEmpty()){
-            getInterestingParamString().get(invokeSIg).putAll(interestingParamString);
+        if(isInterestingInvoke) {
+            if (!getInterestingParamString().containsKey(invokeSIg))
+                getInterestingParamString().put(invokeSIg, new HashMap<>());
+            if (!interestingParamString.isEmpty()) {
+                getInterestingParamString().get(invokeSIg).putAll(interestingParamString);
+            }
         }
-        return valueString;
+        return valueString;//TODO valueString add
+    }
+
+    public static <K, V> void addValue(Map<K, List<V>> map, K key, V value) {
+        map.computeIfAbsent(key, k -> new ArrayList<>());
+        List<V> values = map.get(key);
+        if(!values.contains(value)){
+            values.add(value);
+        }
+    }
+
+    public static <V> void addValue(List<V> list,  V value) {
+        if(!list.contains(value)){
+            list.add(value);
+        }
+    }
+
+    public static <V> void addValue(List<V> list1, List<V> list2){
+        for(V value: list2){
+            addValue(list1, value);
+        }
+    }
+
+    public static <K, V> void addValue(Map<K, List<V>> map, K key, List<V> values) {
+        map.computeIfAbsent(key, k -> new ArrayList<>());
+        List<V> key_values = map.get(key);
+        for(V value: values) {
+            if (!key_values.contains(value)) {
+                key_values.add(value);
+            }
+        }
     }
 
     public boolean isCommonClz(String className){
-        //TODO
+        if(className.contains("Map") || className.contains("json"))
+            return true;
         return false;
     }
 
