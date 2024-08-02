@@ -449,6 +449,60 @@ public class MethodLocal {
         return valueString;//TODO valueString add
     }
 
+    public static List<String> getStaticInvokeReturn(InvokeExpr invokeExpr, HashMap<Integer, List<String>> paramValues){
+        SootMethod sootMethod = invokeExpr.getMethod();
+        String sig = sootMethod.getSignature();
+        SootClass sootClass = sootMethod.getDeclaringClass();
+        List<String> result = new ArrayList<>();
+        String value0 = "";
+        if(paramValues.containsKey(0))
+            value0 = paramValues.get(0).toString();
+        else if(invokeExpr.getArg(0) instanceof Constant) {
+            Object obj = SimulateUtil.getConstant(invokeExpr.getArg(0));
+            if(obj != null)
+                value0 = obj.toString();
+        }
+        else return result;
+
+        if(MethodString.classMaybeCache.containsKey(sootClass)){
+            HashMap<String, List<String>> cache = MethodString.classMaybeCache.get(sootClass);
+            if(cache.containsKey(value0))
+                result.addAll(cache.get(value0));
+            else{
+                String str = sootMethod.getSignature() + '(' + value0 + ')';
+                result.add(str);
+            }
+            return result;
+        } else if(sig.contains("kotlin.TuplesKt: kotlin.Pair 'to'") || sig.contains("stringPlus")){
+            String value1 = "";
+            if(paramValues.containsKey(1))
+                value1 = paramValues.get(1).toString();
+            else if(invokeExpr.getArg(1) instanceof Constant) {
+                Object obj = SimulateUtil.getConstant(invokeExpr.getArg(0));
+                if (obj != null)
+                    value1 = obj.toString();
+            }
+            else return result;
+
+            if(sig.contains("kotlin.TuplesKt: kotlin.Pair 'to'"))
+                result.add(value0 + '=' + value1);
+            else if(sig.contains("stringPlus"))
+                result.add(value0 + value1);
+            return result;
+        } else if (sig.contains("listOf") || sig.contains("valueOf") || sig.contains("boxing")) {
+            result.add(value0);
+            return result;
+        } else if( sig.contains("currentTimeMillis")){
+            result.add("currentTimeMills: " + System.currentTimeMillis());
+            return result;
+        } else{
+            //TODO try to do methodlocal to get return.
+
+        }
+
+        return result;
+    }
+
     public static <K, V> void addValue(Map<K, List<V>> map, K key, V value) {
         map.computeIfAbsent(key, k -> new ArrayList<>());
         List<V> values = map.get(key);

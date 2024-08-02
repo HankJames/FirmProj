@@ -21,8 +21,9 @@ public class CallGraph {
     // map with the sootMethod name and the CallGraphNode of the sootMethod
     private static final Hashtable<String, CallGraphNode> nodes = new Hashtable<>();
 
-    public static final HashMap<String, List<SootClass>> OuterInnerClasses = new HashMap<>();
+    public static final HashMap<String, List<SootClass>> outerInnerClasses = new HashMap<>();
 
+    public static final HashMap<SootClass, List<SootMethod>> callBackClassesWithInvoke = new HashMap<>();
     // Maps Soot Field String to the soot Methods it is referenced
     private static final Hashtable<String, HashSet<SootMethod>> fieldSetters = new Hashtable<>();
 
@@ -34,6 +35,32 @@ public class CallGraph {
         try {
             //init the nodes map
             for (SootClass sootClass : classes) {
+                if(sootClass.hasTag("InnerClassTag") && !MethodString.isStandardLibraryClass(sootClass)){
+                    Tag tag = sootClass.getTag("InnerClassTag");
+                    if(tag instanceof InnerClassTag){
+                        if(((InnerClassTag) tag).getOuterClass() != null){
+                            String outerClass = ((InnerClassTag) tag).getOuterClass().replace('/','.');
+                            if(!outerInnerClasses.containsKey(outerClass))
+                                outerInnerClasses.put(outerClass, new ArrayList<>());
+                            if(!outerInnerClasses.get(outerClass).contains(sootClass)) {
+                                outerInnerClasses.get(outerClass).add(sootClass);
+                                if(!MethodString.classWithOuterInnerFields.containsKey(outerClass))
+                                    MethodString.classWithOuterInnerFields.put(outerClass, new ArrayList<>());
+                                List<SootField> fields = MethodString.classWithOuterInnerFields.get(outerClass);
+                                for(SootField field: sootClass.getFields()) {
+                                    if(!fields.contains(field))
+                                        fields.add(field);
+                                }
+                            }
+                            for(SootClass clz : sootClass.getInterfaces()){
+                                String clzName = clz.getName();
+                                if(clzName.contains("CallBack")){
+                                    callBackClassesWithInvoke.put(sootClass, new ArrayList<>());
+                                }
+                            }
+                        }
+                    }
+                }
                 List<SootMethod> methods = new ArrayList<>(sootClass.getMethods());
                 for (SootMethod sootMethod : methods) {
                     CallGraphNode tmpNode = new CallGraphNode(sootMethod);
@@ -51,27 +78,10 @@ public class CallGraph {
             LOGGER.debug("[CG time]: " + (System.currentTimeMillis() - startTime));
             for (SootClass sootClass : classes) {
                 //LOGGER.warn(sootClass.getName());
-                if(sootClass.hasTag("InnerClassTag") && !MethodString.isStandardLibraryClass(sootClass)){
-                    Tag tag = sootClass.getTag("InnerClassTag");
-                    if(tag instanceof InnerClassTag){
-                        if(((InnerClassTag) tag).getOuterClass() != null){
-                            String outerClass = ((InnerClassTag) tag).getOuterClass().replace('/','.');
-                            if(!OuterInnerClasses.containsKey(outerClass))
-                                OuterInnerClasses.put(outerClass, new ArrayList<>());
-                            if(!OuterInnerClasses.get(outerClass).contains(sootClass)) {
-                                OuterInnerClasses.get(outerClass).add(sootClass);
-                                if(!MethodString.classWithOuterInnerFields.containsKey(outerClass))
-                                    MethodString.classWithOuterInnerFields.put(outerClass, new ArrayList<>());
-                                List<SootField> fields = MethodString.classWithOuterInnerFields.get(outerClass);
-                                for(SootField field: sootClass.getFields()) {
-                                    if(!fields.contains(field))
-                                        fields.add(field);
-                                }
-                            }
-                        }
-                    }
-                }
+                boolean needCheck = !MethodString.isStandardLibraryClass(sootClass);
                 for (SootMethod sootMethod : clone(sootClass.getMethods())) {
+                    if(sootMethod.getSignature().contains("com.gooclient.anycam.activity.settings.update.UpdateFirmwareActivity: void getNewVersion(java.lang.String)"))
+                        LOGGER.info("GOTIT");
                     if (!sootMethod.isConcrete())
                         continue;
                     Body body = null;
@@ -82,6 +92,7 @@ public class CallGraph {
                     }
                     if (body == null)
                         continue;
+
                     for (Unit unit : body.getUnits()) {
                         if (unit instanceof Stmt) {
                             if (((Stmt) unit).containsInvokeExpr()) {
@@ -91,6 +102,15 @@ public class CallGraph {
                                     LOGGER.error(e.getMessage());
                                 }
                             }
+                            if(needCheck && unit instanceof AssignStmt && ((AssignStmt) unit).getRightOp() instanceof NewExpr){
+                                NewExpr newExpr = (NewExpr)((AssignStmt) unit).getRightOp();
+                                SootClass cls = newExpr.getBaseType().getSootClass();
+                                if(callBackClassesWithInvoke.containsKey(cls)){
+                                    List<SootMethod> methods = callBackClassesWithInvoke.get(cls);
+                                    if(!methods.contains(sootMethod)) methods.add(sootMethod);
+                                }
+                            }
+
                             for (ValueBox valueBox : unit.getDefBoxes()) {
                                 Value temporaryValue = valueBox.getValue();
                                 if (temporaryValue instanceof FieldRef) {
@@ -118,6 +138,7 @@ public class CallGraph {
 
 
         LOGGER.info("[CG time]:" + (System.currentTimeMillis() - startTime));
+        LOGGER.info("CallbackCLass: {}", callBackClassesWithInvoke);
         //LOGGER.info("total: " + visitedMethod.toString());
     }
 

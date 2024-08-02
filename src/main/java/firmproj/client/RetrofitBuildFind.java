@@ -149,6 +149,7 @@ public class RetrofitBuildFind {
                                     for(RetrofitBuildPoint lp: localPoints){
                                         if(lp.getCreateClass()==null) {
                                             lp.setCreateClass(clsName);
+                                            lp.classFromParam = false;
                                             addValue(RetrofitClassToBuildPoint, clsName, lp);
                                         }
                                     }
@@ -256,7 +257,7 @@ public class RetrofitBuildFind {
                                         }
                                     }
                                     // if local from okhttp build, then get result of this method
-                                    // else if local from return okhttp client method, then get result of the return method.
+                                    // else if local from (return okhttp client) method, then get result of the return method.
                                     
                                 }
                             } else if (sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder") && (sig.contains("ConverterFactory") || sig.contains("callFactory"))) {

@@ -210,7 +210,7 @@ public class Main {
 
         LOGGER.info("initialisation of the call graph");
         CallGraph.init();
-        MethodString.init();
+        //MethodString.init();
         return t;
     }
 
@@ -224,22 +224,24 @@ public class Main {
         long initTime = System.currentTimeMillis();
         HashMap<SootClass, List<RetrofitPoint>> allRetrofitInterface;
 
-        List<RetrofitPoint> allMethod = GetAllRetrofitAnnotationMethod();
-        allRetrofitInterface = GetRetrofitClass(allMethod);
-        List<RetrofitPoint> firmMethod = GetFirmRelatedMethod(allMethod);
-        LOGGER.info("GetAllfirmMethod: " + firmMethod.size());
-
-        HttpClientFind.findAllInterceptorClasses();
-        HttpClientFind.findAllHttpClientBuildMethod();
-
-        RetrofitBuildFind.RetrofitClassesWithMethods.putAll(allRetrofitInterface);
-        RetrofitBuildFind.findAllRetrofitBuildMethod();
+//        List<RetrofitPoint> allMethod = GetAllRetrofitAnnotationMethod();
+//        allRetrofitInterface = GetRetrofitClass(allMethod);
+//        List<RetrofitPoint> firmMethod = GetFirmRelatedMethod(allMethod);
+//        LOGGER.info("GetAllfirmMethod: " + firmMethod.size());
+//
+//        HttpClientFind.findAllInterceptorClasses();
+//        HttpClientFind.findAllHttpClientBuildMethod();
+//
+//        RetrofitBuildFind.RetrofitClassesWithMethods.putAll(allRetrofitInterface);
+//        RetrofitBuildFind.findAllRetrofitBuildMethod();
+        SootMethod sootMethod = Scene.v().getMethod("<com.library.http.Http: java.lang.String getSign(java.lang.String)>");
+        LLMQuery.generate(sootMethod, new HashMap<>());
         //QueryJson.test();
         //List<ValuePoint> allValuePoints = getAllSolvedValuePoints(targetMethods, t, apk);
         long endTime = System.currentTimeMillis();
         TimeWatcher timeWatcher = TimeWatcher.getTimeWatcher();
 
-        writeRetrofitOut(firmMethod, outputPath);
+        //writeRetrofitOut(firmMethod, outputPath);
 
         //writeOutput(timeWatcher, startTime, initTime, endTime, apk, allValuePoints, outputPath);
 

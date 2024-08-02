@@ -34,7 +34,8 @@ public class HashmapClz implements AbstractClz{
             if(u instanceof AssignStmt){
                 Value rightOp = ((AssignStmt) u).getRightOp();
                 if(rightOp instanceof InvokeExpr){
-                    SootMethod method = ((InvokeStmt) u).getInvokeExpr().getMethod();
+                    InvokeExpr invokeExpr = (InvokeExpr) rightOp;
+                    SootMethod method = invokeExpr.getMethod();
                     if(method.getSignature().contains("Map: java.lang.Object put(java.lang.Object,java.lang.Object)")){
                         HashMap<Value, List<String>> currentValues = vc.getCurrentValues();
                         int argIndex = 0;

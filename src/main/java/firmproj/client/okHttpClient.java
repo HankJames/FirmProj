@@ -16,6 +16,10 @@ public class okHttpClient implements AbstractHttpClient {
 
     private static final Logger LOGGER = LogManager.getLogger(okHttpClient.class);
 
+    public SootMethod sootMethod;
+
+    public Unit unit;
+
     private Value localValue;
 
     private boolean isNeedRequestContent = false;
@@ -23,7 +27,8 @@ public class okHttpClient implements AbstractHttpClient {
     public  final HashMap<String, List<String>> requestContentFromParams = new HashMap<>(); //Body, MediaType.
 
     public okHttpClient(SootMethod method, Unit unit){
-
+        this.sootMethod = method;
+        this.unit = unit;
     }
 
     public okHttpClient(okHttpClient old){

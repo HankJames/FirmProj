@@ -26,16 +26,17 @@ public class QueryJson {
 
     public QueryJson(){}
 
+
+
     public void doGenerate(){
         GenerateJson(targetClass, targetMethodSubsSig, parameterValues, relatedMethodsSig);
     }
 
     public static void test(){
-        String clsName = "com.gooclient.anycam.activity.settings.update.MyHttp";
-        String methodSubSig = "java.lang.String[] parseJSONDecryption(java.lang.String,java.lang.String,java.lang.String[])";
-        List<List<String>> params= new ArrayList<>(List.of(List.of("Goolink2014"),List.of("&GetHttpResult"), List.of("{re,downurl,version,md5}")));
-        List<String> otherMethods = new ArrayList<>(List.of("<com.gooclient.anycam.activity.settings.update.MyHttp: java.lang.String decryption(java.lang.String,java.lang.String)>",
-                "<com.gooclient.anycam.utils.Base64: byte[] decode(byte[])>","<com.gooclient.anycam.utils.RC4Test: byte[] RC4(byte[],java.lang.String)>"));
+        String clsName = "com.gooclient.anycam.utils.ShareDataUtl";
+        String methodSubSig = "java.lang.String decodeShareJson(java.lang.String)";
+        List<List<String>> params= new ArrayList<>(List.of(List.of("clipData")));
+        List<String> otherMethods = new ArrayList<>(List.of("<com.gooclient.anycam.utils.RC4_Base64_encode_decode: java.lang.String decode3(java.lang.String,java.lang.String)>","<com.gooclient.anycam.utils.Base64: byte[] decode(byte[])>","<com.gooclient.anycam.utils.RC4Test: byte[] GetKey(byte[],int)>","<com.gooclient.anycam.utils.RC4Test: byte[] RC4(byte[],java.lang.String)>"));
 
         GenerateJson(clsName, methodSubSig, params, otherMethods);
     }
