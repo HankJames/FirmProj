@@ -65,6 +65,11 @@ public class CustomClz implements AbstractClz{
     }
 
     @Override
+    public boolean isSolved() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         solve();
         StringBuilder result = new StringBuilder();

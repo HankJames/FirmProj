@@ -9,18 +9,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="add invokeSetField and cache find and callback">
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/LLMQuery.java" afterDir="false" />
+    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="cancel some comment line">
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/StringClz.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/UrlClz.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/1.log" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodParamInvoke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodParamInvoke.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/StmtPoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/AbstractFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/AbstractFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/CallFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/CallFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/ConverterClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/ConverterClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/ConverterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/ConverterFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/CustomHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/CustomHttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/HttpClientFind.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/HttpClientFind.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/Interceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/Interceptor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/okHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/okHttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildPoint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraph.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/AbstractClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/AbstractClz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomHttpClz.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/SimulateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/SimulateUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/LLMQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/LLMQuery.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/QueryJson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/QueryJson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
     </list>
     <list id="28af94af-eb16-46e5-bd45-48575d194720" name="New changelist" comment="New changelist" />
     <option name="SHOW_DIALOG" value="false" />
@@ -95,7 +113,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.javaAPp.executor": "Run",
+    "Application.javaAPp.executor": "Debug",
     "Gradle.Build FirmProj.executor": "Run",
     "Gradle.FirmProj [:Main.main()].executor": "Run",
     "Java Scratch.Java.executor": "Run",
@@ -106,13 +124,16 @@
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/data/wenzhi/FirmProj/src",
     "onboarding.tips.debug.path": "D:/BaiduSyncdisk/Iot/FirmProj/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Global Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.19157721",
-    "settings.editor.selected.configurable": "vcs.Git"
+    "settings.editor.selected.configurable": "project.propCompiler"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="firmproj.objectSim" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main" />
       <recent name="$PROJECT_DIR$/gradle/wrapper" />
@@ -136,7 +157,7 @@
       <output_file path="$PROJECT_DIR$/logs/1.log" />
       <option name="MAIN_CLASS_NAME" value="firmproj.main.Main" />
       <module name="FirmProj.main" />
-      <option name="PROGRAM_PARAMETERS" value="-oj -p libs/android.jar -o results -a $PROJECT_DIR$/../APKS/xiaohe.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
+      <option name="PROGRAM_PARAMETERS" value="-oj -p libs/android.jar -o results -a $PROJECT_DIR$/../APKS/ivyiot.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
       <option name="VM_PARAMETERS" value="-Xmx102400m" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -274,7 +295,23 @@
       <option name="project" value="LOCAL" />
       <updated>1721961090282</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="add LLM Query, more invoke, and others">
+      <option name="closed" value="true" />
+      <created>1722589947173</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1722589947173</updated>
+    </task>
+    <task id="LOCAL-00015" summary="cancel some comment line">
+      <option name="closed" value="true" />
+      <created>1722590147878</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1722590147878</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -301,7 +338,9 @@
     <MESSAGE value="add Interceptor and OKHttpClient find." />
     <MESSAGE value="add converterFactory and queryJson" />
     <MESSAGE value="add invokeSetField and cache find and callback" />
-    <option name="LAST_COMMIT_MESSAGE" value="add invokeSetField and cache find and callback" />
+    <MESSAGE value="add LLM Query, more invoke, and others" />
+    <MESSAGE value="cancel some comment line" />
+    <option name="LAST_COMMIT_MESSAGE" value="cancel some comment line" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -311,16 +350,68 @@
           <line>15</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java</url>
+          <line>229</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/firmproj/objectSim/SimulateUtil.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java</url>
+          <line>282</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java</url>
+          <line>1005</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java</url>
+          <line>1012</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java</url>
+          <line>318</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="2" />
         </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.UnsupportedOperationException" package="java.lang" />
+          <option name="timeStamp" value="42" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="48" />
+        </breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="java-exception">
+          <properties>
+            <option name="caller-filters-enabled" value="true" />
+            <caller-filters>
+              <class-filter pattern="firmproj.base.MethodString" />
+            </caller-filters>
+            <class-filters>
+              <class-filter pattern="firmproj.base.MethodString" />
+            </class-filters>
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="java.util.HashMap$Node" memberName="key" />
         <PinnedItemInfo parentTag="soot.jimple.internal.JimpleLocal" memberName="type" />
+        <PinnedItemInfo parentTag="java.util.HashMap$Node" memberName="value" />
         <PinnedItemInfo parentTag="soot.SootClass" memberName="name" />
       </pinned-members>
     </pin-to-top-manager>

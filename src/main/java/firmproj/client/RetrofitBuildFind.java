@@ -49,19 +49,25 @@ public class RetrofitBuildFind {
             if (headString.contains("android") || headString.contains("kotlin") || headString.contains("java") || headString.contains("thingClips"))
                 continue;
             SootClass superClz = sootClass.getSuperclass();
-            if(superClz.getName().equals(CONVERTER_FACTORY)) {
-                ConverterFactory converterFactory = new ConverterFactory(sootClass);
-                converterFactory.init();
-                allFactoryClass.put(sootClass.getName(), converterFactory);
+            Chain<SootClass> interfaces = sootClass.getInterfaces();
+            if(superClz != null) {
+                if (superClz.getName().equals(CONVERTER_FACTORY)) {
+                    ConverterFactory converterFactory = new ConverterFactory(sootClass);
+                    converterFactory.init();
+                    allFactoryClass.put(sootClass.getName(), converterFactory);
+                }
             }
-            else if(superClz.getName().equals(CALL_FACTORY)){
-                CallFactory callFactory = new CallFactory(sootClass);
-                callFactory.init();
-                allFactoryClass.put(sootClass.getName(), callFactory);
+            if(!interfaces.isEmpty()) {
+                for (SootClass interfaceClz : interfaces) {
+                    if (interfaceClz.getName().equals(CALL_FACTORY)) {
+                        CallFactory callFactory = new CallFactory(sootClass);
+                        callFactory.init();
+                        allFactoryClass.put(sootClass.getName(), callFactory);
+                    }
+                }
             }
-
         }
-        LOGGER.info("All Interceptor Classes Result : {}",allFactoryClass.toString());
+        LOGGER.info("All Factory Classes Result : {}",allFactoryClass.toString());
 
         //LOGGER.info("ALL Field with retrofitBuildPoint: {}", );
     }
@@ -89,11 +95,11 @@ public class RetrofitBuildFind {
         HashMap<Value, List<RetrofitBuildPoint>> localToPoint = new HashMap<>();
         HashMap<String, HashMap<Integer, List<String>>> currentValues = new HashMap<>();
         HashMap<Value, List<AbstractHttpClient>> localToClient = new HashMap<>();
+        HashMap<Value, AbstractFactory> localToFactory = new HashMap<>();
 
         if(!checkReturnType(ret)) return result;
         visitedMethod.add(methodSig);
-        if(methodSig.equals("<com.liesheng.module_login.repository.LoginRepository$customerCheckRegister$2: java.lang.Object invokeSuspend(java.lang.Object)>"))
-            LOGGER.warn("GOT!");
+
         for (Unit unit : body.getUnits()) {
             Stmt stmt = (Stmt) unit;
             if(stmt instanceof AssignStmt){
@@ -102,7 +108,7 @@ public class RetrofitBuildFind {
                 if(rightOp instanceof NewExpr){
                     NewExpr newExpr = (NewExpr) rightOp;
                     String clsName = newExpr.getBaseType().getClassName();
-                    if(clsName.equals("retrofit2.Retrofit$Builder")){
+                    if(clsName.equals("retrofit2.Retrofit$Builder") || clsName.toLowerCase().contains("retrofitbuilder")){
                         RetrofitBuildPoint point = new RetrofitBuildPoint(sootMethod, unit);
                         addValue(localToPoint, leftOp, point);
                         result.add(point);
@@ -133,8 +139,15 @@ public class RetrofitBuildFind {
                         }
                         //TODO return okhttp client method.
                     }
-                    if(HttpClientFind.findResult.containsKey(invokeMethod.getSignature()))
+                    if(HttpClientFind.findResult.containsKey(invokeMethod.getSignature())) {
                         localToClient.put(leftOp, HttpClientFind.findResult.get(invokeMethod.getSignature()));
+                    }
+                    if(allFactoryClass.containsKey(invokeRet.toString())){
+                        AbstractFactory factory = allFactoryClass.get(invokeRet.toString());
+                        localToFactory.put(leftOp, factory);
+                        continue;
+                    }
+
 
                     if (rightOp instanceof InstanceInvokeExpr) {
                         Value base = ((InstanceInvokeExpr) rightOp).getBase();
@@ -190,7 +203,7 @@ public class RetrofitBuildFind {
                                     FieldToBuildPoint.put(((FieldRef) leftOp).getField(), localToPoint.get(base));
                                 }
 
-                            } else if (sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder baseUrl(java.lang.String)")) {
+                            } else if (sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder baseUrl(java.lang.String)") || sig.contains("setBaseUrl(java.lang.String)")) {
                                 Value arg = invokeExpr.getArg(0);
                                 if (arg instanceof Constant) {
                                     String baseUrl = (String) SimulateUtil.getConstant(arg);
@@ -214,22 +227,35 @@ public class RetrofitBuildFind {
                                     currentValues.putAll(methodLocal.getInterestingParamString());
                                     LOGGER.info("166: Do MethodLocal result: {}", currentValues.get(sig));
 
-                                    if (currentValues.containsKey(sig) && !fromParam){
-                                        if(currentValues.get(sig).containsKey(0)) {
-                                            List<String> baseUrls = currentValues.get(sig).get(0);
-                                            LOGGER.info("169: Do MethodLocal result: {}", currentValues.get(sig));
-                                            for (String baseUrl : baseUrls) {
-                                                for (RetrofitBuildPoint lp : localPoints) {
-                                                    lp.setBaseUrl(baseUrl);
+                                    if(currentValues.containsKey(sig)) {
+                                        if (ret.toString().equals("void")) {
+                                            if (currentValues.get(sig).containsKey(0)) {
+                                                List<String> baseUrls = currentValues.get(sig).get(0);
+                                                for (String baseUrl : baseUrls) {
+                                                    for (RetrofitBuildPoint lp : localPoints) {
+                                                        lp.setBaseUrl(baseUrl);
+                                                        lp.urlFromParam = false;
+                                                        lp.urlParam = -1;
+                                                    }
+                                                }
+                                            }
+                                        } else if (!fromParam) {
+                                            if (currentValues.get(sig).containsKey(0)) {
+                                                List<String> baseUrls = currentValues.get(sig).get(0);
+                                                LOGGER.info("169: Do MethodLocal result: {}", currentValues.get(sig));
+                                                for (String baseUrl : baseUrls) {
+                                                    for (RetrofitBuildPoint lp : localPoints) {
+                                                        lp.setBaseUrl(baseUrl);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            } else if(sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit build()")){
+                            } else if(sig.contains("Builder: retrofit2.Retrofit build()")){
                                 localToPoint.put(leftOp, localToPoint.remove(base));
 
-                            } else if (sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder client")) {
+                            } else if (sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder client") || sig.contains("setOkHttpClient(okhttp3.OkHttpClient)")) {
                                 //TODO client
                                 Value arg = invokeExpr.getArg(0);
                                 if (arg instanceof Local) {
@@ -261,7 +287,18 @@ public class RetrofitBuildFind {
                                     
                                 }
                             } else if (sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder") && (sig.contains("ConverterFactory") || sig.contains("callFactory"))) {
-
+                                Value arg0 = invokeExpr.getArg(0);
+                                if(localToFactory.containsKey(arg0)){
+                                    AbstractFactory abstractFactory = localToFactory.get(arg0);
+                                    if(abstractFactory instanceof ConverterFactory){
+                                        for(RetrofitBuildPoint localPoint : localPoints)
+                                            localPoint.addConverterFactory(abstractFactory);
+                                    }
+                                    else{
+                                        for(RetrofitBuildPoint localPoint : localPoints)
+                                            localPoint.addCallFactory(abstractFactory);
+                                    }
+                                }
                                 //TODO converterFactory
 
                             }
@@ -281,17 +318,61 @@ public class RetrofitBuildFind {
                     if(leftOp instanceof FieldRef){
                         FieldToBuildPoint.put(((FieldRef) leftOp).getField(), localToPoint.get(rightOp));
                     }
-                } else if(rightOp instanceof FieldRef && FieldToBuildPoint.containsKey(((FieldRef) rightOp).getField())){
-                    if(leftOp instanceof Local){
-                        localToPoint.put(leftOp, FieldToBuildPoint.get(((FieldRef) rightOp).getField()));
+                } else if(rightOp instanceof FieldRef){
+                    SootField field = ((FieldRef) rightOp).getField();
+                    if(FieldToBuildPoint.containsKey(((FieldRef) rightOp).getField())) {
+                        if (leftOp instanceof Local) {
+                            localToPoint.put(leftOp, FieldToBuildPoint.get(field));
+                        }
                     }
-                } else if(rightOp instanceof FieldRef && HttpClientFind.FieldToClientPoint.containsKey(((FieldRef) rightOp).getField())){
-                    if(leftOp instanceof Local){
-                        localToClient.put(leftOp, HttpClientFind.FieldToClientPoint.get(((FieldRef) rightOp).getField()));
+                    else if(HttpClientFind.FieldToClientPoint.containsKey(field)){
+                        if(leftOp instanceof Local) {
+                            localToClient.put(leftOp, HttpClientFind.FieldToClientPoint.get(((FieldRef) rightOp).getField()));
+                        }
                     }
                 }
             }
+            else if(stmt instanceof InvokeStmt){
+                if(stmt.getInvokeExpr() instanceof InstanceInvokeExpr) {
+                    Value base = ((InstanceInvokeExpr) stmt.getInvokeExpr()).getBase();
+                    InvokeExpr invokeExpr =  stmt.getInvokeExpr();
+                    String sig = (stmt.getInvokeExpr()).getMethod().getSignature();
+                    if (localToPoint.containsKey(base)) {
+                        List<RetrofitBuildPoint> localPoints = localToPoint.get(base);
+                        if (sig.contains("retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder client")) {
+                            //TODO client
+                            Value arg = invokeExpr.getArg(0);
+                            if (arg instanceof Local) {
+                                if (localToClient.containsKey(arg)) {
+                                    for (RetrofitBuildPoint lp : localPoints) {
+                                        lp.setOkHttpClients(localToClient.get(arg));
+                                    }
+
+                                } else if (HttpClientFind.findResult.containsKey(methodSig)) {
+                                    List<AbstractHttpClient> tempClients = new ArrayList<>();
+                                    for (AbstractHttpClient client : HttpClientFind.findResult.get(methodSig)) {
+                                        okHttpClient okClient = (okHttpClient) client;
+                                        if (okClient.getLocalValue().equals(arg)) {
+                                            tempClients.add(okClient);
+                                        }
+                                    }
+                                    if (!tempClients.isEmpty()) {
+                                        for (RetrofitBuildPoint lp : localPoints) {
+                                            lp.setOkHttpClients(tempClients);
+                                        }
+                                    }
+                                }
+                                // if local from okhttp build, then get result of this method
+                                // else if local from (return okhttp client) method, then get result of the return method.
+
+                            }
+                        }
+                    }
+
+                }
+            }
         }
+
         return result;
     }
 

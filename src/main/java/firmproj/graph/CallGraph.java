@@ -25,8 +25,6 @@ public class CallGraph {
 
     public static final HashMap<SootClass, List<SootMethod>> callBackClassesWithInvoke = new HashMap<>();
     // Maps Soot Field String to the soot Methods it is referenced
-    private static final Hashtable<String, HashSet<SootMethod>> fieldSetters = new Hashtable<>();
-
 
     public static void init() {
         long startTime = System.currentTimeMillis();
@@ -35,7 +33,8 @@ public class CallGraph {
         try {
             //init the nodes map
             for (SootClass sootClass : classes) {
-                if(sootClass.hasTag("InnerClassTag") && !MethodString.isStandardLibraryClass(sootClass)){
+                if(MethodString.isStandardLibraryClass(sootClass)) continue;
+                if(sootClass.hasTag("InnerClassTag")){
                     Tag tag = sootClass.getTag("InnerClassTag");
                     if(tag instanceof InnerClassTag){
                         if(((InnerClassTag) tag).getOuterClass() != null){
@@ -79,6 +78,7 @@ public class CallGraph {
             for (SootClass sootClass : classes) {
                 //LOGGER.warn(sootClass.getName());
                 boolean needCheck = !MethodString.isStandardLibraryClass(sootClass);
+                if(!needCheck) continue;
                 for (SootMethod sootMethod : clone(sootClass.getMethods())) {
                     if(sootMethod.getSignature().contains("com.gooclient.anycam.activity.settings.update.UpdateFirmwareActivity: void getNewVersion(java.lang.String)"))
                         LOGGER.info("GOTIT");
@@ -102,29 +102,12 @@ public class CallGraph {
                                     LOGGER.error(e.getMessage());
                                 }
                             }
-                            if(needCheck && unit instanceof AssignStmt && ((AssignStmt) unit).getRightOp() instanceof NewExpr){
+                            if(unit instanceof AssignStmt && ((AssignStmt) unit).getRightOp() instanceof NewExpr){
                                 NewExpr newExpr = (NewExpr)((AssignStmt) unit).getRightOp();
                                 SootClass cls = newExpr.getBaseType().getSootClass();
                                 if(callBackClassesWithInvoke.containsKey(cls)){
                                     List<SootMethod> methods = callBackClassesWithInvoke.get(cls);
                                     if(!methods.contains(sootMethod)) methods.add(sootMethod);
-                                }
-                            }
-
-                            for (ValueBox valueBox : unit.getDefBoxes()) {
-                                Value temporaryValue = valueBox.getValue();
-                                if (temporaryValue instanceof FieldRef) {
-                                    FieldRef fieldRef = (FieldRef) temporaryValue;
-                                    if (fieldRef.getField() == null || fieldRef.getField().getDeclaringClass() == null) {
-                                        continue;
-                                    }
-                                    if (fieldRef.getField().getDeclaringClass().isApplicationClass()) {
-                                        String str = fieldRef.getField().toString();
-                                        if (!fieldSetters.containsKey(str)) {
-                                            fieldSetters.put(str, new HashSet<>());
-                                        }
-                                        fieldSetters.get(str).add(sootMethod);
-                                    }
                                 }
                             }
                         }
@@ -153,7 +136,7 @@ public class CallGraph {
         fromNode = getNode(from);
         toNode = getNode(to);
         if (fromNode == null || toNode == null) {
-            LOGGER.debug("Can't add call because from or to node is null");
+            //LOGGER.debug("Can't add call because from or to node is null");
             return;
         }
 
@@ -180,10 +163,6 @@ public class CallGraph {
      */
     public static CallGraphNode getNode(String from) {
         return nodes.get(from);
-    }
-
-    public static HashSet<SootMethod> getSetter(SootField sootField) {
-        return fieldSetters.get(sootField.toString());
     }
 
 

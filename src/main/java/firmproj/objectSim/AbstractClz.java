@@ -21,7 +21,9 @@ public interface AbstractClz {
 
     List<ValueContext> getCurrentValues();
 
-    HashMap<?,?> getResult();
+    Object getResult();
+
+    boolean isSolved();
 
     @Override
     String toString();

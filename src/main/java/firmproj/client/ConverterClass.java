@@ -1,20 +1,44 @@
 package firmproj.client;
 
+import firmproj.utility.LLMQuery;
+import firmproj.utility.QueryJson;
+import soot.SootClass;
 import soot.SootMethod;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class ConverterClass {
+    public SootClass currentClass;
     public SootMethod convertMethod;
-    public List<SootMethod> relatedMethod = new ArrayList<>();
-    public String converterResult;
+    public QueryJson queryJson;
 
-    public ConverterClass(SootMethod method){
-        this.convertMethod = method;
+    public ConverterClass(SootClass sootClass){
+        this.currentClass = sootClass;
     }
 
     public void init(){
+        for(SootMethod sootMethod: currentClass.getMethods()){
+            String sig = sootMethod.getSignature();
+            String str1 = currentClass.getName() + ": java.lang.Object convert";
+            String str2 = currentClass.getName() + ": okhttp3.RequestBody convert";
+            String str3 = currentClass.getName() + ": okhttp3.ResponseBody convert";
+            if(sig.contains(str1) || sig.contains(str2) || sig.contains(str3)){
+                this.convertMethod = sootMethod;
+            }
+        }
+        if(this.convertMethod != null){
+            QueryJson queryJson1 = LLMQuery.generateHttp(convertMethod);
+            if(queryJson1.getTargetMethodSubsSig().contains(convertMethod.getName())){
+                this.queryJson = queryJson1;
+            }
+        }
+    }
 
+    @Override
+    public String toString() {
+        return "ConverterClass{" +
+                "currentClass=" + currentClass +
+                ", convertMethod=" + convertMethod +
+                '}';
     }
 }

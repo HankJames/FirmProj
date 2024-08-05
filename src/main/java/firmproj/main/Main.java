@@ -233,10 +233,11 @@ public class Main {
         HttpClientFind.findAllHttpClientBuildMethod();
 
         RetrofitBuildFind.RetrofitClassesWithMethods.putAll(allRetrofitInterface);
+        RetrofitBuildFind.findAllFactoryClasses();
         RetrofitBuildFind.findAllRetrofitBuildMethod();
 
-        SootMethod sootMethod = Scene.v().getMethod("<com.library.http.Http: java.lang.String getSign(java.lang.String)>");
-        LLMQuery.generate(sootMethod, new HashMap<>());
+        //SootMethod sootMethod = Scene.v().getMethod("<com.library.http.Http: java.lang.String getSign(java.lang.String)>");
+        //LLMQuery.generate(sootMethod, new HashMap<>());
         //QueryJson.test();
         //List<ValuePoint> allValuePoints = getAllSolvedValuePoints(targetMethods, t, apk);
         long endTime = System.currentTimeMillis();

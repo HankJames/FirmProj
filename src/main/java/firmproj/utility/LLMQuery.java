@@ -33,11 +33,29 @@ public class LLMQuery {
 
         List<String> methodSig = retrieveMethod(sootMethod);
         queryJson.setRelatedMethodsSig(methodSig);
+        //queryJson.doGenerate();
+
+        queries.add(queryJson);
+        return queryJson;
+    }
+
+    public static QueryJson generateHttp(SootMethod sootMethod){
+        QueryJson queryJson = new QueryJson();
+        SootClass sootClass = sootMethod.getDeclaringClass();
+
+        queryJson.setTargetClass(sootClass.getName());
+        queryJson.setTargetMethodSubsSig(sootMethod.getSubSignature());
+        queryJson.setParameterValues(new ArrayList<>());
+
+        List<String> methodSig = retrieveMethod(sootMethod);
+        queryJson.setRelatedMethodsSig(methodSig);
+        queryJson.setHttp(true);
         queryJson.doGenerate();
 
         queries.add(queryJson);
         return queryJson;
     }
+
 
     public static List<List<String>> flattenParamValue(SootMethod sootMethod, HashMap<Integer, List<String>> paramValues){
         List<List<String>> result = new ArrayList<>();

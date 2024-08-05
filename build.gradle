@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    implementation files('libs/soot-infoflow-cmd-jar-with-dependencies.jar')
+    implementation files('libs/soot-infoflow-cmd-2.13.0-jar-with-dependencies.jar')
 
 
     implementation 'org.apache.logging.log4j:log4j-api:2.17.1'

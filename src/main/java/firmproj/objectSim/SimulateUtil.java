@@ -19,6 +19,8 @@ public class SimulateUtil {
 
     public static Object getConstant(Value value) {
         if (value instanceof StringConstant) {
+            if(((StringConstant) value).value.contains("https://api.haihe.net.cn:8188/"))
+                System.out.println("1");
             return ((StringConstant) value).value;
         } else if (value instanceof FloatConstant) {
             return ((FloatConstant) value).value;

@@ -1,35 +1,40 @@
 package firmproj.objectSim;
 
 import firmproj.base.ValueContext;
-import soot.*;
+import soot.SootClass;
+import soot.SootMethod;
+import soot.Unit;
+import soot.Value;
 import soot.jimple.AssignStmt;
 import soot.jimple.Constant;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InvokeStmt;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class HashmapClz implements AbstractClz{
-
+public class StringClz implements AbstractClz{
     private final SootClass currentClass;
     private final SootMethod ParentMethod;
-    private HashMap<List<String>, List<String>> result = new HashMap<>();
+    private List<String> result = new ArrayList<>();
     private final List<ValueContext> valueContexts = new ArrayList<>();
     private boolean solved = false;
 
-    public HashmapClz(SootClass currentClass, SootMethod method){
+    public StringClz(SootClass currentClass, SootMethod method){
         this.currentClass = currentClass;
         this.ParentMethod = method;
     }
 
-    public HashmapClz(SootClass currentClass, SootMethod method, List<ValueContext> values){
+    public StringClz(SootClass currentClass, SootMethod method, List<ValueContext> values){
         this(currentClass, method);
         this.valueContexts.addAll(values);
     }
 
     @Override
     public void solve() {
-        HashMap<List<String>,List<String>> tmpResult = new HashMap<>();
+        List<String> tmpResult = new ArrayList<>();
         for(ValueContext vc : valueContexts){
             Unit u = vc.getCurrentUnit();
             if(u instanceof AssignStmt){
@@ -37,7 +42,10 @@ public class HashmapClz implements AbstractClz{
                 if(rightOp instanceof InvokeExpr){
                     InvokeExpr invokeExpr = (InvokeExpr) rightOp;
                     SootMethod method = invokeExpr.getMethod();
-                    if(method.getSignature().contains("Map: java.lang.Object put(java.lang.Object,java.lang.Object)")){
+                    String sig = method.getSignature();
+                    if(sig.contains("java.lang.StringBuilder: java.lang.StringBuilder append")||
+                            sig.contains("java.lang.StringBuffer: java.lang.StringBuffer append")||
+                            sig.contains("java.lang.String: java.lang.String concat")){
                         HashMap<Value, List<String>> currentValues = vc.getCurrentValues();
                         int argIndex = 0;
                         List<List<String>> args = new ArrayList<>();
@@ -55,14 +63,23 @@ public class HashmapClz implements AbstractClz{
                             }
                             argIndex++;
                         }
-                        tmpResult.put(args.get(0), args.get(1));
+                        if(args.get(0) != null)
+                            tmpResult.add(args.get(0).toString());
+                    }
+                    else if(sig.contains("java.lang.String: java.lang.String toLowerCase")){
+                        tmpResult.replaceAll(String::toLowerCase);
+                    } else if (sig.contains("java.lang.String: java.lang.String toUpperCase")) {
+                        tmpResult.replaceAll(String::toUpperCase);
                     }
                 }
             }
             else if (u instanceof InvokeStmt){
                 InvokeExpr invokeExpr = ((InvokeStmt) u).getInvokeExpr();
                 SootMethod method = ((InvokeStmt) u).getInvokeExpr().getMethod();
-                if(method.getSignature().contains("Map: java.lang.Object put(java.lang.Object,java.lang.Object)>")){
+                String sig = method.getSignature();
+                if(sig.contains("java.lang.StringBuilder: java.lang.StringBuilder append")||
+                        sig.contains("java.lang.StringBuffer: java.lang.StringBuffer append")||
+                        sig.contains("java.lang.String: java.lang.String concat")){
                     HashMap<Value, List<String>> currentValues = vc.getCurrentValues();
                     int argIndex = 0;
                     List<List<String>> args = new ArrayList<>();
@@ -80,10 +97,8 @@ public class HashmapClz implements AbstractClz{
                         }
                         argIndex++;
                     }
-                    tmpResult.put(args.get(0), args.get(1));
-                }
-                else if(method.getSignature().contains("Map: void putAll")){
-
+                    if(args.get(0) != null)
+                        tmpResult.add(args.get(0).toString());
                 }
             }
         }
@@ -116,26 +131,20 @@ public class HashmapClz implements AbstractClz{
         return this.valueContexts;
     }
 
+    @Override
+    public List<String> getResult() {
+        return result;
+    }
+
+    @Override
     public boolean isSolved() {
         return solved;
     }
 
     @Override
-    public HashMap<List<String>, List<String>> getResult() {
-        return result;
-    }
-
-    @Override
     public String toString() {
-        solve();
-        StringBuilder result = new StringBuilder();
-        result.append("MapCLZ: From Method: ").append(this.ParentMethod.getSubSignature()).append(" ");
-        result.append("Map Entry: {");
-        for(Map.Entry<List<String>, List<String>> entry: this.result.entrySet()){
-            result.append(entry.toString());
-            result.append(",");
-        }
-        result.append("} ");
-        return result.toString();
+        return "StringClz{" +
+                "result=" + result +
+                '}';
     }
 }

@@ -3,21 +3,35 @@ package firmproj.base;
 import soot.SootMethod;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 public class MethodParamInvoke {
     public SootMethod sootMethod;
-    public Integer param;
+    public List<Integer> param = new ArrayList<>();
+    public HashMap<Integer, List<String>> paramValue = new HashMap<>();
     public final List<String> InvokeMethodSig = new ArrayList<>();
 
     public MethodParamInvoke(SootMethod method, Integer para, String sig){
+        sootMethod = method;
+        param.add(para);
+        InvokeMethodSig.add(sig);
+    }
+
+    public MethodParamInvoke(SootMethod method, Integer para, List<String> sig){
+        sootMethod = method;
+        param.add(para);
+        InvokeMethodSig.addAll(sig);
+    }
+
+    public MethodParamInvoke(SootMethod method, List<Integer> para, String sig){
         sootMethod = method;
         param = para;
         InvokeMethodSig.add(sig);
     }
 
-    public MethodParamInvoke(SootMethod method, Integer para, List<String> sig){
+    public MethodParamInvoke(SootMethod method, List<Integer> para, List<String> sig){
         sootMethod = method;
         param = para;
         InvokeMethodSig.addAll(sig);
@@ -26,6 +40,7 @@ public class MethodParamInvoke {
     public MethodParamInvoke(MethodParamInvoke OldmethodParamInvoke){
         this.sootMethod = OldmethodParamInvoke.sootMethod;
         this.param = OldmethodParamInvoke.param;
+        this.paramValue = OldmethodParamInvoke.paramValue;
         this.InvokeMethodSig.addAll(OldmethodParamInvoke.InvokeMethodSig);
     }
 
@@ -42,6 +57,7 @@ public class MethodParamInvoke {
         return "MethodParamInvoke{" +
                 "sootMethod=" + sootMethod +
                 ", param=" + param +
+                ", paramValue=" + paramValue +
                 ", InvokeMethodSig=" + InvokeMethodSig +
                 '}';
     }

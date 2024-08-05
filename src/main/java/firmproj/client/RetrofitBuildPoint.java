@@ -8,7 +8,8 @@ import java.util.List;
 
 public class RetrofitBuildPoint {
     private final List<String> baseUrl = new ArrayList<>();
-    private final List<String> converterFactory = new ArrayList<>();
+    private final List<ConverterFactory> converterFactory = new ArrayList<>();
+    private final List<CallFactory> callFactory = new ArrayList<>();
     private final List<okHttpClient> okHttpClients = new ArrayList<>();
 
     private SootMethod currentMethod;
@@ -28,6 +29,7 @@ public class RetrofitBuildPoint {
     public RetrofitBuildPoint(RetrofitBuildPoint old){
         this.baseUrl.addAll(old.baseUrl);
         this.converterFactory.addAll(old.converterFactory);
+        this.callFactory.addAll(old.callFactory);
         this.okHttpClients.addAll(old.okHttpClients);
         this.createClass = old.createClass;
         this.createUnit = old.createUnit;
@@ -80,6 +82,24 @@ public class RetrofitBuildPoint {
         }
     }
 
+    public void addCallFactory(AbstractFactory abstractFactory){
+        CallFactory callFactory = (CallFactory) abstractFactory;
+        for(CallFactory callFactory1 : this.callFactory){
+            if(callFactory1.currentClass.equals(callFactory.currentClass))
+                return;
+        }
+        this.callFactory.add(callFactory);
+    }
+
+    public void addConverterFactory(AbstractFactory abstractFactory){
+        ConverterFactory converterFactory = (ConverterFactory) abstractFactory;
+        for(ConverterFactory converterFactory1 : this.converterFactory){
+            if(converterFactory1.factoryClass.equals(converterFactory.factoryClass))
+                return;
+        }
+        this.converterFactory.add(converterFactory);
+    }
+
     public void setCreateClass(String createClass) {
         this.createClass = createClass;
     }
@@ -88,14 +108,17 @@ public class RetrofitBuildPoint {
     public String toString() {
         return "---RetrofitBuildPoint{" +
                 "currentMethod=" + currentMethod +
-                ", baseUrl=" + baseUrl +
+                "baseUrl=" + baseUrl +
                 ", createClass='" + createClass + '\'' +
-                ", urlParam=" + urlParam +
                 ", urlFromParam=" + urlFromParam +
-                ", classParam=" + classParam +
+                ", urlParam=" + urlParam +
                 ", classFromParam=" + classFromParam +
+                ", classParam=" + classParam +
                 ", createUnit=" + createUnit +
-                ", okHttpClients=" + okHttpClients+
+                ", converterFactory=" + converterFactory +
+                ", callFactory=" + callFactory +
+                ", okHttpClients=" + okHttpClients +
                 "}---";
     }
+
 }

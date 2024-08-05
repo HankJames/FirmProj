@@ -1,7 +1,9 @@
 package firmproj.client;
 
+import firmproj.base.MethodLocal;
 import firmproj.base.MethodString;
 import firmproj.objectSim.SimulateUtil;
+import firmproj.objectSim.UrlClz;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import soot.*;
@@ -84,7 +86,8 @@ public class HttpClientFind {
         HashMap<Value, HashMap<String, List<String>>> localToRequestBuilder = new HashMap<>();
         HashMap<String, HashMap<Integer, List<String>>> currentValues = new HashMap<>();
         HashMap<Value, Integer> localFromParam = new HashMap<>();
-        if(!checkReturnType(ret)) return result;
+        HashMap<Value, UrlClz> localToUrlClz = new HashMap<>();
+
         visitedMethod.add(methodSig);
         for (Unit unit : body.getUnits()) {
             Stmt stmt = (Stmt) unit;
@@ -202,21 +205,26 @@ public class HttpClientFind {
                                 } else if (localFromParam.containsKey(urlParam)) {
                                     localToRequestBuilder.get(base).put("url", List.of("$"+localFromParam.get(urlParam)));
                                 }
-//                                else if(urlParam instanceof Local){
-//                                    if(!currentValues.containsKey(sig)) {
-//                                        HashMap<String, List<Integer>> interestingInvoke = new HashMap<>();
-//                                        interestingInvoke.put(sig, new ArrayList<>(List.of(0)));
-//                                        MethodLocal methodLocal = new MethodLocal(sootMethod, interestingInvoke);
-//                                        methodLocal.doAnalysis();
-//                                        currentValues.putAll(methodLocal.getInterestingParamString());
-//                                    }
-//                                    if (currentValues.containsKey(sig)){
-//                                        List<String> urls = currentValues.get(sig).get(0);
-//                                        if(urls != null){
-//                                            localToRequestBuilder.get(base).put("url",urls);
-//                                        }
-//                                    }
-//                                }
+                                else if(urlParam instanceof Local){
+                                    if(!currentValues.containsKey(sig)) {
+                                        HashMap<String, List<Integer>> interestingInvoke = new HashMap<>();
+                                        interestingInvoke.put(sig, new ArrayList<>(List.of(0)));
+                                        MethodLocal methodLocal = new MethodLocal(sootMethod, interestingInvoke);
+                                        methodLocal.doAnalysis();
+                                        if(methodLocal.getLocalFromParams().containsKey(invokeExpr.getArg(0))){
+                                            localToRequestBuilder.get(base).put("url", List.of("$" + methodLocal.getLocalFromParams().get(invokeExpr.getArg(0))));
+                                        }
+                                        else {
+                                            currentValues.putAll(methodLocal.getInterestingParamString());
+                                        }
+                                    }
+                                    if (currentValues.containsKey(sig)){
+                                        List<String> urls = currentValues.get(sig).get(0);
+                                        if(urls != null){
+                                            localToRequestBuilder.get(base).put("url",urls);
+                                        }
+                                    }
+                                }
                             }
                             else if(sig.contains("okhttp3.Request$Builder: okhttp3.Request$Builder post")){
                                 Value postParam = invokeExpr.getArg(0);
@@ -282,9 +290,18 @@ public class HttpClientFind {
                         FieldToClientPoint.put(((FieldRef) leftOp).getField(), localToPoint.get(rightOp));
                     }
                 }
-                else if(rightOp instanceof FieldRef && FieldToClientPoint.containsKey(((FieldRef) rightOp).getField())){
-                    if(leftOp instanceof Local){
-                        localToPoint.put(leftOp, FieldToClientPoint.get(((FieldRef) rightOp).getField()));
+                else if(rightOp instanceof FieldRef) {
+                    SootField field = ((FieldRef) rightOp).getField();
+                    if (FieldToClientPoint.containsKey(field)) {
+                        if (leftOp instanceof Local) {
+                            localToPoint.put(leftOp, FieldToClientPoint.get(((FieldRef) rightOp).getField()));
+                        }
+                    }
+                    else if(field.getType() instanceof RefType){
+                        String clsName = ((RefType) field.getType()).getClassName();
+                        if(allInterceptorClasses.containsKey(clsName)){
+                            localToInterceptor.put(leftOp, allInterceptorClasses.get(clsName));
+                        }
                     }
                 }
             }

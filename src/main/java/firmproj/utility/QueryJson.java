@@ -16,6 +16,7 @@ public class QueryJson {
     private String targetMethodSubsSig;
     private List<List<String>> parameterValues = new ArrayList<>();
     private List<String> relatedMethodsSig = new ArrayList<>();
+    private boolean isHttp = false;
 
     public QueryJson(String className, String methodSubsSig, List<List<String>> parameters, List<String> relatedMethodsSig){
         this.targetClass = className;
@@ -29,7 +30,7 @@ public class QueryJson {
 
 
     public void doGenerate(){
-        GenerateJson(targetClass, targetMethodSubsSig, parameterValues, relatedMethodsSig);
+        GenerateJson(targetClass, targetMethodSubsSig, parameterValues, relatedMethodsSig, isHttp);
     }
 
     public static void test(){
@@ -38,10 +39,10 @@ public class QueryJson {
         List<List<String>> params= new ArrayList<>(List.of(List.of("clipData")));
         List<String> otherMethods = new ArrayList<>(List.of("<com.gooclient.anycam.utils.RC4_Base64_encode_decode: java.lang.String decode3(java.lang.String,java.lang.String)>","<com.gooclient.anycam.utils.Base64: byte[] decode(byte[])>","<com.gooclient.anycam.utils.RC4Test: byte[] GetKey(byte[],int)>","<com.gooclient.anycam.utils.RC4Test: byte[] RC4(byte[],java.lang.String)>"));
 
-        GenerateJson(clsName, methodSubSig, params, otherMethods);
+        GenerateJson(clsName, methodSubSig, params, otherMethods, false);
     }
 
-    public static void GenerateJson(String targetClassName, String targetMethodSubSIg, List<List<String>> parameter, List<String> relatedMethods) {
+    public static void GenerateJson(String targetClassName, String targetMethodSubSIg, List<List<String>> parameter, List<String> relatedMethods, boolean isHttp) {
         List<List<String>> parameters = new ArrayList<>(parameter);
         List<String> relatedMethodNames = new ArrayList<>(relatedMethods);
         // 添加相关方法名，例如：
@@ -102,7 +103,11 @@ public class QueryJson {
         jsonObject.put(targetMethod.getSignature(), targetMethodObject);
 
         // 输出JSON字符串到文件
-        String fileName = "./LLM-Query/query_" +
+        String fileName = "./LLM-Query/";
+        if(isHttp){
+            fileName = fileName + "http_";
+        }
+        fileName = fileName + "query_" +
                 targetClassName +
                 "_" +
                 targetMethodSubSIg +
@@ -127,6 +132,14 @@ public class QueryJson {
         this.parameterValues.add(params);
     }
 
+    public void setHttp(boolean http) {
+        isHttp = http;
+    }
+
+    public boolean isHttp() {
+        return isHttp;
+    }
+
     public void setParameterValues(List<List<String>> parameterValues) {
         this.parameterValues = parameterValues;
     }
@@ -138,6 +151,10 @@ public class QueryJson {
     public void addRelatedMethodSig(String relatedMethodSig){
         if(!this.relatedMethodsSig.contains(relatedMethodSig))
             this.relatedMethodsSig.add(relatedMethodSig);
+    }
+
+    public String getTargetMethodSubsSig() {
+        return targetMethodSubsSig;
     }
 
     private static String parseClassNameFromSignature(String signature) {

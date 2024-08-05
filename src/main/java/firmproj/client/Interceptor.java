@@ -76,7 +76,7 @@ public class Interceptor {
                                     localToString.put(leftOp, List.of("&FILED", ((FieldRef) rightOp).getField().toString()));
                                 }
                             }else if(rightOp instanceof Constant){
-                                Object obj = SimulateUtil.getConstant((Constant)rightOp);
+                                Object obj = SimulateUtil.getConstant(rightOp);
                                 if(obj != null)
                                     localToString.put(leftOp, List.of(obj.toString()));
                             }
