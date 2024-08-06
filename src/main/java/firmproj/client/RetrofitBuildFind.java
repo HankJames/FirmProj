@@ -43,6 +43,7 @@ public class RetrofitBuildFind {
     public static void findAllFactoryClasses(){
         Chain<SootClass> classes = Scene.v().getClasses();
         for (SootClass sootClass : classes) {
+            if(MethodString.isStandardLibraryClass(sootClass)) continue;
             String headString = sootClass.getName().split("\\.")[0];
             String CONVERTER_FACTORY = "retrofit2.Converter$Factory";
             String CALL_FACTORY = "okhttp3.Call$Factory";
@@ -173,7 +174,7 @@ public class RetrofitBuildFind {
                                     HashMap<String, List<Integer>> intereInvoke = new HashMap<>();
                                     intereInvoke.put(sig, new ArrayList<>(List.of(0)));
                                     LOGGER.warn("[DO LOCAL TO FIND CLASS]: {} -> {}", sootMethod, invokeExpr);
-                                    MethodLocal methodLocal = new MethodLocal(sootMethod, intereInvoke);
+                                    MethodLocal methodLocal = new MethodLocal(sootMethod, intereInvoke, 0);
                                     methodLocal.doAnalysis();
                                     if(methodLocal.getLocalFromParams().containsKey(invokeExpr.getArg(0))) {
                                         fromParam = true;
@@ -215,7 +216,7 @@ public class RetrofitBuildFind {
                                     boolean fromParam = false;
                                     HashMap<String, List<Integer>> intereInvoke = new HashMap<>();
                                     intereInvoke.put(sig, new ArrayList<>(List.of(0)));
-                                    MethodLocal methodLocal = new MethodLocal(sootMethod, intereInvoke);
+                                    MethodLocal methodLocal = new MethodLocal(sootMethod, intereInvoke, 0);
                                     methodLocal.doAnalysis();
                                     if(methodLocal.getLocalFromParams().containsKey(invokeExpr.getArg(0))) {
                                         fromParam = true;
@@ -235,7 +236,7 @@ public class RetrofitBuildFind {
                                                     for (RetrofitBuildPoint lp : localPoints) {
                                                         lp.setBaseUrl(baseUrl);
                                                         lp.urlFromParam = false;
-                                                        lp.urlParam = -1;
+                                                        lp.urlParam = new ArrayList<>();
                                                     }
                                                 }
                                             }
@@ -380,36 +381,38 @@ public class RetrofitBuildFind {
         HashMap<String, List<Integer>> interestInvoke = new HashMap<>();
         interestInvoke.put(sig, new ArrayList<>());
         if(oldPoint.urlFromParam){
-            interestInvoke.get(sig).add(oldPoint.urlParam);
+            addValue(interestInvoke, sig, oldPoint.urlParam);
         }
         if(oldPoint.classFromParam){
-            interestInvoke.get(sig).add(oldPoint.classParam);
+            addValue(interestInvoke, sig, oldPoint.classParam);
         }
         if(!interestInvoke.get(sig).isEmpty()) {
-            MethodLocal methodLocal = new MethodLocal(newPoint.getCurrentMethod(), interestInvoke);
+            MethodLocal methodLocal = new MethodLocal(newPoint.getCurrentMethod(), interestInvoke, 0);
             methodLocal.doAnalysis();
-            HashMap<Value, Integer> localFromParams = methodLocal.getLocalFromParams();
+            HashMap<Value, List<Integer>> localFromParams = methodLocal.getLocalFromParams();
             HashMap<String, HashMap<Integer, List<String>>> result = methodLocal.getInterestingParamString();
             if(result.containsKey(sig)) {
-                if(oldPoint.urlFromParam) {
-                    if (localFromParams.containsKey(invokeExpr.getArg(oldPoint.urlParam))) {
-                        newPoint.urlFromParam = true;
-                        newPoint.urlParam = localFromParams.get(invokeExpr.getArg(oldPoint.urlParam));
-                    } else if (result.get(sig).containsKey(oldPoint.urlParam)) {
-                        List<String> urlResult = result.get(sig).get(oldPoint.urlParam);
-                        for (String url : urlResult)
-                            newPoint.setBaseUrl(url);
+                for(int i : result.get(sig).keySet()) {
+                    if (oldPoint.urlFromParam && oldPoint.urlParam.contains(i)) {
+                        if (localFromParams.containsKey(invokeExpr.getArg(i))) {
+                            newPoint.urlFromParam = true;
+                            newPoint.urlParam = localFromParams.get(invokeExpr.getArg(i));
+                        } else if (result.get(sig).containsKey(i)) {
+                            List<String> urlResult = result.get(sig).get(i);
+                            for (String url : urlResult)
+                                newPoint.setBaseUrl(url);
+                        }
                     }
-                }
-                if(oldPoint.classFromParam) {
-                    if (localFromParams.containsKey(invokeExpr.getArg(oldPoint.classParam))) {
-                        newPoint.classFromParam = true;
-                        newPoint.classParam = localFromParams.get(invokeExpr.getArg(oldPoint.classParam));
-                    } else if (result.get(sig).containsKey(oldPoint.classParam)) {
-                        List<String> classResult = result.get(sig).get(oldPoint.classParam);
-                        if (!classResult.isEmpty()) {
-                            newPoint.setCreateClass(classResult.get(0));
+                    if (oldPoint.classFromParam && oldPoint.classParam.contains(i)) {
+                        if (localFromParams.containsKey(invokeExpr.getArg(i))) {
+                            newPoint.classFromParam = true;
+                            newPoint.classParam = localFromParams.get(invokeExpr.getArg(i));
+                        } else if (result.get(sig).containsKey(i)) {
+                            List<String> classResult = result.get(sig).get(i);
+                            if (!classResult.isEmpty()) {
+                                newPoint.setCreateClass(classResult.get(0));
 
+                            }
                         }
                     }
                 }
@@ -432,6 +435,18 @@ public class RetrofitBuildFind {
         List<V> values = map.get(key);
         if(!values.contains(value)){
             values.add(value);
+        }
+    }
+
+    public static <K, V> void addValue(Map<K, List<V>> map, K key, List<V> values) {
+        map.computeIfAbsent(key, k -> new ArrayList<>());
+        List<V> key_values = map.get(key);
+        for(V value: values) {
+            if(value!=null) {
+                if (!key_values.contains(value)) {
+                    key_values.add(value);
+                }
+            }
         }
     }
 

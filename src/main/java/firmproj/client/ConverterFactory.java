@@ -51,7 +51,7 @@ public class ConverterFactory implements AbstractFactory{
     }
 
     private SootClass getConvertClass(SootMethod sootMethod){
-        Body body = sootMethod.getActiveBody();
+        Body body = sootMethod.retrieveActiveBody();
         HashMap<Value, SootClass> localToClass = new HashMap<>();
         for(Unit unit : body.getUnits()){
             if(unit instanceof AssignStmt){

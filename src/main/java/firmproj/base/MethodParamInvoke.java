@@ -13,6 +13,11 @@ public class MethodParamInvoke {
     public HashMap<Integer, List<String>> paramValue = new HashMap<>();
     public final List<String> InvokeMethodSig = new ArrayList<>();
 
+    public MethodParamInvoke(SootMethod method, Integer para){
+        sootMethod = method;
+        param.add(para);
+    }
+
     public MethodParamInvoke(SootMethod method, Integer para, String sig){
         sootMethod = method;
         param.add(para);
@@ -23,6 +28,11 @@ public class MethodParamInvoke {
         sootMethod = method;
         param.add(para);
         InvokeMethodSig.addAll(sig);
+    }
+
+    public MethodParamInvoke(SootMethod method, List<Integer> para){
+        sootMethod = method;
+        param = para;
     }
 
     public MethodParamInvoke(SootMethod method, List<Integer> para, String sig){
@@ -50,6 +60,12 @@ public class MethodParamInvoke {
                 return;
         }
         InvokeMethodSig.add(methodInvoke);
+    }
+
+    public void addMethodInvoke(List<String> methodInvoke){
+        for(String str : methodInvoke){
+            addMethodInvoke(str);
+        }
     }
 
     @Override

@@ -80,13 +80,11 @@ public class CallGraph {
                 boolean needCheck = !MethodString.isStandardLibraryClass(sootClass);
                 if(!needCheck) continue;
                 for (SootMethod sootMethod : clone(sootClass.getMethods())) {
-                    if(sootMethod.getSignature().contains("com.gooclient.anycam.activity.settings.update.UpdateFirmwareActivity: void getNewVersion(java.lang.String)"))
-                        LOGGER.info("GOTIT");
                     if (!sootMethod.isConcrete())
                         continue;
                     Body body = null;
                     try {
-                        body = sootMethod.retrieveActiveBody();
+                        body = sootMethod.getActiveBody();
                     } catch (Exception e) {
                         LOGGER.error("Could not retrieved the active body {} because {}", sootMethod, e.getLocalizedMessage());
                     }
@@ -120,7 +118,7 @@ public class CallGraph {
         }
 
 
-        LOGGER.info("[CG time]:" + (System.currentTimeMillis() - startTime));
+        LOGGER.debug("[CG time3]:" + (System.currentTimeMillis() - startTime));
         LOGGER.info("CallbackCLass: {}", callBackClassesWithInvoke);
         //LOGGER.info("total: " + visitedMethod.toString());
     }

@@ -19,8 +19,8 @@ public class RetrofitBuildPoint {
     public boolean classFromParam = false;
     public boolean urlFromParam = false;
 
-    public Integer classParam = -1;
-    public Integer urlParam = -1;
+    public List<Integer> classParam = new ArrayList<>();
+    public List<Integer> urlParam = new ArrayList<>();
 
     public RetrofitBuildPoint(Unit unit){
         this.createUnit = unit;

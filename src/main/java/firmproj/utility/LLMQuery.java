@@ -76,10 +76,11 @@ public class LLMQuery {
     }
 
     public static List<String> retrieveMethod(SootMethod method, int step){
-        if(step > RETRIEVE_STEP) return new ArrayList<>();
-        Body body = method.getActiveBody();
-        SootClass sootClass = method.getDeclaringClass();
         HashSet<String> result = new HashSet<>();
+        if(step > RETRIEVE_STEP) return new ArrayList<>();
+        SootClass sootClass = method.getDeclaringClass();
+        if(MethodString.isStandardLibraryClass(sootClass)) return new ArrayList<>();
+        Body body = method.retrieveActiveBody();
         for(Unit unit : body.getUnits()){
             if(unit instanceof AssignStmt){
                 Value rightOp = ((AssignStmt) unit).getRightOp();

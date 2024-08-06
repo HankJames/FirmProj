@@ -20,6 +20,8 @@ public class CustomHttpClient implements AbstractHttpClient {
 
     private boolean isNeedRequestContent = false;
 
+    public List<Integer> params = new ArrayList<>();
+
     public final HashMap<String, List<String>> requestContentFromParams = new HashMap<>(); //Body, MediaType, method.
 
     public CustomHttpClient(SootMethod method, Unit unit){

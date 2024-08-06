@@ -75,9 +75,9 @@ public class CustomClz implements AbstractClz{
         StringBuilder result = new StringBuilder();
         result.append("CustomClz: ");
         result.append(this.currentClass.toString());
-        result.append("\nParent Method: ");
+        result.append("Parent Method: ");
         result.append(this.ParentMethod);
-        result.append("\nFieldStrings: ");
+        result.append("FieldStrings: ");
         for(Map.Entry<SootField, String> entry: this.fieldString.entrySet()){
             result.append(entry.toString());
             result.append(";");
