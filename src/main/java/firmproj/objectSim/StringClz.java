@@ -52,8 +52,13 @@ public class StringClz implements AbstractClz{
                         for(Value value: invokeExpr.getArgs()){
                             if(value instanceof Constant) {
                                 Object constObj = SimulateUtil.getConstant(value);
-                                if(constObj != null)
-                                    args.add(List.of(constObj.toString()));
+                                if(constObj != null) {
+                                    if (constObj.toString().equals("58"))
+                                        args.add(List.of(":"));
+                                    else {
+                                        args.add(List.of(constObj.toString()));
+                                    }
+                                }
                                 else{
                                     args.add(List.of("null"));
                                 }
@@ -86,8 +91,11 @@ public class StringClz implements AbstractClz{
                     for(Value value: invokeExpr.getArgs()){
                         if(value instanceof Constant) {
                             Object constObj = SimulateUtil.getConstant(value);
-                            if(constObj != null)
+                            if(constObj != null) {
+                                if (constObj.toString().equals("58"))
+                                    args.add(List.of(":"));
                                 args.add(List.of(constObj.toString()));
+                            }
                             else{
                                 args.add(List.of("null"));
                             }
@@ -98,6 +106,7 @@ public class StringClz implements AbstractClz{
                         argIndex++;
                     }
                     if(args.get(0) != null)
+
                         tmpResult.add(args.get(0).toString());
                 }
             }

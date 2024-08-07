@@ -43,6 +43,7 @@ public class CustomHttpClient implements AbstractHttpClient {
     public String toString() {
         return "CustomHttpClient{" +
                 ", isNeedRequestContent=" + isNeedRequestContent +
+                ", params=" + params +
                 ", requestContentFromParams=" + requestContentFromParams +
                 '}';
     }

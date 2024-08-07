@@ -33,7 +33,9 @@ public class RetrofitBuildFind {
             for (SootMethod sootMethod : clone(sootClass.getMethods())) {
                 if (!sootMethod.isConcrete())
                     continue;
-                findRetrofitBuildMethod(sootMethod);
+                List<RetrofitBuildPoint> retrofitBuildPoints = findRetrofitBuildMethod(sootMethod);
+                if(!retrofitBuildPoints.isEmpty())
+                    addValue(findResult, sootMethod.getSignature(), retrofitBuildPoints);
             }
         }
         LOGGER.info("All retrofitResult: {}",findResult.toString());

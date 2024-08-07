@@ -49,8 +49,8 @@ public class MethodParamInvoke {
 
     public MethodParamInvoke(MethodParamInvoke OldmethodParamInvoke){
         this.sootMethod = OldmethodParamInvoke.sootMethod;
-        this.param = OldmethodParamInvoke.param;
-        this.paramValue = OldmethodParamInvoke.paramValue;
+        this.param.addAll(OldmethodParamInvoke.param);
+        this.paramValue.putAll(OldmethodParamInvoke.paramValue);
         this.InvokeMethodSig.addAll(OldmethodParamInvoke.InvokeMethodSig);
     }
 

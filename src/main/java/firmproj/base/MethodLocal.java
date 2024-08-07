@@ -514,7 +514,7 @@ public class MethodLocal {
             else if(sig.contains("stringPlus"))
                 result.add(value0 + value1);
             return result;
-        } else if (sig.contains("listOf") || sig.contains("valueOf") || sig.contains("boxing")) {
+        } else if (sig.contains("listOf") || sig.contains("valueOf") || sig.contains("boxing") || sig.contains("mapOf")) {
             result.add(value0);
             return result;
         } else if( sig.contains("currentTimeMillis")){
