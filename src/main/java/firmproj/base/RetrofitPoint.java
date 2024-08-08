@@ -89,14 +89,10 @@ public class RetrofitPoint {
         StringBuilder result = new StringBuilder();
         result.append("RetrofitPoint: ");
         result.append(getMethod().toString());
-        result.append("\n======\nMethod Anno:");
-        for(AnnotationTag tag: getMethodAnnotations()){
-            result.append(tag.toString());
-        }
-        result.append("======\nParam Anno:");
-        for(AnnotationTag tag: getParameterAnnotations()){
-            result.append(tag.toString());
-        }
+        result.append("\nMethod Anno:");
+        result.append(MethodString.getContent(methodAnnotations));
+        result.append("\nParam Anno:");
+        result.append(MethodString.getContent(parameterAnnotations));
 
         return result.toString();
     }

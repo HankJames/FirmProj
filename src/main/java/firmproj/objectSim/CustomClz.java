@@ -1,5 +1,6 @@
 package firmproj.objectSim;
 
+import firmproj.base.MethodString;
 import firmproj.base.ValueContext;
 import soot.SootClass;
 import soot.SootField;
@@ -15,7 +16,7 @@ public class CustomClz implements AbstractClz{
 
     private final SootClass currentClass;
     private final SootMethod ParentMethod;
-    private final HashMap<SootField, String> fieldString = new HashMap<>();
+    private final HashMap<SootField, List<String>> fieldString = new HashMap<>();
     private final List<ValueContext> valueContexts = new ArrayList<>();
 
     public CustomClz(SootClass currentClass, SootMethod method){
@@ -78,8 +79,10 @@ public class CustomClz implements AbstractClz{
         result.append("Parent Method: ");
         result.append(this.ParentMethod);
         result.append("FieldStrings: ");
-        for(Map.Entry<SootField, String> entry: this.fieldString.entrySet()){
-            result.append(entry.toString());
+        for(Map.Entry<SootField, List<String>> entry: this.fieldString.entrySet()){
+            result.append(entry.getKey());
+            result.append('=');
+            result.append(MethodString.getContent(entry.getValue()));
             result.append(";");
         }
         return result.toString();

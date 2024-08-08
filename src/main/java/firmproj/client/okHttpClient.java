@@ -1,5 +1,6 @@
 package firmproj.client;
 
+import firmproj.base.MethodString;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import soot.SootMethod;
@@ -9,6 +10,7 @@ import soot.Value;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class okHttpClient implements AbstractHttpClient {
 
@@ -63,9 +65,23 @@ public class okHttpClient implements AbstractHttpClient {
     @Override
     public String toString() {
         return "okHttpClient{" +
-                "interceptors=" + interceptors +
+                "params=" + params +
+                ", interceptors=" + interceptors +
                 ", isNeedRequestContent=" + isNeedRequestContent +
-                ", requestContentFromParams=" + requestContentFromParams +
+                ", requestContentFromParams=" + MethodString.getContent(requestContentFromParams) +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        okHttpClient that = (okHttpClient) o;
+        return isNeedRequestContent == that.isNeedRequestContent && Objects.equals(interceptors, that.interceptors) && Objects.equals(sootMethod, that.sootMethod) && Objects.equals(params, that.params) && Objects.equals(requestContentFromParams, that.requestContentFromParams);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(interceptors, sootMethod, isNeedRequestContent, params, requestContentFromParams);
     }
 }

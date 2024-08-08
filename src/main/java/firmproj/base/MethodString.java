@@ -112,7 +112,7 @@ public class MethodString {
                             if (str.equals("\"\"") || str.equals("null") || str.equals("0") || str.isEmpty()) continue;
                             addValue(methodToString, sootMethod, str);
                             TryAddStringToInterface(sootMethod);
-                            LOGGER.info("266:New Method To String: " + sootMethod.getSignature() + ":" + str + ";" + methodToString.get(sootMethod).toString());
+                            LOGGER.info("266:New Method To String: " + sootMethod.getSignature() + ":" + str + ";" + getContent(methodToString.get(sootMethod)));
                             mstrs.add(str);
                         }
                         //return mstrs;
@@ -152,7 +152,7 @@ public class MethodString {
                                                             mstrs.add(str);
                                                     }
                                                     TryAddStringToInterface(sootMethod);
-                                                    LOGGER.info("238:New Method To String: " + sootMethod.getSignature() + ":" + strs + ";" + methodToString.get(sootMethod).toString());
+                                                    LOGGER.info("238:New Method To String: " + sootMethod.getSignature() + ":" + strs + ";" + MethodString.getContent(methodToString.get(sootMethod)));
                                                     //return mstrs;
                                                 }
                                             }
@@ -176,7 +176,7 @@ public class MethodString {
                                                 addValue(methodToString, sootMethod, item);
                                             }
                                             TryAddStringToInterface(sootMethod);
-                                            LOGGER.info("255:New Method To String: " + sootMethod.getSignature() + ":" + mstrs + ";" + methodToString.get(sootMethod).toString());
+                                            LOGGER.info("255:New Method To String: " + sootMethod.getSignature() + ":" + mstrs + ";" + MethodString.getContent(methodToString.get(sootMethod)));
                                         }
                                         //return mstrs;
                                     }
@@ -186,7 +186,7 @@ public class MethodString {
                                             addValue(methodToString, sootMethod, rightOp.toString());
                                             mstrs.add(rightOp.toString());
                                             TryAddStringToInterface(sootMethod);
-                                            LOGGER.info("314:New Method To String: " + sootMethod.getSignature() + ":" + mstrs + ";" + methodToString.get(sootMethod).toString());
+                                            LOGGER.info("314:New Method To String: " + sootMethod.getSignature() + ":" + mstrs + ";" + MethodString.getContent(methodToString.get(sootMethod)));
                                         }
                                     }
                                     else if(rightOp instanceof BinopExpr){
@@ -261,8 +261,11 @@ public class MethodString {
                 for (Tag tag : field.getTags()) {
                     if (tag instanceof ConstantValueTag) {
                         ConstantValueTag constantValueTag = (ConstantValueTag) tag;
-                        String str = constantValueTag.getConstant().toString();
-                        addValue(fieldToString, field.toString(), str);
+                        Object obj = SimulateUtil.getConstant(constantValueTag.getConstant());
+                        if(obj != null) {
+                            String str = obj.toString();
+                            addValue(fieldToString, field.toString(), str);
+                        }
                     }
                 }
             }
@@ -324,7 +327,7 @@ public class MethodString {
 
                 if(fieldStr.toString().contains(startField)) return tmpResult; //ring
                 fieldStr.replaceAll(s -> s.replace(field, ""));
-                String resultStr = retrieveAllfieldString(field, fieldStr.toString());
+                String resultStr = retrieveAllfieldString(field, getContent(fieldStr));
 
                 tmpResult = tmpResult.replace(field, resultStr);
             }
@@ -335,7 +338,7 @@ public class MethodString {
 
     public static HashMap<Integer, SootField> GetSetField(SootMethod sootMethod){
 
-        if(sootMethod.getSignature().contains("void getNewVersion(java.lang.String)"))
+        if(sootMethod.getSignature().contains("java.util.Map getHeaderData(java.lang.String)"))
             LOGGER.info("TARGET");
         SootClass clz = sootMethod.getDeclaringClass();
         HashMap<SootMethod, HashMap<Integer, SootField>> clzMethod = allClzWithSetFieldMethod.get(clz);
@@ -570,7 +573,6 @@ public class MethodString {
                                 SootMethod method = ((InvokeExpr) rightOp).getMethod();
                                 if(methodToFieldString.containsKey(method) || MethodString.getMethodToString().containsKey(method)) {
                                     if (methodToString.containsKey(method)) {
-
                                         localToString.put(leftOp, MethodString.getMethodToString().get(method));
                                     } else if (methodToFieldString.containsKey(method)) {
                                         if (fieldToString.containsKey(methodToFieldString.get(method))) {
@@ -615,7 +617,7 @@ public class MethodString {
                                             if(localFromParam.containsKey(arg)){
                                                addValue(localFromParam, rightBase, localFromParam.get(arg));
                                             }
-                                            paramValueWithStrings.put(arg, new ArrayList<>(List.of(localArray.get(arg).toString())));
+                                            paramValueWithStrings.put(arg, new ArrayList<>(List.of(getContent(localArray.get(arg)))));
                                         }
                                         else if(localToString.containsKey(arg) ){
                                             paramValueWithStrings.put(arg, localToString.get(arg));
@@ -623,11 +625,11 @@ public class MethodString {
                                         else if(localFromParamInvoke.containsKey(arg)){
                                             addValue(localFromParam, rightBase, localFromParamInvoke.get(arg).param);
                                             MethodParamInvoke methodParamInvoke = new MethodParamInvoke(localFromParamInvoke.get(arg));
-                                            paramValueWithStrings.put(arg, new ArrayList<>(List.of(methodParamInvoke.InvokeMethodSig.toString())));
+                                            paramValueWithStrings.put(arg, new ArrayList<>(List.of(getContent(methodParamInvoke.InvokeMethodSig))));
                                         }
                                         else if(localFromParam.containsKey(arg)){
                                             addValue(localFromParam, rightBase, localFromParam.get(arg));
-                                            paramValueWithStrings.put(arg, new ArrayList<>(List.of("$" + localFromParam.get(arg))));
+                                            paramValueWithStrings.put(arg, MethodString.paramListToString(localFromParam.get(arg)));
                                         }
                                         if(paramValueWithStrings.containsKey(arg))
                                             paramIndexWithStrings.put(index, paramValueWithStrings.get(arg));
@@ -704,7 +706,7 @@ public class MethodString {
                                             if(localFromParam.containsKey(arg)){
                                                 addValue(fromParamArg, localFromParam.get(arg));
                                             }
-                                            paramIndexWithStrings.put(index, new ArrayList<>(List.of(localArray.get(arg).toString())));
+                                            paramIndexWithStrings.put(index, new ArrayList<>(List.of(getContent(localArray.get(arg)))));
                                         }
                                         else if(localToString.containsKey(arg) ){
                                             paramIndexWithStrings.put(index, localToString.get(arg));
@@ -716,7 +718,7 @@ public class MethodString {
                                         }
                                         else if(localFromParam.containsKey(arg)){
                                             addValue(fromParamArg, localFromParam.get(arg));
-                                            paramIndexWithStrings.put(index, new ArrayList<>(List.of("$" + localFromParam.get(arg))));
+                                            paramIndexWithStrings.put(index, MethodString.paramListToString(localFromParam.get(arg)));
                                         }
                                         index++;
                                     }
@@ -735,15 +737,15 @@ public class MethodString {
                                         }
                                     }
                                     else{
-                                        methodParamInvoke = new MethodParamInvoke(sootMethod, fromParamArg, method.getSignature() + paramIndexWithStrings);
+                                        methodParamInvoke = new MethodParamInvoke(sootMethod, fromParamArg, method.getSignature() + getContent(paramIndexWithStrings));
                                         if(method.getReturnType() instanceof ArrayType){
                                             ArrayType arrayType = (ArrayType) method.getReturnType();
                                             if(arrayType.toString().toLowerCase().contains("byte")) continue;
                                             int LEN = 10;
                                             List<List<String>> arrayList = new ArrayList<>();
                                             List<String> arrayValue = new ArrayList<>();
-                                            if(fromParamArg.isEmpty())
-                                                arrayValue.addAll(methodParamInvoke.InvokeMethodSig);
+                                            if(fromParamArg.isEmpty() && !methodParamInvoke.InvokeMethodSig.isEmpty())
+                                                arrayValue.add(getContent(methodParamInvoke.InvokeMethodSig));
                                             else {
                                                 arrayValue.add(methodParamInvoke.toString());
                                                 localFromParam.put(leftOp, fromParamArg);
@@ -814,7 +816,7 @@ public class MethodString {
                             if (methodToFieldString.containsValue(leftField.toString())) {
                                 SootMethod method = getKeyByValue(methodToFieldString, leftField.toString());
                                 if(method != null){
-                                    addValue(methodToString, method, rightOp.toString());
+                                    addValue(methodToString, method, obj.toString());
                                     TryAddStringToInterface(method);
                                     LOGGER.info("141:New Method To String: " + method.getSignature() + ":" + rightOp + ";" + methodToString.get(method).toString());
                                 }
@@ -898,10 +900,8 @@ public class MethodString {
                                     }
                                     else if (localFromParam.containsKey(rightOp)) {
                                         arrayValue.clear();
-                                        for(int i : localFromParam.get(rightOp)) {
-                                            arrayValue.add("$[" + i + "]");
-                                            addValue(localFromParam, base, i);
-                                        }
+                                        arrayValue.addAll(MethodString.paramListToString(localFromParam.get(rightOp)));
+                                        addValue(localFromParam, base, localFromParam.get(rightOp));
                                     }
                                     else if (localFromParamInvoke.containsKey(rightOp)){
                                         MethodParamInvoke methodParamInvoke = new MethodParamInvoke(localFromParamInvoke.get(rightOp));
@@ -946,7 +946,7 @@ public class MethodString {
                             isNeedInvoke = true;
                             List<String> paramList = new ArrayList<>();
                             for (List<String> strs : localArray.get(param)) {
-                                paramList.add(strs.toString());
+                                paramList.add(getContent(strs));
                             }
                             localToParam.put(index, param);
                             localToString.put(param, paramList);
@@ -965,7 +965,7 @@ public class MethodString {
                         else if(localFromParam.containsKey(param)) {
                             isNeedInvoke = true;
                             localToParam.put(index, param);
-                            addValue(valueContext.getCurrentValues(), param, "$" + localFromParam.get(param));
+                            addValue(valueContext.getCurrentValues(), param, paramListToString(localFromParam.get(param)));
 
                             if(base != null && localToCLz.containsKey(base)) {
                                 addValue(localFromParam, base, localFromParam.get(param));
@@ -976,11 +976,11 @@ public class MethodString {
                             localToParam.put(index, param);
 
                             if(base != null && localToCLz.containsKey(base)) {
-                                addValue(valueContext.getCurrentValues(), param, localFromParamInvoke.get(param).InvokeMethodSig.toString());
+                                addValue(valueContext.getCurrentValues(), param, getContent(localFromParamInvoke.get(param).InvokeMethodSig));
                                 addValue(localFromParam, base, localFromParamInvoke.get(param).param);
                             }
                             else{
-                                addValue(valueContext.getCurrentValues(), param, localFromParamInvoke.get(param).toString());
+                                addValue(valueContext.getCurrentValues(), param, localFromParamInvoke.get(param).toString()); //todo
                             }
                         }
 
@@ -1038,7 +1038,7 @@ public class MethodString {
                                                 addValue(methodParamInvoke.paramValue, paramIndex, localToString.get(localValue));
                                             }
                                             else if(localArray.containsKey(localValue)){
-                                                addValue(methodParamInvoke.paramValue, paramIndex, localArray.get(localValue).toString());
+                                                addValue(methodParamInvoke.paramValue, paramIndex, getContent(localArray.get(localValue)));
                                             }
                                             else if(localToCLz.containsKey(localValue)){
                                                 addValue(methodParamInvoke.paramValue, paramIndex, localToCLz.get(localValue).toString());
@@ -1101,6 +1101,7 @@ public class MethodString {
                                             }
                                         } else {
                                             Object constObj = SimulateUtil.getConstant(paramWithConstant.get(constIndex));
+                                            if(constObj.toString().isEmpty()) continue;
                                             if (field != null && constObj != null) {
                                                 if (!fieldToString.containsKey(field.toString()))
                                                     fieldToString.put(field.toString(), new ArrayList<>());
@@ -1149,7 +1150,7 @@ public class MethodString {
                             if(paramWithConstant.containsKey(1)) {
                                 Constant ob1 = paramWithConstant.get(1);
                                 if (ob1 == null)
-                                    str[1] = localToString.get(localToParam.get(1)).toString();
+                                    str[1] = getContent(localToString.get(localToParam.get(1)));
                                 else {
                                     Object ob = SimulateUtil.getConstant(ob1);
                                     if (ob != null)
@@ -1166,9 +1167,7 @@ public class MethodString {
                                 }
                                 else maybeCache = false;
                             }
-
-
-                            if(maybeCache) {
+                            if(maybeCache && str[0] !=null && str[1] != null) {
                                 SootClass invokeClz = invokeMethod.getDeclaringClass();
                                 if(!isStandardLibraryClass(invokeClz)) {
                                     if (!classMaybeCache.containsKey(invokeClz))
@@ -1182,13 +1181,17 @@ public class MethodString {
                 }
                 else if (stmt instanceof ReturnStmt) {
                     Value returnOP = ((ReturnStmt) stmt).getOp();
+                    String returnType = sootMethod.getReturnType().toString().toLowerCase();
                     if(localFromParamInvoke.containsKey(returnOP)){
                         //TODO methodReturnParamInvoke.
                         if(methodReturnParamInvoke.containsKey(sootMethod)) {
                             if(methodReturnParamInvoke.get(sootMethod).InvokeMethodSig.toString().length() < localFromParamInvoke.get(returnOP).InvokeMethodSig.toString().length())
                                 methodReturnParamInvoke.put(sootMethod, localFromParamInvoke.get(returnOP));
                         }
-                        if(isCommonType(sootMethod.getReturnType())){
+                        else{
+                            methodReturnParamInvoke.put(sootMethod, localFromParamInvoke.get(returnOP));
+                        }
+                        if(returnType.contains("url") || returnType.contains("string")){
                             String returnStr = localFromParamInvoke.get(returnOP).toString();
                             if(isFirmRelatedUrl(returnStr))
                                 LOGGER.debug("FIND URL: {} ,from method {} ", returnStr, sootMethod);
@@ -1202,11 +1205,13 @@ public class MethodString {
                             if(methodReturnParamInvoke.containsKey(sootMethod)) {
                                 if(methodReturnParamInvoke.get(sootMethod).InvokeMethodSig.toString().length() < methodParamInvoke.InvokeMethodSig.toString().length())
                                     methodReturnParamInvoke.put(sootMethod, methodParamInvoke);
+                            }else{
+                                methodReturnParamInvoke.put(sootMethod, methodParamInvoke);
                             }
                         }
                     }
                     if(localToString.containsKey(returnOP)){
-                        if(isCommonType(sootMethod.getReturnType())){
+                        if(returnType.contains("url") || returnType.contains("string")){
                             String returnStr = localToString.get(returnOP).toString();
                             if(isFirmRelatedUrl(returnStr))
                                 LOGGER.debug("FIND local URL: {} ,from method {} ", returnStr, sootMethod);
@@ -1218,11 +1223,20 @@ public class MethodString {
         return fieldWithParam;
     }
 
+    public static List<String> paramListToString(List<Integer> params){
+        List<String> result = new ArrayList<>();
+        for(Integer i : params){
+            result.add("$[" + i + "]");
+        }
+        return result;
+    }
+
+
     public static boolean isFirmRelatedUrl(String strParam){
         int i = 0;
         String str = strParam.toLowerCase();
-        if(str.contains(".com") || str.contains("url") || str.contains(".cn") || str.contains("://"))
-            i++;
+        if(str.contains(".com") || str.contains(".net") || str.contains(".cn") || str.contains("://") || str.contains("http"))
+            i = i + 2;
         if(str.contains("firmware") || str.contains("upgrade") || str.contains("update") || (str.contains("version") && (str.contains("match") || str.contains("new")))){
             i++;
         }
@@ -1231,7 +1245,7 @@ public class MethodString {
         if(str.contains("appupdate") || str.contains("app_update") || str.contains("!"))
             i--;
 
-        return i>1;
+        return i>2;
     }
 
     public static boolean isCommonType(Type type) {
@@ -1333,13 +1347,16 @@ public class MethodString {
     }
 
     public static String getInvokeSigOfString(String str){
-        String regex = "InvokeMethodSig=\\[(.*?)]}(, |$)";
+        String regex = "InvokeMethodSig=(\\[(<.*?)]|(<.*?))}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(str);
 
-        if (matcher.find()) {
+        while (matcher.find()) {
             // 将匹配的结果添加到列表中
-            return matcher.group(1);
+            if(matcher.group(1) != null)
+                return matcher.group(1);
+            else if(matcher.group(2) != null)
+                return matcher.group(2);
         }
         return null;
     }
@@ -1372,6 +1389,41 @@ public class MethodString {
 
     public static HashMap<String,List<String>> getFieldToString(){
         return fieldToString;
+    }
+
+    public static String getContent(Object obj) {
+        if (obj instanceof List<?>) {
+            List<?> list = (List<?>) obj;
+            if(list.isEmpty()) return "";
+            if (list.size() == 1) {
+                Object firstElement = list.get(0);
+                return getContent(firstElement);
+            } else {
+                // 返回 List 的 toString() 形式
+                List<String> stringList = new ArrayList<>();
+                for (Object element : list) {
+                    stringList.add(getContent(element));
+                }
+                return stringList.toString();
+            }
+        } else if (obj instanceof Map<?, ?>) {
+            Map<?, ?> map = (Map<?, ?>) obj;
+            StringBuilder sb = new StringBuilder("{");
+            boolean first = true;
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                if (!first) sb.append(", ");
+                sb.append(getContent(entry.getKey())).append("=").append(getContent(entry.getValue()));
+                first = false;
+            }
+            sb.append("}");
+            return sb.toString();
+        } else if (obj instanceof String) {
+            return (String) obj;
+        } else if(obj==null){
+            return "null";
+        } else{
+            return obj.toString();
+        }
     }
 
     public static <V> void addValue(List<V> list,  V value) {

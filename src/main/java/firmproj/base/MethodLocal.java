@@ -402,7 +402,7 @@ public class MethodLocal {
                     LOGGER.warn("[SIMULATE]: Find Interesting Solved Local Value: {}", LocalToString.get(value));
                     addValue(paramValue, value, LocalToString.get(value));
                     if (isInterestingInvoke && interestingParam.contains(i)) {
-                        LOGGER.warn("[SIMULATE]: Find Interesting Local invoke value: {}=>{}", i, paramValue.toString());
+                        LOGGER.warn("[SIMULATE]: Find Interesting Local invoke value: {}=>{}", i, MethodString.getContent(paramValue));
                         addValue(interestingParamString, i, paramValue.get(value));
                     }
                 }
@@ -419,8 +419,8 @@ public class MethodLocal {
         if(!nextInvokeParam.isEmpty()) {
             HashSet<CallGraphNode> callByNodes = CallGraph.getNode(sootMethod.toString()).getCallBy();
             if(callByNodes.isEmpty()){
-                for(int p : nextInvokeParam.get(sootMethod.getSignature())) {
-                    addValue(paramValue, invokeExpr.getArg(p), "UNKNOWN FROM "+ sootMethod.getSubSignature() + "($" + p + ")");
+                for(Value arg : invokeExpr.getArgs()){
+                    addValue(paramValue, arg, "UNKNOWN FROM "+ sootMethod.getSubSignature() + MethodString.paramListToString(nextInvokeParam.get(sootMethod.getSignature())));
                 }
             }
             else {
@@ -444,7 +444,7 @@ public class MethodLocal {
                                     addValue(paramValue, value, invokeResult.get(index));   //if param value if just local or other.
                                 }
                                 if (isInterestingInvoke && interestingParam.contains(invokeArg)) {
-                                    LOGGER.warn("[SIMULATE]: Find Interesting From invoke: {}=>{}", i, paramValue.toString());
+                                    LOGGER.warn("[SIMULATE]: Find Interesting From invoke: {}=>{}", i, MethodString.getContent(paramValue));
                                     addValue(interestingParamString, invokeArg, paramValue.get(value));
                                 }
                             }
@@ -468,7 +468,7 @@ public class MethodLocal {
         for(Integer key : invokeArgToMethodArg.keySet()){
             List<Integer> value = invokeArgToMethodArg.get(key);
             if(value.contains(methodArg))
-                addValue(result, methodArg);
+                addValue(result, key);
         }
         return result;
     }
@@ -481,7 +481,7 @@ public class MethodLocal {
         List<String> result = new ArrayList<>();
         String value0 = "";
         if(paramValues.containsKey(0))
-            value0 = paramValues.get(0).toString();
+            value0 = MethodString.getContent(paramValues.get(0));
         else if(invokeExpr.getArg(0) instanceof Constant) {
             Object obj = SimulateUtil.getConstant(invokeExpr.getArg(0));
             if(obj != null)
@@ -498,10 +498,10 @@ public class MethodLocal {
                 result.add(str);
             }
             return result;
-        } else if(sig.contains("kotlin.TuplesKt: kotlin.Pair 'to'") || sig.contains("stringPlus")){
+        } else if(sig.contains("kotlin.TuplesKt: kotlin.Pair 'to'") || sig.contains("stringPlus") || sig.contains("java.net.URLEncoder: java.lang.String encode")){
             String value1 = "";
             if(paramValues.containsKey(1))
-                value1 = paramValues.get(1).toString();
+                value1 = MethodString.getContent(paramValues.get(1));
             else if(invokeExpr.getArg(1) instanceof Constant) {
                 Object obj = SimulateUtil.getConstant(invokeExpr.getArg(0));
                 if (obj != null)
@@ -513,6 +513,8 @@ public class MethodLocal {
                 result.add(value0 + '=' + value1);
             else if(sig.contains("stringPlus"))
                 result.add(value0 + value1);
+            else if(sig.contains("java.net.URLEncoder: java.lang.String encode"))
+                result.add("encode(" + value0 + "," + value1 + ")");
             return result;
         } else if (sig.contains("listOf") || sig.contains("valueOf") || sig.contains("boxing") || sig.contains("mapOf")) {
             result.add(value0);

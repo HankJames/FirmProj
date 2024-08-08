@@ -13,7 +13,9 @@ import soot.*;
 import soot.jimple.*;
 import soot.util.Chain;
 
+import java.lang.reflect.Method;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HttpClientFind {
     public static final HashMap<String, List<AbstractHttpClient>> findResult = new HashMap<>();
@@ -72,7 +74,7 @@ public class HttpClientFind {
     public static List<AbstractHttpClient> findHttpClientBuildMethod(SootMethod sootMethod){
         String methodSig = sootMethod.getSignature();
         if(findResult.containsKey(methodSig)) return findResult.get(methodSig);
-        if(methodSig.contains("void onSendGetFwInfo(java.lang.String,int,java.lang.String"))
+        if(methodSig.contains("android.graphics.Bitmap a0(com.foscam.foscam.entity.MessageAlarm)"))
             LOGGER.info("got");
 
         List<AbstractHttpClient> result = new ArrayList<>();
@@ -203,7 +205,7 @@ public class HttpClientFind {
                                 }
                             }
                             else if(localToArray.containsKey(arg)){
-                                paramValueWithStrings.put(arg, new ArrayList<>(List.of(localToArray.get(arg).toString())));
+                                paramValueWithStrings.put(arg, new ArrayList<>(List.of(MethodString.getContent(localToArray.get(arg)))));
                             }
                             else if(arg instanceof Constant){
                                 Object obj = SimulateUtil.getConstant(arg);
@@ -223,7 +225,7 @@ public class HttpClientFind {
                             else if(localFromParam.containsKey(arg)){
                                 if(base!=null)
                                     addValue(localFromParam, base, localFromParam.get(arg));
-                                paramValueWithStrings.put(arg, new ArrayList<>(List.of("$" + localFromParam.get(arg))));
+                                paramValueWithStrings.put(arg, new ArrayList<>(MethodString.paramListToString(localFromParam.get(arg))));
                             }
                             else{
                                 paramValueWithStrings.put(arg, new ArrayList<>(List.of("UNKOWN")));
@@ -274,10 +276,10 @@ public class HttpClientFind {
                                     localToPoint.put(leftOp, localToPoint.remove(base));
                                     Value arg0 = invokeExpr.getArg(0);
                                     HashMap<String, List<String>> newCallParam = new HashMap<>();
-                                    if (localFromParam.containsKey(arg0)) {
-                                        newCallParam.put("Request", List.of("$" + localFromParam.get(arg0)));
-                                    } else if (localToRequestBuilder.containsKey(arg0)) {
+                                    if (localToRequestBuilder.containsKey(arg0)) {
                                         newCallParam.putAll(localToRequestBuilder.get(arg0));
+                                    }else if (localFromParam.containsKey(arg0)) {
+                                        newCallParam.put("Request", MethodString.paramListToString(localFromParam.get(arg0)));
                                     }
                                     for (AbstractHttpClient client : localToPoint.get(leftOp)) {
                                         okHttpClient okHttpClient = (firmproj.client.okHttpClient) client;
@@ -290,10 +292,11 @@ public class HttpClientFind {
                                 } else if (sig.contains("com.github.kittinunf.fuel.core.Request: com.github.kittinunf.fuel.core.Request header(java.util.Map)")) {
                                     Value arg = invokeExpr.getArg(0);
                                     List<Integer> params = new ArrayList<>();
-                                    if(localFromParam.containsKey(arg)){
-                                        params = new ArrayList<>(localFromParam.get(arg));
-                                    }else if(localFromParamInvoke.containsKey(arg)){
+                                    if(localFromParamInvoke.containsKey(arg)){
                                         params = new ArrayList<>(localFromParamInvoke.get(arg).param);
+                                    }
+                                    else if(localFromParam.containsKey(arg)){
+                                        params = new ArrayList<>(localFromParam.get(arg));
                                     }
                                     for (AbstractHttpClient abstractHttpClient : localPoints) {
                                         CustomHttpClient customHttpClient = (CustomHttpClient) abstractHttpClient;
@@ -314,8 +317,15 @@ public class HttpClientFind {
                                         if (obj != null) {
                                             localToRequestBuilder.get(base).put("url", List.of(obj.toString()));
                                         }
-                                    } else if (localFromParam.containsKey(urlParam)) {
-                                        localToRequestBuilder.get(base).put("url", List.of("$" + localFromParam.get(urlParam)));
+                                    } else if(localToClz.containsKey(urlParam)){
+                                        AbstractClz abstractClz1 = localToClz.get(urlParam);
+                                        abstractClz1.solve();
+                                        if(localFromParam.containsKey(urlParam)){
+                                            addValue(localFromParam, base, localFromParam.get(urlParam));
+                                        }
+                                    }
+                                    else if (localFromParam.containsKey(urlParam)) {
+                                        localToRequestBuilder.get(base).put("url", MethodString.paramListToString(localFromParam.get(urlParam))); //todo replace
                                         addValue(localFromParam, base, localFromParam.get(urlParam));
                                     } else if (urlParam instanceof Local) {
                                         if (!currentValues.containsKey(sig)) {
@@ -324,7 +334,7 @@ public class HttpClientFind {
                                             MethodLocal methodLocal = new MethodLocal(sootMethod, interestingInvoke, 0);
                                             methodLocal.doAnalysis();
                                             if (methodLocal.getLocalFromParams().containsKey(invokeExpr.getArg(0))) {
-                                                localToRequestBuilder.get(base).put("url", List.of("$" + methodLocal.getLocalFromParams().get(invokeExpr.getArg(0))));
+                                                localToRequestBuilder.get(base).put("url", MethodString.paramListToString(methodLocal.getLocalFromParams().get(invokeExpr.getArg(0))));
                                             } else {
                                                 currentValues.putAll(methodLocal.getInterestingParamString());
                                             }
@@ -343,11 +353,14 @@ public class HttpClientFind {
                                         if (obj != null) {
                                             localToRequestBuilder.get(base).put("body", List.of(obj.toString()));
                                         }
-                                    } else if (localFromParam.containsKey(postParam)) {
-                                        localToRequestBuilder.get(base).put("body", List.of("$" + localFromParam.get(postParam)));
-                                        addValue(localFromParam, base, localFromParam.get(postParam));
                                     } else if (localToString.containsKey(postParam)) {
                                         localToRequestBuilder.get(base).put("body", localToString.get(postParam));
+                                        if(localFromParam.containsKey(postParam)){
+                                            addValue(localFromParam, base, localFromParam.get(postParam));
+                                        }
+                                    }else if (localFromParam.containsKey(postParam)) {
+                                        localToRequestBuilder.get(base).put("body", MethodString.paramListToString(localFromParam.get(postParam)));
+                                        addValue(localFromParam, base, localFromParam.get(postParam));
                                     }
                                 } else if (sig.contains("okhttp3.Request$Builder: okhttp3.Request build()")) {
                                     localToRequestBuilder.put(leftOp, localToRequestBuilder.remove(base));
@@ -369,37 +382,59 @@ public class HttpClientFind {
                                     HashMap<Integer, List<String>> paramValues = new HashMap<>();
                                     for (int i : params) {
                                         Value arg = invokeExpr.getArg(i);
-                                        if (paramValueWithStrings.containsKey(arg)) {
+                                        if (paramValueWithStrings.containsKey(arg)) { //todo just localtostring or constant
                                             paramValues.put(i, paramValueWithStrings.get(arg));
                                         }
                                         if (localFromParam.containsKey(arg)) {
                                             addValue(methodParamInvoke.param, localFromParam.get(arg));
+                                            methodParamInvoke.InvokeMethodSig.replaceAll(s -> s.replace("$["+i+"]", MethodString.getContent(MethodString.paramListToString(localFromParam.get(arg)))));
                                         }
                                         else if(localFromParamInvoke.containsKey(arg)){
                                             addValue(methodParamInvoke.param, localFromParamInvoke.get(arg).param);
+                                            methodParamInvoke.InvokeMethodSig.replaceAll(s -> s.replace("$["+i+"]", MethodString.getContent(localFromParamInvoke.get(arg).InvokeMethodSig)));
                                         }
                                     }
                                     if (!paramValues.isEmpty()) {
                                         addValue(methodParamInvoke.paramValue, paramValues);
                                     }
                                     if(methodParamInvoke.param.isEmpty()){
-                                        localToString.put(leftOp,  new ArrayList<>(List.of(methodParamInvoke.InvokeMethodSig + methodParamInvoke.paramValue.toString())));
+                                        localToString.put(leftOp,  new ArrayList<>(List.of(MethodString.getContent(methodParamInvoke.InvokeMethodSig) + MethodString.getContent(methodParamInvoke.paramValue))));
                                         localFromParam.remove(leftOp);
                                         localToClz.remove(leftOp);
                                         localFromParamInvoke.remove(leftOp);
                                         localToPoint.remove(leftOp);
                                     }
                                     else {
-                                        localFromParamInvoke.put(leftOp, new MethodParamInvoke(methodParamInvoke));
+                                        localFromParamInvoke.put(leftOp, methodParamInvoke);
                                     }
                                 }
                             }
-                            else if(localFromParam.containsKey(base)){
-                                localFromParamInvoke.put(leftOp, new MethodParamInvoke(sootMethod, localFromParam.get(base), invokeMethod.getSignature()));
+                            else if(MethodString.methodToFieldString.containsKey(invokeMethod) || MethodString.getMethodToString().containsKey(invokeMethod)) {
+                                if (MethodString.methodToString.containsKey(invokeMethod)) {
+                                    localToString.put(leftOp, MethodString.getMethodToString().get(invokeMethod));
+                                } else if (MethodString.methodToFieldString.containsKey(invokeMethod)) {
+                                    localToString.put(leftOp, new ArrayList<>(List.of(MethodString.methodToFieldString.get(invokeMethod))));
+                                }
+                                localFromParam.remove(leftOp);
+                                localFromParamInvoke.remove(leftOp);
+                                localToClz.remove(leftOp);
                             }
-                            else if(localFromParamInvoke.containsKey(base)){
-                                localFromParamInvoke.put(leftOp, new MethodParamInvoke(localFromParamInvoke.get(base)));
-                                localFromParamInvoke.get(leftOp).addMethodInvoke(invokeMethod.getSignature());
+                            else {
+                                if (localFromParamInvoke.containsKey(base)) {
+                                    localFromParamInvoke.put(leftOp, new MethodParamInvoke(localFromParamInvoke.get(base)));
+                                    localFromParamInvoke.get(leftOp).addMethodInvoke(invokeMethod.getSignature());
+                                    if(localFromParam.containsKey(base))
+                                        addValue(localFromParamInvoke.get(base).param, localFromParam.get(base));
+                                } else if (localFromParam.containsKey(base)) {
+                                    localFromParamInvoke.put(leftOp, new MethodParamInvoke(sootMethod, localFromParam.get(base), invokeMethod.getSignature()));
+                                } else {
+                                    MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, new ArrayList<>(), invokeMethod.getSignature());
+                                    localFromParamInvoke.put(leftOp, methodParamInvoke);
+                                }
+                                localToClz.remove(leftOp);
+                                localToArray.remove(leftOp);
+                                localToString.remove(leftOp);
+                                localFromParam.remove(leftOp);
                             }
 
                             if(localFromParam.containsKey(base)){
@@ -418,20 +453,22 @@ public class HttpClientFind {
                                         localToString.get(leftOp).add(obj.toString());
                                     }
                                 } else if (localFromParam.containsKey(arg0)) {
-                                    localToString.get(leftOp).add("$" + localFromParam.get(arg0));
+                                    localToString.get(leftOp).add(MethodString.getContent(MethodString.paramListToString(localFromParam.get(arg0))));
                                 }
                             } else if (invokeSig.contains("okhttp3.RequestBody: okhttp3.RequestBody create")) {
                                 localToString.put(leftOp, new ArrayList<>());
-                                for (Value value : staticInvokeExpr.getArgs()) {
+                                for (Value value : staticInvokeExpr.getArgs()) {//todo replace with parameterValues
                                     if (value instanceof Constant) {
                                         Object obj = SimulateUtil.getConstant(value);
                                         if (obj != null) {
                                             localToString.get(leftOp).add(obj.toString());
                                         }
-                                    } else if (localFromParam.containsKey(value)) {
-                                        localToString.get(leftOp).add("$" + localFromParam.get(value));
                                     } else if (localToString.containsKey(value)) {
                                         localToString.get(leftOp).addAll(localToString.get(value));
+                                    }else if (localFromParam.containsKey(value)) {
+                                        localToString.get(leftOp).add(MethodString.getContent(MethodString.paramListToString(localFromParam.get(value))));
+                                        localFromParam.remove(leftOp);
+                                        addValue(localFromParam, leftOp, localFromParam.get(value));
                                     }
                                 }
                             } else if (invokeSig.contains("com.github.kittinunf.fuel.FuelKt: com.github.kittinunf.fuel.core.Request httpGet(java.lang.String,java.util.List)")) {
@@ -469,6 +506,13 @@ public class HttpClientFind {
                                     MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, argFromParams, staticInvokeReturn);
                                     localFromParamInvoke.put(leftOp, methodParamInvoke);
                                 }
+                                else{
+                                    localFromParamInvoke.put(leftOp, new MethodParamInvoke(sootMethod, argFromParams, invokeMethod.getSignature()));
+                                }
+                                localToClz.remove(leftOp);
+                                localToArray.remove(leftOp);
+                                localToString.remove(leftOp);
+                                localFromParam.remove(leftOp);
                             }
                         }
                     } else if (rightOp instanceof CastExpr) {
@@ -518,10 +562,9 @@ public class HttpClientFind {
                                         }
                                     }
                                     else if (localFromParam.containsKey(rightOp)) {
-                                        for(int i : localFromParam.get(rightOp)) {
-                                            arrayValue.add("$" + i);
-                                            addValue(localFromParam, base, i);
-                                        }
+                                        arrayValue.clear();
+                                        arrayValue.addAll(MethodString.paramListToString(localFromParam.get(rightOp)));
+                                        addValue(localFromParam, base, localFromParam.get(rightOp));
                                     }
                                     else if (localFromParamInvoke.containsKey(rightOp)){
                                         MethodParamInvoke methodParamInvoke = localFromParamInvoke.get(rightOp);
@@ -589,7 +632,7 @@ public class HttpClientFind {
                                 }
                                 else if(localFromParam.containsKey(arg)){
                                     addValue(localFromParam, base, localFromParam.get(arg));
-                                    paramValueWithStrings.put(arg, new ArrayList<>(List.of("$" + localFromParam.get(arg))));
+                                    paramValueWithStrings.put(arg, MethodString.paramListToString(localFromParam.get(arg)));
                                 }
 
                             }
@@ -605,7 +648,8 @@ public class HttpClientFind {
             }catch (Exception ignore){
             }
         }
-        return result;
+
+        return result.stream().distinct().collect(Collectors.toList());
     }
 
     private static void tryToAddResult(SootMethod sootMethod, AbstractHttpClient point){

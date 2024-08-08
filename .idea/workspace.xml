@@ -9,16 +9,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="add methodReturnParamInvoke, retrieve field's value in methodParamInvoke. add url client/clz identify, fix getinvokeExprValues bug.">
+    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="fix arrayRef param transfer, complete the paramInvoke Transfer.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodParamInvoke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodParamInvoke.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/CustomHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/CustomHttpClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/HttpClientFind.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/HttpClientFind.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/SimulateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/SimulateUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/Interceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/Interceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/okHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/okHttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/StringClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/StringClz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/UrlClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/UrlClz.java" afterDir="false" />
     </list>
     <list id="28af94af-eb16-46e5-bd45-48575d194720" name="New changelist" comment="New changelist" />
     <option name="SHOW_DIALOG" value="false" />
@@ -95,7 +99,7 @@
   "keyToString": {
     "Application.javaAPp.executor": "Debug",
     "Gradle.Build FirmProj.executor": "Run",
-    "Gradle.FirmProj [:Main.main()].executor": "Debug",
+    "Gradle.FirmProj [:Main.main()].executor": "Run",
     "Java Scratch.Java.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -107,7 +111,7 @@
     "project.structure.last.edited": "Global Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.19157721",
-    "settings.editor.selected.configurable": "project.propCompiler"
+    "settings.editor.selected.configurable": "advanced.settings"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -137,7 +141,7 @@
       <output_file path="$PROJECT_DIR$/logs/1.log" />
       <option name="MAIN_CLASS_NAME" value="firmproj.main.Main" />
       <module name="FirmProj.main" />
-      <option name="PROGRAM_PARAMETERS" value="-p libs/android.jar -o results -a $PROJECT_DIR$/../APKS/gooclient.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
+      <option name="PROGRAM_PARAMETERS" value="-p libs/android.jar -o results -a $PROJECT_DIR$/../APKS/xiaohe.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
       <option name="VM_PARAMETERS" value="-Xmx102400m" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -307,7 +311,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722956576412</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="fix arrayRef param transfer, complete the paramInvoke Transfer.">
+      <option name="closed" value="true" />
+      <created>1723050596130</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1723050596130</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -338,7 +350,8 @@
     <MESSAGE value="cancel some comment line" />
     <MESSAGE value="add simple return url, add static field,  change arrayRef, add localToClz to methodString, change methodLocal getInvokeValues, and so on" />
     <MESSAGE value="add methodReturnParamInvoke, retrieve field's value in methodParamInvoke. add url client/clz identify, fix getinvokeExprValues bug." />
-    <option name="LAST_COMMIT_MESSAGE" value="add methodReturnParamInvoke, retrieve field's value in methodParamInvoke. add url client/clz identify, fix getinvokeExprValues bug." />
+    <MESSAGE value="fix arrayRef param transfer, complete the paramInvoke Transfer." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix arrayRef param transfer, complete the paramInvoke Transfer." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -350,18 +363,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/firmproj/client/HttpClientFind.java</url>
-          <line>75</line>
+          <line>77</line>
           <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java</url>
-          <line>338</line>
-          <option name="timeStamp" value="57" />
+          <line>341</line>
+          <option name="timeStamp" value="85" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java</url>
-          <line>374</line>
-          <option name="timeStamp" value="72" />
+          <url>file://$PROJECT_DIR$/src/main/java/firmproj/client/HttpClientFind.java</url>
+          <line>106</line>
+          <option name="timeStamp" value="92" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
@@ -370,6 +383,10 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.UnsupportedOperationException" package="java.lang" />
           <option name="timeStamp" value="42" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="91" />
         </breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -391,7 +408,6 @@
         <PinnedItemInfo parentTag="java.util.HashMap$Node" memberName="key" />
         <PinnedItemInfo parentTag="java.lang.Integer" memberName="value" />
         <PinnedItemInfo parentTag="soot.jimple.internal.JimpleLocal" memberName="type" />
-        <PinnedItemInfo parentTag="java.util.HashMap$Node" memberName="value" />
         <PinnedItemInfo parentTag="soot.SootClass" memberName="name" />
         <PinnedItemInfo parentTag="firmproj.base.MethodParamInvoke" memberName="InvokeMethodSig" />
         <PinnedItemInfo parentTag="java.util.regex.Matcher" memberName="groups" />

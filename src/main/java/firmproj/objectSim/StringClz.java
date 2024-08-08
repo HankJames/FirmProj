@@ -1,5 +1,6 @@
 package firmproj.objectSim;
 
+import firmproj.base.MethodString;
 import firmproj.base.ValueContext;
 import soot.SootClass;
 import soot.SootMethod;
@@ -13,7 +14,6 @@ import soot.jimple.InvokeStmt;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class StringClz implements AbstractClz{
     private final SootClass currentClass;
@@ -69,7 +69,7 @@ public class StringClz implements AbstractClz{
                             argIndex++;
                         }
                         if(args.get(0) != null)
-                            tmpResult.add(args.get(0).toString());
+                            tmpResult.add(MethodString.getContent(args.get(0)));
                     }
                     else if(sig.contains("java.lang.String: java.lang.String toLowerCase")){
                         tmpResult.replaceAll(String::toLowerCase);
@@ -106,8 +106,7 @@ public class StringClz implements AbstractClz{
                         argIndex++;
                     }
                     if(args.get(0) != null)
-
-                        tmpResult.add(args.get(0).toString());
+                        tmpResult.add(MethodString.getContent(args.get(0)));
                 }
             }
         }
@@ -153,7 +152,7 @@ public class StringClz implements AbstractClz{
     @Override
     public String toString() {
         return "StringClz{" +
-                "result=" + result +
+                "result=" + MethodString.getContent(result) +
                 '}';
     }
 }

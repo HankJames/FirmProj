@@ -8,10 +8,7 @@ import soot.*;
 import soot.jimple.*;
 
 import java.awt.image.LookupOp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Interceptor {
@@ -31,7 +28,7 @@ public class Interceptor {
         return "Interceptor{" +
                 "sootClass=" + sootClass +
                 ", isNotCustomInterceptor=" + isNotCustomInterceptor +
-                ", headers=" + headers +
+                ", headers=" + MethodString.getContent(headers) +
                 '}';
     }
 
@@ -133,7 +130,7 @@ public class Interceptor {
                                         }
                                         i++;
                                     }
-                                    localToString.put(leftOp, List.of("&INVOKE",method.getSignature(), args.toString()));
+                                    localToString.put(leftOp, List.of("&INVOKE",method.getSignature(), MethodString.getContent(args)));
                                 }
                             }
                         }
@@ -192,4 +189,16 @@ public class Interceptor {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Interceptor that = (Interceptor) o;
+        return isNotCustomInterceptor == that.isNotCustomInterceptor && Objects.equals(sootClass, that.sootClass) && Objects.equals(currentMethod, that.currentMethod) && Objects.equals(headers, that.headers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sootClass, currentMethod, isNotCustomInterceptor, headers);
+    }
 }

@@ -1,5 +1,6 @@
 package firmproj.objectSim;
 
+import firmproj.base.MethodString;
 import firmproj.base.ValueContext;
 import firmproj.client.CustomHttpClient;
 import soot.SootClass;
@@ -64,13 +65,14 @@ public class UrlClz implements AbstractClz {
                             argIndex++;
                         }
                         if(args.get(0) != null) {
-                            tmpResult.add(args.get(0).toString());
+                            tmpResult.add(MethodString.getContent(args.get(0)));
+                            RequestProperty.put("url", new ArrayList<>(args.get(0)));
                             if(args.get(0).contains("$[")){
                                 clientResult.setNeedRequestContent(true);
                             }
                         }
                     }
-                    else if(sig.contains("java.net.URL: java.net.URLConnection openConnection()")){
+                    else if(sig.contains("URLConnection openConnection()")){
                         isUrlClient = true;
                     }
                 }
@@ -98,13 +100,14 @@ public class UrlClz implements AbstractClz {
                         argIndex++;
                     }
                     if(args.get(0) != null) {
-                        tmpResult.add(args.get(0).toString());
+                        tmpResult.add(MethodString.getContent(args.get(0)));
+                        RequestProperty.put("url", new ArrayList<>(args.get(0)));
                         if(args.get(0).contains("$[")){
                             clientResult.setNeedRequestContent(true);
                         }
                     }
                 }
-                else if(sig.contains("java.net.HttpURLConnection: void setRequestProperty(java.lang.String,java.lang.String)")){
+                else if(sig.contains("URLConnection: void setRequestProperty(java.lang.String,java.lang.String)")){
                     HashMap<Value, List<String>> currentValues = vc.getCurrentValues();
                     int argIndex = 0;
                     List<List<String>> args = new ArrayList<>();
@@ -127,7 +130,7 @@ public class UrlClz implements AbstractClz {
                     }
 
                 }
-                else if(sig.contains("java.net.HttpURLConnection: void setRequestMethod")){
+                else if(sig.contains("URLConnection: void setRequestMethod")){
                     HashMap<Value, List<String>> currentValues = vc.getCurrentValues();
                     int argIndex = 0;
                     List<List<String>> args = new ArrayList<>();
@@ -227,7 +230,7 @@ public class UrlClz implements AbstractClz {
     @Override
     public String toString() {
         return "UrlClz{" +
-                "result=" + result +
+                "result=" + MethodString.getContent(result) +
                 '}';
     }
 }

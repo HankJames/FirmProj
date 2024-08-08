@@ -1,5 +1,6 @@
 package firmproj.objectSim;
 
+import firmproj.base.MethodString;
 import firmproj.base.ValueContext;
 import soot.*;
 import soot.jimple.AssignStmt;
@@ -132,10 +133,14 @@ public class HashmapClz implements AbstractClz{
         result.append("MapCLZ: From Method: ").append(this.ParentMethod.getSubSignature()).append(" ");
         result.append("Map Entry: {");
         for(Map.Entry<List<String>, List<String>> entry: this.result.entrySet()){
-            result.append(entry.toString());
+            result.append(MethodString.getContent(entry.getKey()));
+            result.append('=');
+            result.append(MethodString.getContent(entry.getValue()));
             result.append(",");
         }
-        result.append("} ");
+        result.deleteCharAt(result.length()-1);
+        if(!this.result.isEmpty())
+            result.append("} ");
         return result.toString();
     }
 }

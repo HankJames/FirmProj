@@ -1,11 +1,9 @@
 package firmproj.base;
 
+import soot.SootField;
 import soot.SootMethod;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class MethodParamInvoke {
     public SootMethod sootMethod;
@@ -73,8 +71,8 @@ public class MethodParamInvoke {
         return "MethodParamInvoke{" +
                 "sootMethod=" + sootMethod +
                 ", param=" + param +
-                ", paramValue=" + paramValue +
-                ", InvokeMethodSig=" + InvokeMethodSig +
+                ", paramValue=" + MethodString.getContent(paramValue) +
+                ", InvokeMethodSig=" + MethodString.getContent(InvokeMethodSig) +
                 '}';
     }
 

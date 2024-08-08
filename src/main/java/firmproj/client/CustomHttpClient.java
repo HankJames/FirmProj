@@ -41,7 +41,7 @@ public class CustomHttpClient implements AbstractHttpClient {
 
     @Override
     public String toString() {
-        return "CustomHttpClient{" +
+        return "CustomHttpClient{" + sootMethod +
                 ", isNeedRequestContent=" + isNeedRequestContent +
                 ", params=" + params +
                 ", requestContentFromParams=" + requestContentFromParams +
