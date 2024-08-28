@@ -9,20 +9,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="fix arrayRef param transfer, complete the paramInvoke Transfer.">
+    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="fix bugs, change the param's string, &#10;optimize the list string">
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallBackPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/JSONObjectClz.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/FileUtility.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodParamInvoke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodParamInvoke.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/AbstractHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/AbstractHttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/CallFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/CallFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/ConverterClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/ConverterClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/ConverterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/ConverterFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/CustomHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/CustomHttpClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/HttpClientFind.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/HttpClientFind.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/Interceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/Interceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildPoint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/okHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/okHttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/CustomClz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraphNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraphNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/StringClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/StringClz.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/UrlClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/UrlClz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/FirmwareRelated.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/FirmwareRelated.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/LLMQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/LLMQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/QueryJson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/QueryJson.java" afterDir="false" />
     </list>
     <list id="28af94af-eb16-46e5-bd45-48575d194720" name="New changelist" comment="New changelist" />
     <option name="SHOW_DIALOG" value="false" />
@@ -85,7 +98,7 @@
     <setting file="file://$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -97,6 +110,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "Application.javaAPp.executor": "Debug",
     "Gradle.Build FirmProj.executor": "Run",
     "Gradle.FirmProj [:Main.main()].executor": "Run",
@@ -108,10 +122,10 @@
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/data/wenzhi/FirmProj/src",
     "onboarding.tips.debug.path": "D:/BaiduSyncdisk/Iot/FirmProj/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Global Libraries",
+    "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.19157721",
-    "settings.editor.selected.configurable": "advanced.settings"
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -131,7 +145,7 @@
       <recent name="FirmProj.graph" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.javaAPp">
+  <component name="RunManager">
     <configuration name="javaAPp" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -141,29 +155,12 @@
       <output_file path="$PROJECT_DIR$/logs/1.log" />
       <option name="MAIN_CLASS_NAME" value="firmproj.main.Main" />
       <module name="FirmProj.main" />
-      <option name="PROGRAM_PARAMETERS" value="-p libs/android.jar -o results -a $PROJECT_DIR$/../APKS/xiaohe.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
-      <option name="VM_PARAMETERS" value="-Xmx102400m" />
+      <option name="PROGRAM_PARAMETERS" value="-p libs/android.jar -o results -a $PROJECT_DIR$/../APKS/yingsheng.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
+      <option name="VM_PARAMETERS" value="-Xmx819200m" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Java" type="Java Scratch">
-      <option name="ALTERNATIVE_JRE_PATH" value="11" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
-      <option name="MAIN_CLASS_NAME" value="firmproj.main.Main" />
-      <module name="FirmProj.main" />
-      <option name="PROGRAM_PARAMETERS" value="-oj -p libs/android.jar -o results -a apks/1.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
-      <shortenClasspath name="NONE" />
-      <option name="VM_PARAMETERS" value="-Xms5g -Xmx16g" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="Application.javaAPp" />
-      <item itemvalue="Java Scratch.Java" />
-    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -319,7 +316,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723050596130</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="fix bugs, change the param's string, &#10;optimize the list string">
+      <option name="closed" value="true" />
+      <created>1723125624701</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1723125624701</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -351,42 +356,63 @@
     <MESSAGE value="add simple return url, add static field,  change arrayRef, add localToClz to methodString, change methodLocal getInvokeValues, and so on" />
     <MESSAGE value="add methodReturnParamInvoke, retrieve field's value in methodParamInvoke. add url client/clz identify, fix getinvokeExprValues bug." />
     <MESSAGE value="fix arrayRef param transfer, complete the paramInvoke Transfer." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix arrayRef param transfer, complete the paramInvoke Transfer." />
+    <MESSAGE value="fix bugs, change the param's string, &#10;optimize the list string" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bugs, change the param's string, &#10;optimize the list string" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/Main.java</url>
           <line>15</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/firmproj/client/HttpClientFind.java</url>
-          <line>77</line>
-          <option name="timeStamp" value="50" />
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java</url>
+          <line>88</line>
+          <option name="timeStamp" value="143" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java</url>
-          <line>341</line>
-          <option name="timeStamp" value="85" />
+          <line>993</line>
+          <option name="timeStamp" value="188" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/firmproj/client/HttpClientFind.java</url>
-          <line>106</line>
-          <option name="timeStamp" value="92" />
+          <url>file://$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java</url>
+          <line>757</line>
+          <option name="timeStamp" value="190" />
         </line-breakpoint>
-        <breakpoint enabled="true" type="java-exception">
+        <breakpoint type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="2" />
         </breakpoint>
-        <breakpoint enabled="true" type="java-exception">
+        <breakpoint type="java-exception">
           <properties class="java.lang.UnsupportedOperationException" package="java.lang" />
           <option name="timeStamp" value="42" />
         </breakpoint>
-        <breakpoint enabled="true" type="java-exception">
+        <breakpoint type="java-exception">
           <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
           <option name="timeStamp" value="91" />
+        </breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.IndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="103" />
+        </breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="java.util.ConcurrentModificationException" package="java.util" />
+          <option name="timeStamp" value="104" />
+        </breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.OutOfMemoryError" package="java.lang" />
+          <option name="timeStamp" value="105" />
+        </breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.ClassCastException" package="java.lang" />
+          <option name="timeStamp" value="179" />
+        </breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.NumberFormatException" package="java.lang" />
+          <option name="timeStamp" value="187" />
         </breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -405,17 +431,23 @@
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
-        <PinnedItemInfo parentTag="java.util.HashMap$Node" memberName="key" />
         <PinnedItemInfo parentTag="java.lang.Integer" memberName="value" />
-        <PinnedItemInfo parentTag="soot.jimple.internal.JimpleLocal" memberName="type" />
         <PinnedItemInfo parentTag="soot.SootClass" memberName="name" />
-        <PinnedItemInfo parentTag="firmproj.base.MethodParamInvoke" memberName="InvokeMethodSig" />
         <PinnedItemInfo parentTag="java.util.regex.Matcher" memberName="groups" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="GradleRunConfiguration">
+        <watch expression="FieldToBuildPoint.get(Scene.v().getField(&quot;&lt;com.liesheng.hayloufun.repository.a: com.liesheng.hayloufun.repository.ApiService b&gt;&quot;))" language="JAVA" />
+        <watch expression="findResult.get(&quot;&lt;com.liesheng.hayloufun.repository.a: com.liesheng.hayloufun.repository.ApiService a()&gt;&quot;)" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/FirmProj$javaAPp.ic" NAME="javaAPp Coverage Results" MODIFIED="1723474098337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

@@ -8,6 +8,7 @@ import soot.jimple.ReturnStmt;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class ConverterFactory implements AbstractFactory{
     public SootClass factoryClass;
@@ -70,8 +71,6 @@ public class ConverterFactory implements AbstractFactory{
         return null;
     }
 
-
-
     public void setRequestBodyConverter(ConverterClass requestBodyConverter) {
         this.requestBodyConverter = requestBodyConverter;
     }
@@ -82,6 +81,30 @@ public class ConverterFactory implements AbstractFactory{
 
     public void setResponseBodyConverter(ConverterClass responseBodyConverter) {
         this.responseBodyConverter = responseBodyConverter;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConverterFactory that = (ConverterFactory) o;
+        return Objects.equals(factoryClass, that.factoryClass) && Objects.equals(requestBodyConverter, that.requestBodyConverter) && Objects.equals(responseBodyConverter, that.responseBodyConverter);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(factoryClass, requestBodyConverter, responseBodyConverter);
+    }
+
+    public String getResult(){
+        StringBuilder result = new StringBuilder(factoryClass.getName()).append("={");
+        if(requestBodyConverter != null)
+            result.append("RequestConverter=").append(requestBodyConverter.currentClass.getName());
+        if(responseBodyConverter != null)
+            result.append(",ResponseConverter=").append(responseBodyConverter.currentClass.getName());
+        result.append("}");
+        generateQuery();
+        return result.toString();
     }
 
     @Override

@@ -89,7 +89,7 @@ public class Main {
         }
         outputBackwardContexts = cmd.hasOption(CommandLineOptions.outputBackwardContexts);
         outputJimpleFiles = cmd.hasOption(CommandLineOptions.outputJimpleFiles);
-        initDirs(outputPath);
+        FileUtility.initDirs(outputPath);
 
         // set Android jar, which is later needed from soot
         Config.ANDROID_JAR_DIR = cmd.getOptionValue(CommandLineOptions.platform);
@@ -109,7 +109,7 @@ public class Main {
                         currentPath = path.toString() + "/android.jar";
                     }
                 }catch (Exception e) {
-
+                    LOGGER.error(e);
                 }
             }
             jarToLoad = currentPath;
@@ -125,7 +125,7 @@ public class Main {
         if (cmd.getOptionValue(CommandLineOptions.apk) != null) {
             apksToAnalyse.add(cmd.getOptionValue(CommandLineOptions.apk));
         } else {
-            apksToAnalyse.addAll(getApksFromFile(cmd.getOptionValue(CommandLineOptions.listOfApk)));
+            apksToAnalyse.addAll(FileUtility.getApksFromFile(cmd.getOptionValue(CommandLineOptions.listOfApk)));
         }
 
         // load exclusion list
@@ -190,7 +190,7 @@ public class Main {
     private static Thread initTool(String apk, List<String> exclusionList, boolean initSoot, String outputPath, CommandLine cmd) throws IOException {
         LOGGER.info("Setting up soot");
         ApkContext apkContext = ApkContext.getInstance(apk);
-        if (cmd.hasOption(CommandLineOptions.dontOverwriteResult) && getOutputFile(outputPath).exists()) {
+        if (cmd.hasOption(CommandLineOptions.dontOverwriteResult) && FileUtility.getOutputFile(outputPath).exists()) {
             System.exit(0);
         }
         if (initSoot) {
@@ -210,7 +210,6 @@ public class Main {
 
         LOGGER.info("initialisation of the call graph");
         CallGraph.init();
-        MethodString.init();
         return t;
     }
 
@@ -222,6 +221,9 @@ public class Main {
         Thread t = initTool(apk, exclusionList, true, outputPath, cmd);
         //Soot configuration and call graph initialisation
         long initTime = System.currentTimeMillis();
+
+        MethodString.init();
+
         HashMap<SootClass, List<RetrofitPoint>> allRetrofitInterface;
 
         List<RetrofitPoint> allMethod = GetAllRetrofitAnnotationMethod();
@@ -235,6 +237,8 @@ public class Main {
         RetrofitBuildFind.RetrofitClassesWithMethods.putAll(allRetrofitInterface);
         RetrofitBuildFind.findAllFactoryClasses();
         RetrofitBuildFind.findAllRetrofitBuildMethod();
+        RetrofitBuildFind.processPointParams(firmMethod);
+        HttpClientFind.processAllClientParams();
 
         //SootMethod sootMethod = Scene.v().getMethod("<com.library.http.Http: java.lang.String getSign(java.lang.String)>");
         //LLMQuery.generate(sootMethod, new HashMap<>());
@@ -243,9 +247,8 @@ public class Main {
         long endTime = System.currentTimeMillis();
         TimeWatcher timeWatcher = TimeWatcher.getTimeWatcher();
 
-        writeRetrofitOut(firmMethod, outputPath);
-
-
+        writeOutPut(firmMethod, outputPath);
+        writeJsonOutput(firmMethod, outputPath);
         if (Options.v().output_format() == 1) {
             PackManager.v().writeOutput();
         }
@@ -317,17 +320,28 @@ public class Main {
         return result;
     }
 
-    public static void writeRetrofitOut(List<RetrofitPoint> methods,String outputPath){
-        File outputFile = getOutputFile(outputPath);
+    public static void writeOutPut(List<RetrofitPoint> methods, String outputPath){
+        File outputFile = FileUtility.getOutputFile(outputPath);
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(outputFile), StandardCharsets.UTF_8))) {
-
             for(RetrofitPoint Rp: methods){
-                writer.write("RetrofitMethod: \n");
-                writer.write(Rp.toString());
-                LOGGER.info(Rp.toString());
-                writer.write("===================\n");
+                LOGGER.info("now : {}", Rp.getMethod().getName());
+                Rp.solve();
+                writer.write("[RetrofitMethod]: \n");
+                writer.write(Rp.getResult());
+                LOGGER.info(Rp.getResult());
+                writer.write("\n");
             }
+            for(String str : HttpClientFind.finalResult){
+                writer.write(str);
+                writer.write("\n");
+            }
+
+            for(String str : MethodString.findUrl){
+                writer.write("[Possible Url]: ");
+                writer.write(str + "\n");
+            }
+            LOGGER.info("create:"+outputPath+"\nRealPath: "+outputFile.getAbsolutePath());
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -335,40 +349,36 @@ public class Main {
             throw new RuntimeException(e);
         }
     }
-    public static File getOutputFile(String outputPath) {
-        File outputFile = new File(outputPath);
-        if (outputFile.isDirectory()) {
-            outputPath += ApkContext.getInstance().getPackageName() + ".txt";
-            outputFile= new File(outputPath);
-            LOGGER.info("create:"+outputPath+"\nRealPath: "+outputFile.getAbsolutePath());
-        }
-        return outputFile;
-    }
-    private static List<String> getApksFromFile(String path) {
-        List<String> result = new LinkedList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            String line = "";
-            while (line != null) {
-                line = reader.readLine();
-                result.add(line);
-            }
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
-        }
-        return result;
-    }
 
-    private static void initDirs(String outputPath) {
-        File tmp = new File(outputPath);
-        if (!tmp.exists()) {
-            LOGGER.info("creating tmp directory");
-            if (!outputPath.endsWith(".json")) {
-                tmp.mkdir();
-            }
+    public static void writeJsonOutput(List<RetrofitPoint> methods, String outputPath){
+        JSONObject jsonObject = new JSONObject();
+        int i = 0;
+        for(RetrofitPoint Rp: methods){
+            Rp.solve();
+            String result = Rp.getResult();
+            jsonObject.put(String.valueOf(i), result);
+            LLMQuery.checkAndGenerateJson(result);
+            i++;
         }
-        tmp = new File(Config.LOGDIR);
-        if (!tmp.exists())
-            tmp.mkdir();
+        for(String str : HttpClientFind.finalResult){
+            jsonObject.put(String.valueOf(i), str);
+            LLMQuery.checkAndGenerateJson(str);
+            i++;
+        }
+
+        for(String str : MethodString.findUrl){
+            jsonObject.put(String.valueOf(i), "[Possible Url]: " + str);
+            LLMQuery.checkAndGenerateJson(str);
+            i++;
+        }
+        outputPath +=  "_json/" ;
+        FileUtility.initDirs(outputPath);
+        outputPath += ApkContext.getInstance().getPackageName() + ".json";
+        try (FileWriter file = new FileWriter(outputPath)) {
+            file.write(jsonObject.toString(4)); // 格式化输出
+            System.out.println("结果写入到" + outputPath + "文件中！");
+        }
+        catch (Throwable ignore) {}
     }
 
     public static <K, V> void addValue(Map<K, List<V>> map, K key, V value) {

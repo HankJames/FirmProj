@@ -4,16 +4,18 @@ import firmproj.base.MethodLocal;
 import firmproj.base.MethodParamInvoke;
 import firmproj.base.MethodString;
 import firmproj.base.ValueContext;
+import firmproj.graph.CallGraph;
+import firmproj.graph.CallGraphNode;
 import firmproj.objectSim.AbstractClz;
 import firmproj.objectSim.SimulateUtil;
 import firmproj.objectSim.UrlClz;
+import firmproj.utility.FirmwareRelated;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import soot.*;
 import soot.jimple.*;
 import soot.util.Chain;
 
-import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,8 @@ public class HttpClientFind {
     public static final HashMap<SootField, List<AbstractHttpClient>> FieldToClientPoint = new HashMap<>();
 
     private static final HashSet<String> visitedMethod = new HashSet<>();
+
+    public static final List<String> finalResult = new ArrayList<>();
 
     public static void findAllHttpClientBuildMethod(){
         Chain<SootClass> classes = Scene.v().getClasses();
@@ -69,13 +73,89 @@ public class HttpClientFind {
         //LOGGER.info("ALL Field with retrofitBuildPoint: {}", );
     }
 
+    public static void processAllClientParams(){
+        // loop all client that need param.
+        // get callNode, and the sootmethod Name / get all param.
+        // if name or param is firm related, then output the result.
+        HashMap<SootMethod, AbstractHttpClient> methodToClient = new HashMap<>();
+        for(Map.Entry<String, List<AbstractHttpClient>> entry : findResult.entrySet()){
+            for(AbstractHttpClient abstractHttpClient : entry.getValue()){
+                if(abstractHttpClient.isNeedRequestContent()) {
+                    SootMethod method = Scene.v().getMethod(entry.getKey());
+//                    if (FirmwareRelated.isFirmRelated(method.getSubSignature())) {
+//                        methodToClient.put(method, abstractHttpClient);
+//                    }
+//                    else{
+                    if(method.getSignature().contains("onServerZone"))
+                        LOGGER.info("Got");
+                    List<CallGraphNode> nextNodes = CallGraph.findCaller(method.getSignature(), false);
+                    for (CallGraphNode node : nextNodes) {
+                        SootMethod nextMethod = node.getSootMethod();
+                        if (FirmwareRelated.isFirmRelated(nextMethod.getSignature()) && !findResult.containsKey(nextMethod.getSignature())) {
+                            AbstractHttpClient newClient = getAbstractHttpClient(abstractHttpClient);
+                            newClient.setSootMethod(method);
+                            methodToClient.put(nextMethod, newClient); // MethodLocal(nextMethod, newClient.sootMethod+params, 0);
+                        }
+                    }
+//                    }
+                }
+                else{
+                    if(abstractHttpClient instanceof CustomHttpClient){
+                        if(FirmwareRelated.isFirmRelated(entry.getKey()) && abstractHttpClient.getResult().contains("http") && abstractHttpClient.getResult().contains("://")){
+                            LOGGER.info("[SolvedClient]: {}\n{}", entry.getKey(), abstractHttpClient.getResult());
+                            finalResult.add("[SolveClient]: "+ entry.getKey() + "\n" + abstractHttpClient.getResult());
+                        }
+                    }
+                }
+            }
+        }
+
+        for(Map.Entry<SootMethod, AbstractHttpClient> entry : methodToClient.entrySet()){
+            HashMap<String, List<Integer>> nextInvokeParams = new HashMap<>();
+            String sig = entry.getValue().getSootMethod().getSignature();
+            nextInvokeParams.put(sig, MethodString.clone(entry.getValue().getParams()));
+            MethodLocal methodLocal = new MethodLocal(entry.getKey(), nextInvokeParams,0);
+            methodLocal.setGetResult(true);
+            methodLocal.doAnalysis();
+            if(methodLocal.getInterestingParamString().containsKey(sig)) {
+                HashMap<Integer, List<String>> invokeResult = MethodString.clone(methodLocal.getInterestingParamString().get(sig));
+                for(Integer integer : invokeResult.keySet()){
+                    List<String> values = invokeResult.get(integer);
+                    Iterator<String> iterator = values.iterator();
+                    while(iterator.hasNext()){
+                        String str = iterator.next();
+                        if(str.startsWith("UNKNOWN") || str.isEmpty() || str.length() > 5000 || (values.size() > 10 && str.startsWith("<") && str.endsWith(">")))
+                            iterator.remove();
+                    }
+                }
+                entry.getValue().addParamValues(invokeResult);
+                LOGGER.info("[SolveClient]: {}\n{}", entry.getKey().getSignature(), entry.getValue().getResult());
+                finalResult.add("[SolveClient]: "+ entry.getKey().getSignature() + "\n" +  entry.getValue().getResult());
+            }
+        }
+
+    }
+
+    private static AbstractHttpClient getAbstractHttpClient(AbstractHttpClient abstractHttpClient) {
+        AbstractHttpClient newClient;
+        if(abstractHttpClient instanceof okHttpClient) {
+            newClient = new okHttpClient((okHttpClient) abstractHttpClient);
+        }
+        else{
+            newClient = new CustomHttpClient();
+            if(abstractHttpClient.getRequestContent() != null)
+                newClient.addRequestContent(abstractHttpClient.getRequestContent());
+        }
+        newClient.setSootMethod(abstractHttpClient.getSootMethod());
+        newClient.setParams(abstractHttpClient.getParams());
+        newClient.setNeedRequestContent(abstractHttpClient.isNeedRequestContent());
+        return newClient;
+    }
 
 
     public static List<AbstractHttpClient> findHttpClientBuildMethod(SootMethod sootMethod){
         String methodSig = sootMethod.getSignature();
         if(findResult.containsKey(methodSig)) return findResult.get(methodSig);
-        if(methodSig.contains("android.graphics.Bitmap a0(com.foscam.foscam.entity.MessageAlarm)"))
-            LOGGER.info("got");
 
         List<AbstractHttpClient> result = new ArrayList<>();
 
@@ -84,7 +164,7 @@ public class HttpClientFind {
         try {
             body = sootMethod.retrieveActiveBody();
         } catch (Exception e) {
-            //LOGGER.error("Could not retrieved the active body {} because {}", sootMethod, e.getLocalizedMessage());
+            LOGGER.error("Could not retrieved the active body {} because {}", sootMethod, e.getLocalizedMessage());
         }
         if (body == null)
             return result;
@@ -156,7 +236,8 @@ public class HttpClientFind {
                             localToClz.put(leftOp, urlClz);
                         } else if(MethodLocal.isCommonClz(clsName)){
                             AbstractClz abstractClz = MethodLocal.CreateCommonClz(cls, sootMethod);
-                            localToClz.put(leftOp, abstractClz);
+                            if(abstractClz !=null)
+                                localToClz.put(leftOp, abstractClz);
                         }
                     }
                     else if (rightOp instanceof InvokeExpr) {
@@ -167,17 +248,17 @@ public class HttpClientFind {
                                 List<AbstractHttpClient> points = findHttpClientBuildMethod(invokeMethod);
                                 if (!points.isEmpty()) {
                                     result.addAll(points);
-                                    if (sootMethod.getReturnType().toString().equals("okhttp3.OkHttpClient")) {
-                                        for (AbstractHttpClient pt : points) {
+                                    for (AbstractHttpClient pt : points) {
+                                        pt.setSootMethod(sootMethod);
+                                        pt.setCreateUnit(unit);
+                                        if (sootMethod.getReturnType().toString().equals("okhttp3.OkHttpClient")) {
                                             //TODO request body param trans.
                                             okHttpClient newClient = (okHttpClient) pt;
                                             newClient.setLocalValue(leftOp);
                                             addValue(localToPoint, leftOp, newClient);
-
                                             LOGGER.info("108: Method: {} , From Method: {}, new Client: {}", methodSig, invokeMethod.getSignature(), pt.toString());
-                                        }
-                                    } else {
-                                        for (AbstractHttpClient pt : points) {
+
+                                        } else {
                                             addValue(localToPoint, leftOp, pt);
                                             LOGGER.info("114: Method: {} , From Method: {}, new Client: {}", methodSig, invokeMethod.getSignature(), pt.toString());
                                         }
@@ -215,7 +296,7 @@ public class HttpClientFind {
                                 }
                             }
                             else if(localFromParamInvoke.containsKey(arg)){
-                                paramValueWithStrings.put(arg, localFromParamInvoke.get(arg).InvokeMethodSig);
+                                paramValueWithStrings.put(arg, localFromParamInvoke.get(arg).invokeMethodSig);
                                 if(!localFromParamInvoke.get(arg).param.isEmpty() && base!=null)
                                     addValue(localFromParam, base, localFromParamInvoke.get(arg).param);
                             }
@@ -247,8 +328,10 @@ public class HttpClientFind {
                                 localFromParam.remove(leftOp);
 
                                 if(abstractClz instanceof UrlClz) {
-                                    if(localFromParam.containsKey(base))
+                                    if(localFromParam.containsKey(base)) {
                                         addValue(((UrlClz) abstractClz).getClientResult().params, localFromParam.get(base));
+                                        ((UrlClz) abstractClz).getClientResult().setNeedRequestContent(true);
+                                    }
                                     if(((UrlClz) abstractClz).isUrlClient()) {
                                         addValue(localToPoint, leftOp, ((UrlClz) abstractClz).getClientResult());
                                         addValue(result, ((UrlClz) abstractClz).getClientResult());
@@ -332,6 +415,7 @@ public class HttpClientFind {
                                             HashMap<String, List<Integer>> interestingInvoke = new HashMap<>();
                                             interestingInvoke.put(sig, new ArrayList<>(List.of(0)));
                                             MethodLocal methodLocal = new MethodLocal(sootMethod, interestingInvoke, 0);
+                                            methodLocal.setGetResult(true);
                                             methodLocal.doAnalysis();
                                             if (methodLocal.getLocalFromParams().containsKey(invokeExpr.getArg(0))) {
                                                 localToRequestBuilder.get(base).put("url", MethodString.paramListToString(methodLocal.getLocalFromParams().get(invokeExpr.getArg(0))));
@@ -369,7 +453,7 @@ public class HttpClientFind {
                             else if(MethodString.methodReturnParamInvoke.containsKey(invokeMethod)){
                                 MethodParamInvoke methodParamInvoke = new MethodParamInvoke(MethodString.methodReturnParamInvoke.get(invokeMethod));
                                 if(!methodParamInvoke.paramValue.isEmpty() || methodParamInvoke.param.isEmpty()) {
-                                    localToString.put(leftOp, methodParamInvoke.InvokeMethodSig);
+                                    localToString.put(leftOp, methodParamInvoke.invokeMethodSig);
                                     localFromParam.remove(leftOp);
                                     localToClz.remove(leftOp);
                                     localFromParamInvoke.remove(leftOp);
@@ -386,27 +470,29 @@ public class HttpClientFind {
                                             paramValues.put(i, paramValueWithStrings.get(arg));
                                         }
                                         if (localFromParam.containsKey(arg)) {
+                                            paramValues.remove(i);
                                             addValue(methodParamInvoke.param, localFromParam.get(arg));
-                                            methodParamInvoke.InvokeMethodSig.replaceAll(s -> s.replace("$["+i+"]", MethodString.getContent(MethodString.paramListToString(localFromParam.get(arg)))));
+                                            methodParamInvoke.invokeMethodSig.replaceAll(s -> s.replace("$["+i+"]", MethodString.getContent(MethodString.paramListToString(localFromParam.get(arg)))));
                                         }
                                         else if(localFromParamInvoke.containsKey(arg)){
+                                            paramValues.remove(i);
                                             addValue(methodParamInvoke.param, localFromParamInvoke.get(arg).param);
-                                            methodParamInvoke.InvokeMethodSig.replaceAll(s -> s.replace("$["+i+"]", MethodString.getContent(localFromParamInvoke.get(arg).InvokeMethodSig)));
+                                            methodParamInvoke.invokeMethodSig.replaceAll(s -> s.replace("$["+i+"]", MethodString.getContent(localFromParamInvoke.get(arg).invokeMethodSig)));
                                         }
                                     }
                                     if (!paramValues.isEmpty()) {
-                                        addValue(methodParamInvoke.paramValue, paramValues);
+                                        methodParamInvoke.addParamValue(paramValues);
                                     }
                                     if(methodParamInvoke.param.isEmpty()){
-                                        localToString.put(leftOp,  new ArrayList<>(List.of(MethodString.getContent(methodParamInvoke.InvokeMethodSig) + MethodString.getContent(methodParamInvoke.paramValue))));
-                                        localFromParam.remove(leftOp);
-                                        localToClz.remove(leftOp);
-                                        localFromParamInvoke.remove(leftOp);
-                                        localToPoint.remove(leftOp);
+                                        localToString.put(leftOp,  new ArrayList<>(List.of(MethodString.getContent(methodParamInvoke.invokeMethodSig) + MethodString.getContent(methodParamInvoke.paramValue))));
                                     }
                                     else {
                                         localFromParamInvoke.put(leftOp, methodParamInvoke);
                                     }
+                                    localFromParam.remove(leftOp);
+                                    localToClz.remove(leftOp);
+                                    localFromParamInvoke.remove(leftOp);
+                                    localToPoint.remove(leftOp);
                                 }
                             }
                             else if(MethodString.methodToFieldString.containsKey(invokeMethod) || MethodString.getMethodToString().containsKey(invokeMethod)) {
@@ -426,9 +512,9 @@ public class HttpClientFind {
                                     if(localFromParam.containsKey(base))
                                         addValue(localFromParamInvoke.get(base).param, localFromParam.get(base));
                                 } else if (localFromParam.containsKey(base)) {
-                                    localFromParamInvoke.put(leftOp, new MethodParamInvoke(sootMethod, localFromParam.get(base), invokeMethod.getSignature()));
+                                    localFromParamInvoke.put(leftOp, new MethodParamInvoke(sootMethod, localFromParam.get(base), invokeMethod.getSignature() + paramIndexWithStrings));
                                 } else {
-                                    MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, new ArrayList<>(), invokeMethod.getSignature());
+                                    MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, new ArrayList<>(), invokeMethod.getSignature() + paramIndexWithStrings);
                                     localFromParamInvoke.put(leftOp, methodParamInvoke);
                                 }
                                 localToClz.remove(leftOp);
@@ -436,8 +522,7 @@ public class HttpClientFind {
                                 localToString.remove(leftOp);
                                 localFromParam.remove(leftOp);
                             }
-
-                            if(localFromParam.containsKey(base)){
+                            if(localFromParam.containsKey(base) && !((Local)base).getName().equals("r0")){
                                 addValue(localFromParam, leftOp, localFromParam.get(base));
                             }
 
@@ -471,9 +556,27 @@ public class HttpClientFind {
                                         addValue(localFromParam, leftOp, localFromParam.get(value));
                                     }
                                 }
-                            } else if (invokeSig.contains("com.github.kittinunf.fuel.FuelKt: com.github.kittinunf.fuel.core.Request httpGet(java.lang.String,java.util.List)")) {
-                                CustomHttpClient customHttpClient = new CustomHttpClient(sootMethod, unit);
+                            } else if (invokeSig.contains("com.github.kittinunf.fuel.FuelKt: com.github.kittinunf.fuel.core.Request httpGet(java.lang.String,java.util.List)") ||
+                                    invokeSig.contains("com.github.kittinunf.fuel.FuelKt: com.github.kittinunf.fuel.core.Request httpPost(java.lang.String,java.util.List)")) {
+                                CustomHttpClient customHttpClient = new CustomHttpClient(invokeMethod, unit);
                                 addValue(localToPoint, leftOp, customHttpClient);
+                                if(MethodString.fieldToString.containsKey("<com.github.kittinunf.fuel.core.FuelManager: java.lang.String basePath>")
+                                || MethodString.fieldToString.containsKey("<com.github.kittinunf.fuel.core.FuelManager: java.util.Map baseHeaders>")
+                                || MethodString.fieldToString.containsKey("<com.github.kittinunf.fuel.core.FuelManager: java.util.List baseParams>")){
+                                    HashMap<String, List<String>> requestContentFromParams = new HashMap<>();
+                                    List<String> tmp = MethodString.fieldToString.get("<com.github.kittinunf.fuel.core.FuelManager: java.lang.String basePath>");
+                                    if(tmp != null)
+                                        requestContentFromParams.put("basePath", clone(tmp));
+                                    tmp = MethodString.fieldToString.get("<com.github.kittinunf.fuel.core.FuelManager: java.util.Map baseHeaders>");
+                                    if(tmp != null)
+                                        requestContentFromParams.put("headers", clone(tmp));
+                                    tmp = MethodString.fieldToString.get("<com.github.kittinunf.fuel.core.FuelManager: java.util.List baseParams>");
+                                    if(tmp != null)
+                                        requestContentFromParams.put("baseParams", clone(tmp));
+                                    if(!requestContentFromParams.isEmpty())
+                                        customHttpClient.addRequestContent(requestContentFromParams);
+                                }
+
                                 result.add(customHttpClient);
                                 for(Value arg : staticInvokeExpr.getArgs()){
                                     if(localFromParam.containsKey(arg)){
@@ -568,12 +671,12 @@ public class HttpClientFind {
                                     }
                                     else if (localFromParamInvoke.containsKey(rightOp)){
                                         MethodParamInvoke methodParamInvoke = localFromParamInvoke.get(rightOp);
-                                        addValue(arrayValue, methodParamInvoke.InvokeMethodSig);
+                                        addValue(arrayValue, methodParamInvoke.invokeMethodSig);
                                         if(!methodParamInvoke.param.isEmpty())
                                             addValue(localFromParam, base, methodParamInvoke.param);
                                     }
                                 }
-                                catch (Exception ignore){}
+                                catch (Exception e){LOGGER.error(e);}
                             }
                         }
                         else if(localFromParamInvoke.containsKey(rightOp)){
@@ -593,6 +696,7 @@ public class HttpClientFind {
                         if (FieldToClientPoint.containsKey(field)) {
                             if (leftOp instanceof Local) {
                                 localToPoint.put(leftOp, FieldToClientPoint.get(((FieldRef) rightOp).getField()));
+                                tryToAddResult(sootMethod, localToPoint.get(leftOp));
                             }
                         } else if (field.getType() instanceof RefType) {
                             String clsName = ((RefType) field.getType()).getClassName();
@@ -600,6 +704,9 @@ public class HttpClientFind {
                                 localToInterceptor.put(leftOp, allInterceptorClasses.get(clsName));
                             }
                         }
+                    } else {
+                        localToArray.remove(leftOp);
+                        localToClz.remove(leftOp);
                     }
                 }else if(stmt instanceof InvokeStmt){
                     if(stmt.getInvokeExpr() instanceof InstanceInvokeExpr) {
@@ -645,7 +752,7 @@ public class HttpClientFind {
                         }
                     }
                 }
-            }catch (Exception ignore){
+            }catch (Throwable ignore){
             }
         }
 

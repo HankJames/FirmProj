@@ -1,5 +1,6 @@
 package firmproj.client;
 
+import firmproj.base.MethodLocal;
 import firmproj.base.MethodString;
 import firmproj.objectSim.SimulateUtil;
 import org.apache.logging.log4j.LogManager;
@@ -8,6 +9,7 @@ import soot.*;
 import soot.jimple.*;
 
 import java.awt.image.LookupOp;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,15 @@ public class Interceptor {
 
     public Interceptor(SootClass clz){
         this.sootClass = clz;
+    }
+
+    public String getResult(){
+        StringBuilder result = new StringBuilder("Headers=");
+        if(!headers.isEmpty()) {
+            result.append(MethodString.getContent(headers));
+            return result.toString();
+        }
+        else return "";
     }
 
     @Override
@@ -46,7 +57,7 @@ public class Interceptor {
                 try {
                     body = sootMethod.retrieveActiveBody();
                 } catch (Exception e) {
-                    //LOGGER.error("Could not retrieved the active body {} because {}", sootMethod, e.getLocalizedMessage());
+                    LOGGER.error("Could not retrieved the active body {} because {}", sootMethod, e.getLocalizedMessage());
                 }
                 if (body == null)
                     continue;
@@ -70,7 +81,7 @@ public class Interceptor {
                                     localToString.put(leftOp, MethodString.getFieldToString().get(((FieldRef) rightOp).getField().toString()));
                                 }
                                 else{
-                                    localToString.put(leftOp, List.of("&FILED", ((FieldRef) rightOp).getField().toString()));
+                                    localToString.put(leftOp, List.of(((FieldRef) rightOp).getField().toString()));
                                 }
                             }else if(rightOp instanceof Constant){
                                 Object obj = SimulateUtil.getConstant(rightOp);
@@ -83,7 +94,7 @@ public class Interceptor {
                                 if(method.getSignature().contains("toString") && rightOp instanceof InstanceInvokeExpr){
                                     Value base = ((InstanceInvokeExpr) rightOp).getBase();
                                     if(localToMap.containsKey(base)){
-                                        List<String> list = localToMap.get(base).entrySet().stream().map(entry -> entry.getKey() + "->" + entry.getValue()).collect(Collectors.toList());
+                                        List<String> list = new ArrayList<>(List.of(MethodString.getContent(localToMap.get(base))));
                                         localToString.put(leftOp, list);
                                     }
                                     else if(localToString.containsKey(base))
@@ -92,14 +103,14 @@ public class Interceptor {
                                 else if(method.getSignature().contains("internal.Boxing") || method.getName().contains("valueOf")){
                                     if(localToString.containsKey(invokeExpr.getArg(0)))
                                         localToString.put(leftOp, localToString.get(invokeExpr.getArg(0)));
+                                }else if(MethodString.getMethodToString().containsKey(method)){
+                                    localToString.put(leftOp, MethodString.getMethodToString().get(method));
                                 }
                                 else if(MethodString.getMethodToFieldString().containsKey(method)){
                                     localToString.put(leftOp, List.of(MethodString.getMethodToFieldString().get(method)));
                                 }
-                                if(MethodString.getMethodToString().containsKey(method)){
-                                    localToString.put(leftOp, MethodString.getMethodToString().get(method));
-                                }
-                                if(method.getSignature().contains("okhttp3.Request$Builder: okhttp3.Request$Builder addHeader")){
+
+                                else if(method.getSignature().contains("okhttp3.Request$Builder: okhttp3.Request$Builder addHeader")){
                                     List<List<String>> argString = new ArrayList<>();
                                     for(int i=0;i<2;i++){
                                         Value arg = invokeExpr.getArg(i);
@@ -112,7 +123,7 @@ public class Interceptor {
                                             argString.add(localToString.get(arg));
                                         }
                                         else
-                                            argString.add(List.of("&UNKNOWN"));
+                                            argString.add(List.of("UNKNOWN"));
                                     }
                                     headers.put(argString.get(0), argString.get(1));
                                     LOGGER.info("107: Get New Header, {}->{}, Interceptor: {}", argString.get(0), argString.get(1), sootClass.getName());
@@ -130,7 +141,11 @@ public class Interceptor {
                                         }
                                         i++;
                                     }
-                                    localToString.put(leftOp, List.of("&INVOKE",method.getSignature(), MethodString.getContent(args)));
+                                    List<String> result = MethodLocal.getStaticInvokeReturn(invokeExpr, args);
+                                    if(!result.isEmpty())
+                                        localToString.put(leftOp, result);
+                                    else
+                                        localToString.put(leftOp, List.of(method.getSignature()+MethodString.getContent(args)));
                                 }
                             }
                         }
@@ -156,7 +171,7 @@ public class Interceptor {
                                             argString.add(localToString.get(arg));
                                         }
                                         else
-                                            argString.add(List.of("&UNKNOWN"));
+                                            argString.add(List.of("UNKNOWN"));
                                     }
                                     localToMap.get(base).put(argString.get(0), argString.get(1));
                                     LOGGER.info("New Put: {},{},{}", argString.get(0), argString.get(1),localToMap.get(base));
@@ -176,7 +191,7 @@ public class Interceptor {
                                         argString.add(localToString.get(arg));
                                     }
                                     else
-                                        argString.add(List.of("&UNKNOWN"));
+                                        argString.add(List.of("UNKNOWN"));
                                 }
                                 headers.put(argString.get(0), argString.get(1));
                                 LOGGER.info("179: Get New Header, {}->{}, Interceptor: {}", argString.get(0), argString.get(1), sootClass.getName());

@@ -1,17 +1,19 @@
 package firmproj.utility;
 
+import firmproj.main.ApkContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import soot.*;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class QueryJson {
-
+    private static final Logger LOGGER = LogManager.getLogger(QueryJson.class);
+    public SootMethod targetMethod;
     private String targetClass;
     private String targetMethodSubsSig;
     private List<List<String>> parameterValues = new ArrayList<>();
@@ -29,8 +31,8 @@ public class QueryJson {
 
 
 
-    public void doGenerate(){
-        GenerateJson(targetClass, targetMethodSubsSig, parameterValues, relatedMethodsSig, isHttp);
+    public boolean doGenerate(){
+        return GenerateJson(targetClass, targetMethodSubsSig, parameterValues, relatedMethodsSig, isHttp);
     }
 
     public static void test(){
@@ -42,7 +44,24 @@ public class QueryJson {
         GenerateJson(clsName, methodSubSig, params, otherMethods, false);
     }
 
-    public static void GenerateJson(String targetClassName, String targetMethodSubSIg, List<List<String>> parameter, List<String> relatedMethods, boolean isHttp) {
+    public static boolean GenerateJson(String targetClassName, String targetMethodSubSIg, List<List<String>> parameter, List<String> relatedMethods, boolean isHttp) {
+        // 输出JSON字符串到文件
+        String fileName = "./LLM-Query/" + ApkContext.getInstance().getPackageName() + "/";
+        FileUtility.initDirs(fileName);
+        if(isHttp){
+            fileName = fileName + "http_";
+        }
+        fileName = fileName + "query_<" +
+                targetClassName +
+                ": " +
+                targetMethodSubSIg +
+                ">.json";
+
+        File check = new File(fileName);
+        if(check.exists()){
+            return false;
+        }
+
         List<List<String>> parameters = new ArrayList<>(parameter);
         List<String> relatedMethodNames = new ArrayList<>(relatedMethods);
         // 添加相关方法名，例如：
@@ -53,7 +72,7 @@ public class QueryJson {
         SootClass targetClass = Scene.v().loadClassAndSupport(targetClassName);
         targetClass.setApplicationClass();
         for(SootMethod method: targetClass.getMethods()){
-            System.out.println(method.getSubSignature());
+            //System.out.println(method.getSubSignature());
         }
 
         // 找到目标方法
@@ -74,7 +93,7 @@ public class QueryJson {
         for (String methodName : relatedMethodNames) {
             String className = parseClassNameFromSignature(methodName);
             String subSignature = parseSubSignatureFromSignature(methodName);
-            System.out.println(subSignature);
+            //System.out.println(subSignature);
 
             SootClass otherClass = Scene.v().loadClassAndSupport(className);
             SootMethod method = otherClass.getMethod(subSignature);
@@ -102,22 +121,13 @@ public class QueryJson {
 
         jsonObject.put(targetMethod.getSignature(), targetMethodObject);
 
-        // 输出JSON字符串到文件
-        String fileName = "./LLM-Query/";
-        if(isHttp){
-            fileName = fileName + "http_";
-        }
-        fileName = fileName + "query_" +
-                targetClassName +
-                "_" +
-                targetMethodSubSIg +
-                ".json";
-
         try (FileWriter file = new FileWriter(fileName)) {
                 file.write(jsonObject.toString(4)); // 格式化输出
                 System.out.println("JSON内容已成功写入到" + fileName + "文件中！");
-            } catch (IOException ignored) {
+                return true;
+            } catch (Throwable ignore) { return false;
             }
+
     }
 
     public void setTargetClass(String targetClass) {
@@ -167,5 +177,18 @@ public class QueryJson {
         int start = signature.indexOf(':') + 2;
         int end = signature.indexOf('>');
         return signature.substring(start, end);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        QueryJson queryJson = (QueryJson) o;
+        return Objects.equals(targetClass, queryJson.targetClass) && Objects.equals(targetMethodSubsSig, queryJson.targetMethodSubsSig);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(targetClass, targetMethodSubsSig);
     }
 }

@@ -6,6 +6,7 @@ import soot.SootClass;
 import soot.SootMethod;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class ConverterClass {
     public SootClass currentClass;
@@ -32,6 +33,19 @@ public class ConverterClass {
                 this.queryJson = queryJson1;
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConverterClass that = (ConverterClass) o;
+        return Objects.equals(currentClass, that.currentClass) && Objects.equals(convertMethod, that.convertMethod);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(currentClass, convertMethod);
     }
 
     @Override

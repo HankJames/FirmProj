@@ -45,9 +45,18 @@ public class CallGraphNode {
         return callBy;
     }
 
+    public HashSet<CallGraphNode> getCallTo() {
+        return callTo;
+    }
 
     public SootMethod getSootMethod() {
         return sootMethod;
     }
 
+    @Override
+    public String toString() {
+        return "CallGraphNode{" +
+                "sootMethod=" + sootMethod +
+                '}';
+    }
 }

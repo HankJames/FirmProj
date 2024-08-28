@@ -28,6 +28,8 @@ public class okHttpClient implements AbstractHttpClient {
 
     public List<Integer> params = new ArrayList<>();
 
+    public HashMap<Integer, List<String>> paramValues = new HashMap<>();
+
     public  final HashMap<String, List<String>> requestContentFromParams = new HashMap<>(); //Body, MediaType.
 
     public okHttpClient(SootMethod method, Unit unit){
@@ -38,7 +40,7 @@ public class okHttpClient implements AbstractHttpClient {
     public okHttpClient(okHttpClient old){
         this.interceptors.addAll(old.interceptors);
         this.isNeedRequestContent = old.isNeedRequestContent();
-        this.requestContentFromParams.putAll(old.requestContentFromParams);
+        this.requestContentFromParams.putAll(MethodString.clone(old.requestContentFromParams));
     }
 
     public void setInterceptors(Interceptor interceptor){
@@ -54,12 +56,79 @@ public class okHttpClient implements AbstractHttpClient {
         return localValue;
     }
 
-    public void setNeedRequestContent(boolean need){
-        this.isNeedRequestContent = need;
+    public void setNeedRequestContent(boolean isNeed){
+        this.isNeedRequestContent = isNeed;
     }
 
     public boolean isNeedRequestContent() {
         return isNeedRequestContent;
+    }
+
+    @Override
+    public void setCreateUnit(Unit unit) {
+        this.unit = unit;
+    }
+
+    @Override
+    public void setSootMethod(SootMethod sootMethod) {
+        this.sootMethod = sootMethod;
+    }
+
+    @Override
+    public SootMethod getSootMethod() {
+        return this.sootMethod;
+    }
+
+    @Override
+    public void setParams(List<Integer> params) {
+        MethodString.addValue(this.params, params);
+    }
+
+    @Override
+    public List<Integer> getParams() {
+        return this.params;
+    }
+
+    @Override
+    public void addRequestContent(HashMap<String, List<String>> addContent) {
+        MethodString.addValue(this.requestContentFromParams, addContent);
+    }
+
+    @Override
+    public HashMap<String, List<String>> getRequestContent() {
+        return this.requestContentFromParams;
+    }
+
+    @Override
+    public void addParamValues(HashMap<Integer, List<String>> paramValues) {
+        MethodString.addValue(this.paramValues, paramValues);
+
+    }
+
+    @Override
+    public HashMap<Integer, List<String>> getParamValues() {
+        return this.paramValues;
+    }
+
+    public String getResult(){
+        if(!this.paramValues.isEmpty()){
+            HashMap<Integer, List<String>> paraVa = paramValues;
+            for(Integer integer : paraVa.keySet()) {
+                for(List<String> values : this.requestContentFromParams.values())
+                    values.replaceAll(s -> s.replace("$[" + integer + "]", MethodString.getContent(paraVa.get(integer))));
+            }
+        }
+        StringBuilder result = new StringBuilder("Client=[");
+        for(Interceptor interceptor : interceptors){
+            if(!interceptor.getResult().isEmpty())
+                result.append(interceptor.getResult()).append(",");
+        }
+        if(result.length() > 8)
+            result.deleteCharAt(result.length() - 1);
+        if(!requestContentFromParams.isEmpty())
+            result.append(MethodString.getContent(requestContentFromParams));
+        result.append("]");
+        return result.toString();
     }
 
     @Override

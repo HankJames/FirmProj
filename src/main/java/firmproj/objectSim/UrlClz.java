@@ -126,7 +126,9 @@ public class UrlClz implements AbstractClz {
                         argIndex++;
                     }
                     if(args.size() > 1){
-                        RequestProperty.put(args.get(0).get(0), args.get(1));
+                        try {
+                            RequestProperty.put(args.get(0).get(0), args.get(1));
+                        } catch (Throwable ignore){}
                     }
 
                 }
@@ -176,9 +178,10 @@ public class UrlClz implements AbstractClz {
                 }
             }
         }
-        if(isUrlClient && !RequestProperty.isEmpty()){
+        if(isUrlClient){
             clientResult.sootMethod = getParentMethod();
-            clientResult.requestContentFromParams.putAll(RequestProperty);
+            if(!RequestProperty.isEmpty())
+                clientResult.requestContentFromParams.putAll(RequestProperty);
         }
         result = tmpResult;
         solved = !result.isEmpty();

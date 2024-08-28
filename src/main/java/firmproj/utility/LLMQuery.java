@@ -1,42 +1,56 @@
 package firmproj.utility;
 
+import firmproj.base.MethodLocal;
 import firmproj.base.MethodParamInvoke;
 import firmproj.base.MethodString;
+import firmproj.client.AbstractHttpClient;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import soot.*;
 import soot.jimple.AssignStmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InvokeStmt;
 import soot.jimple.StaticInvokeExpr;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class LLMQuery {
-    public static final List<QueryJson> queries = new ArrayList<>();
+    private static final Logger LOGGER = LogManager.getLogger(LLMQuery.class);
+    public static final HashSet<QueryJson> queries = new HashSet<>();
     private static final int RETRIEVE_STEP = 2;
 
-    public static QueryJson generate(MethodParamInvoke methodParamInvoke){
-        return new QueryJson();
+    public static void generate(MethodParamInvoke methodParamInvoke){
+        for(String invokeSig : methodParamInvoke.invokeMethodSig) {
+            HashMap<String, HashMap<Integer, List<String>>> result = FirmwareRelated.matchInvokeSig(invokeSig);
+            if(!result.isEmpty()) {
+                for(Map.Entry<String, HashMap<Integer, List<String>>> entry : result.entrySet()) {
+                    try{
+                        SootMethod sootMethod = Scene.v().getMethod(entry.getKey());
+                        if(MethodString.isStandardLibraryClass(sootMethod.getDeclaringClass()) || !sootMethod.isConcrete())
+                            continue;
+                        generate(sootMethod, entry.getValue());
+                    }
+                    catch (Exception ignore){}
+                }
+            }
+        }
     }
 
-    public static QueryJson generate(SootMethod sootMethod, HashMap<Integer, List<String>> paramValues){
+    public static void generate(SootMethod sootMethod, HashMap<Integer, List<String>> paramValues){
         QueryJson queryJson = new QueryJson();
         SootClass sootClass = sootMethod.getDeclaringClass();
-        if(MethodString.isStandardLibraryClass(sootClass)) return queryJson;
+        if(MethodString.isStandardLibraryClass(sootClass)) return;
 
         List<List<String>> parameterValues = flattenParamValue(sootMethod, paramValues);
         queryJson.setTargetClass(sootClass.getName());
         queryJson.setTargetMethodSubsSig(sootMethod.getSubSignature());
         queryJson.setParameterValues(parameterValues);
+        queryJson.targetMethod = sootMethod;
 
         List<String> methodSig = retrieveMethod(sootMethod);
         queryJson.setRelatedMethodsSig(methodSig);
         //queryJson.doGenerate();
-
         queries.add(queryJson);
-        return queryJson;
     }
 
     public static QueryJson generateHttp(SootMethod sootMethod){
@@ -46,14 +60,25 @@ public class LLMQuery {
         queryJson.setTargetClass(sootClass.getName());
         queryJson.setTargetMethodSubsSig(sootMethod.getSubSignature());
         queryJson.setParameterValues(new ArrayList<>());
+        queryJson.targetMethod = sootMethod;
 
         List<String> methodSig = retrieveMethod(sootMethod);
         queryJson.setRelatedMethodsSig(methodSig);
-        queryJson.setHttp(true);
-        queryJson.doGenerate();
+        //queryJson.setHttp(true);
+        //queryJson.doGenerate();
 
         queries.add(queryJson);
         return queryJson;
+    }
+
+    public static void checkAndGenerateJson(String str){
+        for(QueryJson queryJson : queries){
+            if(str.contains(queryJson.targetMethod.getSignature())){
+                boolean succ = queryJson.doGenerate();
+                if(succ)
+                    LOGGER.info("Generate: {}", queryJson.getTargetMethodSubsSig());
+            }
+        }
     }
 
 
@@ -79,7 +104,7 @@ public class LLMQuery {
         HashSet<String> result = new HashSet<>();
         if(step > RETRIEVE_STEP) return new ArrayList<>();
         SootClass sootClass = method.getDeclaringClass();
-        if(MethodString.isStandardLibraryClass(sootClass)) return new ArrayList<>();
+        if(MethodString.isStandardLibraryClass(sootClass) || !method.isConcrete()) return new ArrayList<>();
         Body body = method.retrieveActiveBody();
         for(Unit unit : body.getUnits()){
             if(unit instanceof AssignStmt){

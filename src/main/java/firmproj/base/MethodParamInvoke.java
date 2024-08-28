@@ -1,15 +1,15 @@
 package firmproj.base;
 
-import soot.SootField;
 import soot.SootMethod;
 
 import java.util.*;
 
 public class MethodParamInvoke {
     public SootMethod sootMethod;
+    public boolean solved;
     public List<Integer> param = new ArrayList<>();
     public HashMap<Integer, List<String>> paramValue = new HashMap<>();
-    public final List<String> InvokeMethodSig = new ArrayList<>();
+    public final List<String> invokeMethodSig = new ArrayList<>();
 
     public MethodParamInvoke(SootMethod method, Integer para){
         sootMethod = method;
@@ -19,13 +19,13 @@ public class MethodParamInvoke {
     public MethodParamInvoke(SootMethod method, Integer para, String sig){
         sootMethod = method;
         param.add(para);
-        InvokeMethodSig.add(sig);
+        invokeMethodSig.add(sig);
     }
 
     public MethodParamInvoke(SootMethod method, Integer para, List<String> sig){
         sootMethod = method;
         param.add(para);
-        InvokeMethodSig.addAll(sig);
+        invokeMethodSig.addAll(sig);
     }
 
     public MethodParamInvoke(SootMethod method, List<Integer> para){
@@ -36,44 +36,79 @@ public class MethodParamInvoke {
     public MethodParamInvoke(SootMethod method, List<Integer> para, String sig){
         sootMethod = method;
         param = para;
-        InvokeMethodSig.add(sig);
+        invokeMethodSig.add(sig);
     }
 
     public MethodParamInvoke(SootMethod method, List<Integer> para, List<String> sig){
         sootMethod = method;
         param = para;
-        InvokeMethodSig.addAll(sig);
+        invokeMethodSig.addAll(sig);
     }
 
     public MethodParamInvoke(MethodParamInvoke OldmethodParamInvoke){
         this.sootMethod = OldmethodParamInvoke.sootMethod;
         this.param.addAll(OldmethodParamInvoke.param);
         this.paramValue.putAll(OldmethodParamInvoke.paramValue);
-        this.InvokeMethodSig.addAll(OldmethodParamInvoke.InvokeMethodSig);
+        this.solved = OldmethodParamInvoke.solved;
+        this.invokeMethodSig.addAll(OldmethodParamInvoke.invokeMethodSig);
     }
 
     public void addMethodInvoke(String methodInvoke){
-        for(String str : InvokeMethodSig){
+        for(String str : invokeMethodSig){
+            if(str == null) continue;
             if(str.equals(methodInvoke))
                 return;
         }
-        InvokeMethodSig.add(methodInvoke);
+        invokeMethodSig.add(methodInvoke);
     }
 
     public void addMethodInvoke(List<String> methodInvoke){
         for(String str : methodInvoke){
+            if(str ==null) continue;
             addMethodInvoke(str);
         }
     }
 
+    public void addParamValue(HashMap<Integer, List<String>> invokeResult){
+        MethodString.addValue(paramValue, invokeResult);
+        this.solve();
+    }
+
+    public void solve(){
+        if(this.invokeMethodSig.toString().length() > 5000) {
+            this.invokeMethodSig.clear();
+            this.param.clear();
+            this.solved = true;
+            return;
+        }
+        if(!this.paramValue.isEmpty()){
+            HashMap<Integer, List<String>> paraVa = paramValue;
+            for(Integer integer : paraVa.keySet()) {
+                if(paraVa.get(integer) != null)
+                    this.invokeMethodSig.replaceAll(s -> s.replace("$[" + integer + "]", MethodString.getContent(paraVa.get(integer))));
+            }
+        }
+        List<Integer> keys = new ArrayList<>(paramValue.keySet());
+        this.param.removeAll(keys);
+        if(param.isEmpty()) solved = true;
+    }
+
+
     @Override
     public String toString() {
-        return "MethodParamInvoke{" +
-                "sootMethod=" + sootMethod +
-                ", param=" + param +
-                ", paramValue=" + MethodString.getContent(paramValue) +
-                ", InvokeMethodSig=" + MethodString.getContent(InvokeMethodSig) +
-                '}';
+        this.solve();
+        if(solved || param.isEmpty()){
+            return MethodString.getContent(invokeMethodSig);
+        }
+        StringBuilder sb = new StringBuilder("MethodParamInvoke{");
+        sb.append("sootMethod=").append(sootMethod);
+        sb.append(", param=").append(param);
+        sb.append(", paramValue=").append(MethodString.getContent(paramValue));
+        sb.append(", invokeMethodSig=");
+        sb.append(MethodString.getContent(invokeMethodSig));
+        sb.deleteCharAt(sb.length()-1);
+        sb.append("}");
+        return sb.toString();
     }
 
     @Override
@@ -81,11 +116,11 @@ public class MethodParamInvoke {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MethodParamInvoke that = (MethodParamInvoke) o;
-        return Objects.equals(sootMethod, that.sootMethod) && Objects.equals(param, that.param) && Objects.equals(InvokeMethodSig, that.InvokeMethodSig);
+        return Objects.equals(sootMethod, that.sootMethod) && Objects.equals(param, that.param) && Objects.equals(invokeMethodSig, that.invokeMethodSig);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sootMethod, param, InvokeMethodSig);
+        return Objects.hash(sootMethod, param, invokeMethodSig);
     }
 }

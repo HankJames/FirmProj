@@ -2,7 +2,10 @@ package firmproj.objectSim;
 
 import firmproj.base.MethodString;
 import firmproj.base.ValueContext;
-import soot.*;
+import soot.SootClass;
+import soot.SootMethod;
+import soot.Unit;
+import soot.Value;
 import soot.jimple.AssignStmt;
 import soot.jimple.Constant;
 import soot.jimple.InvokeExpr;
@@ -10,7 +13,7 @@ import soot.jimple.InvokeStmt;
 
 import java.util.*;
 
-public class HashmapClz implements AbstractClz{
+public class JSONObjectClz implements AbstractClz{
 
     private final SootClass currentClass;
     private final SootMethod ParentMethod;
@@ -18,12 +21,12 @@ public class HashmapClz implements AbstractClz{
     private final List<ValueContext> valueContexts = new ArrayList<>();
     private boolean solved = false;
 
-    public HashmapClz(SootClass currentClass, SootMethod method){
+    public JSONObjectClz(SootClass currentClass, SootMethod method){
         this.currentClass = currentClass;
         this.ParentMethod = method;
     }
 
-    public HashmapClz(SootClass currentClass, SootMethod method, List<ValueContext> values){
+    public JSONObjectClz(SootClass currentClass, SootMethod method, List<ValueContext> values){
         this(currentClass, method);
         this.valueContexts.addAll(values);
     }
@@ -38,7 +41,7 @@ public class HashmapClz implements AbstractClz{
                 if(rightOp instanceof InvokeExpr){
                     InvokeExpr invokeExpr = (InvokeExpr) rightOp;
                     SootMethod method = invokeExpr.getMethod();
-                    if(method.getSignature().contains("Map: java.lang.Object put(java.lang.Object,java.lang.Object)")){
+                    if(method.getSignature().contains("JSONObject put(java.lang.String,java.lang.Object)")){
                         HashMap<Value, List<String>> currentValues = vc.getCurrentValues();
                         int argIndex = 0;
                         List<List<String>> args = new ArrayList<>();
@@ -63,7 +66,7 @@ public class HashmapClz implements AbstractClz{
             else if (u instanceof InvokeStmt){
                 InvokeExpr invokeExpr = ((InvokeStmt) u).getInvokeExpr();
                 SootMethod method = ((InvokeStmt) u).getInvokeExpr().getMethod();
-                if(method.getSignature().contains("Map: java.lang.Object put(java.lang.Object,java.lang.Object)>")){
+                if(method.getSignature().contains("JSONObject put(java.lang.String,java.lang.Object)")){
                     HashMap<Value, List<String>> currentValues = vc.getCurrentValues();
                     int argIndex = 0;
                     List<List<String>> args = new ArrayList<>();
@@ -82,9 +85,6 @@ public class HashmapClz implements AbstractClz{
                         argIndex++;
                     }
                     tmpResult.put(args.get(0), args.get(1));
-                }
-                else if(method.getSignature().contains("Map: void putAll")){
-
                 }
             }
         }

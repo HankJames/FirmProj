@@ -7,6 +7,7 @@ import soot.SootClass;
 import soot.SootMethod;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class CallFactory implements AbstractFactory{
     public SootClass currentClass;
@@ -32,8 +33,27 @@ public class CallFactory implements AbstractFactory{
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CallFactory that = (CallFactory) o;
+        return Objects.equals(currentClass, that.currentClass) && Objects.equals(currentMethod, that.currentMethod);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(currentClass, currentMethod);
+    }
+
+    @Override
     public void generateQuery() {
         this.queryJson.doGenerate();
+    }
+
+    public String getResult(){
+        String result = this.currentClass.getName();
+        generateQuery();
+        return result;
     }
 
     @Override
