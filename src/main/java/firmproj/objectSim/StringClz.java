@@ -64,6 +64,7 @@ public class StringClz implements AbstractClz{
                                 }
                             }
                             else{
+                                if(currentValues.get(value).toString().length() > 2000) continue;
                                 args.add(currentValues.get(value));
                             }
                             argIndex++;
@@ -75,6 +76,8 @@ public class StringClz implements AbstractClz{
                         tmpResult.replaceAll(String::toLowerCase);
                     } else if (sig.contains("java.lang.String: java.lang.String toUpperCase")) {
                         tmpResult.replaceAll(String::toUpperCase);
+                    } else if(sig.contains("java.lang.String: java.lang.String replace")){
+                        tmpResult.replaceAll(s -> s.replace(MethodString.getContent(invokeExpr.getArg(0)), MethodString.getContent(invokeExpr.getArg(1))));
                     }
                 }
             }
@@ -101,6 +104,7 @@ public class StringClz implements AbstractClz{
                             }
                         }
                         else{
+                            if(currentValues.get(value).toString().length() > 2000) continue;
                             args.add(currentValues.get(value));
                         }
                         argIndex++;

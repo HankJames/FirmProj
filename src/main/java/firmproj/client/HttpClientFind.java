@@ -10,6 +10,7 @@ import firmproj.objectSim.AbstractClz;
 import firmproj.objectSim.SimulateUtil;
 import firmproj.objectSim.UrlClz;
 import firmproj.utility.FirmwareRelated;
+import firmproj.utility.TimeoutTaskExecutor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import soot.*;
@@ -414,6 +415,8 @@ public class HttpClientFind {
                                         if (!currentValues.containsKey(sig)) {
                                             HashMap<String, List<Integer>> interestingInvoke = new HashMap<>();
                                             interestingInvoke.put(sig, new ArrayList<>(List.of(0)));
+                                            TimeoutTaskExecutor timeoutTaskExecutor = new TimeoutTaskExecutor(10);
+                                            timeoutTaskExecutor.executeWithTimeout(() -> {
                                             MethodLocal methodLocal = new MethodLocal(sootMethod, interestingInvoke, 0);
                                             methodLocal.setGetResult(true);
                                             methodLocal.doAnalysis();
@@ -421,7 +424,8 @@ public class HttpClientFind {
                                                 localToRequestBuilder.get(base).put("url", MethodString.paramListToString(methodLocal.getLocalFromParams().get(invokeExpr.getArg(0))));
                                             } else {
                                                 currentValues.putAll(methodLocal.getInterestingParamString());
-                                            }
+                                            }});
+                                            timeoutTaskExecutor.shutdown();
                                         }
                                         if (currentValues.containsKey(sig)) {
                                             List<String> urls = currentValues.get(sig).get(0);
@@ -482,6 +486,7 @@ public class HttpClientFind {
                                     }
                                     if (!paramValues.isEmpty()) {
                                         methodParamInvoke.addParamValue(paramValues);
+                                        methodParamInvoke.solve();
                                     }
                                     if(methodParamInvoke.param.isEmpty()){
                                         localToString.put(leftOp,  new ArrayList<>(List.of(MethodString.getContent(methodParamInvoke.invokeMethodSig) + MethodString.getContent(methodParamInvoke.paramValue))));

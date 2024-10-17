@@ -9,6 +9,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,10 +42,19 @@ public class FileUtility {
     }
 
     public static void initDirs(String outputPath) {
+        Path path = Paths.get(outputPath);
+        Path directory = path.getParent();
+        try{
+            if(Files.notExists(directory)){
+                Files.createDirectories(directory);
+            }
+        } catch (IOException e) {
+            System.err.println("Failed to create directories: "+ e.getMessage());
+        }
         File tmp = new File(outputPath);
         if (!tmp.exists()) {
             //LOGGER.info("creating tmp directory");
-            if (!outputPath.endsWith(".json")) {
+            if (!outputPath.endsWith(".json") && !outputPath.endsWith(".txt")) {
                 tmp.mkdir();
             }
         }

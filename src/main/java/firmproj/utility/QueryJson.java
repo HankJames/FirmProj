@@ -13,6 +13,7 @@ import java.util.*;
 
 public class QueryJson {
     private static final Logger LOGGER = LogManager.getLogger(QueryJson.class);
+    public static String outputPath;
     public SootMethod targetMethod;
     private String targetClass;
     private String targetMethodSubsSig;
@@ -29,7 +30,9 @@ public class QueryJson {
 
     public QueryJson(){}
 
-
+    public static void setOutputPath(String path){
+        outputPath = path;
+    }
 
     public boolean doGenerate(){
         return GenerateJson(targetClass, targetMethodSubsSig, parameterValues, relatedMethodsSig, isHttp);
@@ -46,8 +49,8 @@ public class QueryJson {
 
     public static boolean GenerateJson(String targetClassName, String targetMethodSubSIg, List<List<String>> parameter, List<String> relatedMethods, boolean isHttp) {
         // 输出JSON字符串到文件
-        String fileName = "./LLM-Query/" + ApkContext.getInstance().getPackageName() + "/";
-        FileUtility.initDirs(fileName);
+        String fileName = outputPath + "LLM-Query/";
+
         if(isHttp){
             fileName = fileName + "http_";
         }
@@ -57,6 +60,7 @@ public class QueryJson {
                 targetMethodSubSIg +
                 ">.json";
 
+        FileUtility.initDirs(fileName);
         File check = new File(fileName);
         if(check.exists()){
             return false;
@@ -78,18 +82,21 @@ public class QueryJson {
         // 找到目标方法
         SootMethod targetMethod = targetClass.getMethod(targetMethodSubSIg);
 
-        // 获取目标方法的Body
-        Body targetBody = targetMethod.retrieveActiveBody();
-
         // 获取目标方法所有的语句
         List<String> targetStatements = new ArrayList<>();
-        for (Unit unit : targetBody.getUnits()) {
-            targetStatements.add(unit.toString() + ";");
-        }
-        String targetCode = String.join(" ", targetStatements);
+        Map<String, String> relatedMethodsCode = new HashMap<>();
+        String targetCode = "";
+        try {
+            // 获取目标方法的Body
+            Body targetBody = targetMethod.retrieveActiveBody();
+            for (Unit unit : targetBody.getUnits()) {
+                targetStatements.add(unit.toString() + ";");
+            }
+
+        targetCode = String.join(" ", targetStatements);
 
         // 获取相关方法的代码
-        Map<String, String> relatedMethodsCode = new HashMap<>();
+
         for (String methodName : relatedMethodNames) {
             String className = parseClassNameFromSignature(methodName);
             String subSignature = parseSubSignatureFromSignature(methodName);
@@ -97,7 +104,7 @@ public class QueryJson {
 
             SootClass otherClass = Scene.v().loadClassAndSupport(className);
             SootMethod method = otherClass.getMethod(subSignature);
-
+            if(!otherClass.isApplicationClass() || !method.isConcrete()) continue;
             Body methodBody = method.retrieveActiveBody();
             List<String> methodStatements = new ArrayList<>();
             for (Unit unit : methodBody.getUnits()) {
@@ -105,6 +112,8 @@ public class QueryJson {
             }
             relatedMethodsCode.put(methodName, String.join(" ", methodStatements));
         }
+        }
+        catch (Exception ignore){}
 
         // 构建JSON对象
         JSONObject jsonObject = new JSONObject();
@@ -126,7 +135,7 @@ public class QueryJson {
                 System.out.println("JSON内容已成功写入到" + fileName + "文件中！");
                 return true;
             } catch (Throwable ignore) { return false;
-            }
+        }
 
     }
 

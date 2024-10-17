@@ -24,13 +24,12 @@
     <Loggers>
         <Logger name="soot.jimple.infoflow.android.resources" level="error"/>
         <Logger name="soot.jimple.infoflow.android.entryPointCreators.components.ActivityEntryPointCreator" level="error"/>
-
         <Root level="debug">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="infoLog"/>
+           <!-- <AppenderRef ref="infoLog"/>
             <AppenderRef ref="warnLog"/>
             <AppenderRef ref="errorLog"/>
-            <AppenderRef ref="debugLog"/>
+            <AppenderRef ref="debugLog"/> -->
         </Root>
     </Loggers>
 </Configuration>

@@ -34,7 +34,6 @@ import java.util.*;
 public class Main {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
-    public static boolean outputBackwardContexts;
     public static boolean outputJimpleFiles;
     private static void iniLog(String app) {
         LOGGER.info("Start Analysing {}", app);
@@ -62,35 +61,17 @@ public class Main {
 
         if (cmd.hasOption(CommandLineOptions.outputPath)) {
             outputPath = cmd.getOptionValue(CommandLineOptions.outputPath);
-        }
 
-        //if (cmd.hasOption(CommandLineOptions.taintRules)) {
-        //    BackwardTracing.createInstance(cmd.getOptionValue(CommandLineOptions.taintRules));
-        //}
+            // if output path exist and has files, then return
+            ApkContext apkContext = ApkContext.getInstance(cmd.getOptionValue(CommandLineOptions.apk));
+            outputPath += apkContext.getPackageName() + ".apk/Output/";
+            if (FileUtility.getOutputFile(outputPath + apkContext.getPackageName() + ".txt").exists()) {
+                LOGGER.error("Output path {} already exists and is not empty", outputPath);
+                System.exit(1);
+            }
 
-        if (cmd.hasOption(CommandLineOptions.outputGraph)) {
-            Config.OUTPUT_GRAPHS = true;
+            QueryJson.setOutputPath(outputPath);
         }
-        if (cmd.hasOption(CommandLineOptions.outputGraphPath)) {
-            Config.GRAPH_RESULT_DIR = cmd.getOptionValue(CommandLineOptions.outputGraphPath);
-        }
-        if (cmd.hasOption(CommandLineOptions.maxBackwardSteps)) {
-            Config.MAXBACKWARDSTEPS = Integer.parseInt(cmd.getOptionValue(CommandLineOptions.maxBackwardSteps));
-        }
-        if (cmd.hasOption(CommandLineOptions.maxBackwardContext)) {
-            Config.MAXBACKWARDSTEPS = Integer.parseInt(cmd.getOptionValue(CommandLineOptions.maxBackwardContext));
-        }
-
-        if (cmd.hasOption(CommandLineOptions.timeoutBackward)) {
-            Config.TIMEOUT_BACKWARDS = Integer.parseInt(cmd.getOptionValue(CommandLineOptions.timeoutBackward)) * 60;
-        }
-        if (cmd.hasOption(CommandLineOptions.timeoutForward)) {
-            Config.TIMEOUT_FORWARD = Integer.parseInt(cmd.getOptionValue(CommandLineOptions.timeoutForward)) * 60;
-        }
-        outputBackwardContexts = cmd.hasOption(CommandLineOptions.outputBackwardContexts);
-        outputJimpleFiles = cmd.hasOption(CommandLineOptions.outputJimpleFiles);
-        FileUtility.initDirs(outputPath);
-
         // set Android jar, which is later needed from soot
         Config.ANDROID_JAR_DIR = cmd.getOptionValue(CommandLineOptions.platform);
         String jarToLoad;
@@ -117,8 +98,6 @@ public class Main {
         }
 
         //parse description, containing methods to trace
-
-        //JSONObject targetMethods = new JSONObject(new String(Files.readAllBytes(Paths.get(cmd.getOptionValue(CommandLineOptions.desc)))));
         JSONObject targetMethods = new JSONObject();
         //set apk to analyse
         List<String> apksToAnalyse = new LinkedList<>();
@@ -187,7 +166,7 @@ public class Main {
 
     }
 
-    private static Thread initTool(String apk, List<String> exclusionList, boolean initSoot, String outputPath, CommandLine cmd) throws IOException {
+    private static void initTool(String apk, List<String> exclusionList, boolean initSoot, String outputPath, CommandLine cmd) throws IOException {
         LOGGER.info("Setting up soot");
         ApkContext apkContext = ApkContext.getInstance(apk);
         if (cmd.hasOption(CommandLineOptions.dontOverwriteResult) && FileUtility.getOutputFile(outputPath).exists()) {
@@ -203,14 +182,10 @@ public class Main {
         }catch (Throwable e) {
             LOGGER.error("Soot could not load classes...");
         }
-        TimeWatcher timeWatcher = TimeWatcher.getTimeWatcher();
-        Thread t = new Thread(timeWatcher);
-        t.setDaemon(true);
-        t.start();
 
         LOGGER.info("initialisation of the call graph");
         CallGraph.init();
-        return t;
+        return;
     }
 
     public static void analyzeApk(String apk, List<String> exclusionList, JSONObject targetMethods, String outputPath, CommandLine cmd) throws IOException {
@@ -218,7 +193,7 @@ public class Main {
         long startTime = System.currentTimeMillis();
 
         iniLog(apk);
-        Thread t = initTool(apk, exclusionList, true, outputPath, cmd);
+        initTool(apk, exclusionList, true, outputPath, cmd);
         //Soot configuration and call graph initialisation
         long initTime = System.currentTimeMillis();
 
@@ -245,9 +220,8 @@ public class Main {
         //QueryJson.test();
         //List<ValuePoint> allValuePoints = getAllSolvedValuePoints(targetMethods, t, apk);
         long endTime = System.currentTimeMillis();
-        TimeWatcher timeWatcher = TimeWatcher.getTimeWatcher();
 
-        writeOutPut(firmMethod, outputPath);
+        writeOutPut(firmMethod, outputPath, startTime, endTime);
         writeJsonOutput(firmMethod, outputPath);
         if (Options.v().output_format() == 1) {
             PackManager.v().writeOutput();
@@ -320,8 +294,23 @@ public class Main {
         return result;
     }
 
-    public static void writeOutPut(List<RetrofitPoint> methods, String outputPath){
-        File outputFile = FileUtility.getOutputFile(outputPath);
+    public static void writeOutPut(List<RetrofitPoint> methods, String outputPath, long initTime, long endTime){
+        String timePath = outputPath + File.separator + "RunTime.txt";
+        FileUtility.initDirs(timePath);
+        File timeFile = new File(timePath);
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(timeFile), StandardCharsets.UTF_8))) {
+            writer.write("[Time]: ");
+            writer.write((endTime - initTime) + "\n");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        outputPath += ApkContext.getInstance().getPackageName() + ".txt";
+
+        FileUtility.initDirs(outputPath);
+        File outputFile = new File(outputPath);
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(outputFile), StandardCharsets.UTF_8))) {
             for(RetrofitPoint Rp: methods){
@@ -371,9 +360,8 @@ public class Main {
             LLMQuery.checkAndGenerateJson(str);
             i++;
         }
-        outputPath +=  "_json/" ;
-        FileUtility.initDirs(outputPath);
         outputPath += ApkContext.getInstance().getPackageName() + ".json";
+        FileUtility.initDirs(outputPath);
         try (FileWriter file = new FileWriter(outputPath)) {
             file.write(jsonObject.toString(4)); // 格式化输出
             System.out.println("结果写入到" + outputPath + "文件中！");

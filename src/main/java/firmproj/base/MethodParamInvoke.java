@@ -70,8 +70,18 @@ public class MethodParamInvoke {
     }
 
     public void addParamValue(HashMap<Integer, List<String>> invokeResult){
+        if(invokeResult.toString().length() > 2000) return;
         MethodString.addValue(paramValue, invokeResult);
-        this.solve();
+    }
+
+    public void addParamValue(Integer arg, List<String> value){
+        if(value.toString().length() > 2000) return;
+        MethodString.addValue(paramValue, arg, value);
+    }
+
+    public void addParamValue(Integer arg, String value){
+        if(value.length() > 1000) return;
+        MethodString.addValue(paramValue, arg, value);
     }
 
     public void solve(){
@@ -96,7 +106,6 @@ public class MethodParamInvoke {
 
     @Override
     public String toString() {
-        this.solve();
         if(solved || param.isEmpty()){
             return MethodString.getContent(invokeMethodSig);
         }

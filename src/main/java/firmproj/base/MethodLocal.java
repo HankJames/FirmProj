@@ -186,7 +186,7 @@ public class MethodLocal {
                 if(rightOp instanceof InstanceInvokeExpr){
                     base = ((InstanceInvokeExpr) rightOp).getBase();
                 }
-                if(MethodString.methodReturnParamInvoke.containsKey(invokeMethod)){
+                if(MethodString.methodReturnParamInvoke.containsKey(invokeMethod) && !getInterestingInvoke().containsKey(invokeMethod.getSignature())){
                     MethodParamInvoke methodParamInvoke = MethodString.methodReturnParamInvoke.get(invokeMethod);
                     for(Integer param : clone(methodParamInvoke.param)){
                         Value arg = invokeExpr.getArg(param);
@@ -198,7 +198,7 @@ public class MethodLocal {
                         else if(arg instanceof Constant){
                             Object obj = SimulateUtil.getConstant(arg);
                             if(obj != null)
-                                addValue(methodParamInvoke.paramValue, param, obj.toString());
+                                methodParamInvoke.addParamValue(  param, obj.toString());
                         }
                     }
                     LocalToString.remove(leftOp);
@@ -690,6 +690,7 @@ public class MethodLocal {
                                     }
                                 }
                                 methodParamInvoke.addParamValue(tmpValues);
+                                methodParamInvoke.solve();
                             }
 
                             for (Integer index : invokeResult.keySet()) {

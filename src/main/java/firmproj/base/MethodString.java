@@ -299,17 +299,23 @@ public class MethodString {
         for(List<MethodParamInvoke> methodParamInvokes : FieldSetByMethodInvoke.values()){
             allMethodParamInvoke.addAll(methodParamInvokes);
         }
-        allMethodParamInvoke.addAll(methodReturnParamInvoke.values());
+        for(MethodParamInvoke methodParamInvoke : methodReturnParamInvoke.values()){
+            Type type = methodParamInvoke.sootMethod.getReturnType();
+            if(isCommonType(type))
+                allMethodParamInvoke.add(methodParamInvoke);
+        }
 
         for(MethodParamInvoke methodParamInvoke : allMethodParamInvoke){
+            if(methodParamInvoke.sootMethod.getSignature().equals("<com.yamaha.hs.hpctrl.firmware.FirmwareServerInfo: java.net.URL url(java.lang.String)>"))
+                LOGGER.info("got");
             LOGGER.info("No.{} of total: {} Now: {}, ", visited.size(), allMethodParamInvoke.size(), methodParamInvoke.sootMethod.getSignature());
             if(visited.contains(methodParamInvoke)) continue;
             visited.add(methodParamInvoke);
             HashMap<String, List<Integer>> nextInvokeParam = new HashMap<>();
             HashMap<Integer, List<String>> paramValue = new HashMap<>();
             SootMethod sootMethod = methodParamInvoke.sootMethod;
-
-            if(isStandardLibraryClass(sootMethod.getDeclaringClass()) || sootMethod.toString().toLowerCase().contains("tostring()") || sootMethod.toString().toLowerCase().contains("format(") || sootMethod.toString().contains("lang.reflect")) continue;
+            String sig = sootMethod.getSignature().toLowerCase();
+            if(isStandardLibraryClass(sootMethod.getDeclaringClass()) || sig.contains(".internal.")|| sig.contains("tostring()") || sig.contains("format(") || sig.contains("lang.reflect")) continue;
             nextInvokeParam.put(sootMethod.getSignature(), methodParamInvoke.param);
 
             if(methodParamInvoke.invokeMethodSig.toString().length() > 5000) continue;
@@ -325,26 +331,34 @@ public class MethodString {
             }
             else {
                 MethodLocal.getNodeCallToIfNotEq(nextInvokeParam, callByNodes);
-                for (CallGraphNode node : callByNodes) {
-                    HashMap<String, List<Integer>> Next = clone(nextInvokeParam);
-                    //LOGGER.warn("[SIMULATE]: Get Call By Nodes, {}==>{}", node.getSootMethod(), nextInvokeParam);
-                    MethodLocal newMethodLocal = new MethodLocal(node.getSootMethod(), Next, 1);
-                    newMethodLocal.doAnalysis();
-                    if (newMethodLocal.getInterestingParamString().containsKey(sootMethod.getSignature())) {
-                        HashMap<Integer, List<String>> invokeResult = newMethodLocal.getInterestingParamString().get(sootMethod.getSignature());
-                        if(!invokeResult.isEmpty()) {
-                            methodParamInvoke.addParamValue(invokeResult);
-                            if(methodParamInvoke.solved && !methodReturnParamInvoke.containsValue(methodParamInvoke)){
-                                LLMQuery.generate(methodParamInvoke);
+                int timeout = 10;
+                TimeoutTaskExecutor timeoutTaskExecutor = new TimeoutTaskExecutor(timeout);
+                timeoutTaskExecutor.executeWithTimeout(() -> {
+                    for (CallGraphNode node : callByNodes) {
+                        HashMap<String, List<Integer>> Next = clone(nextInvokeParam);
+                        //LOGGER.warn("[SIMULATE]: Get Call By Nodes, {}==>{}", node.getSootMethod(), nextInvokeParam);
+                        MethodLocal newMethodLocal = new MethodLocal(node.getSootMethod(), Next, 1);
+                        newMethodLocal.doAnalysis();
+                        if (newMethodLocal.getInterestingParamString().containsKey(sootMethod.getSignature())) {
+                            HashMap<Integer, List<String>> invokeResult = newMethodLocal.getInterestingParamString().get(sootMethod.getSignature());
+                            if(!invokeResult.isEmpty()) {
+                                addValue(paramValue, invokeResult);
+                                if(methodParamInvoke.solved && !methodReturnParamInvoke.containsValue(methodParamInvoke)){
+                                    LLMQuery.generate(methodParamInvoke);
+                                }
                             }
                         }
                     }
-                }
-                for(Integer arg : methodParamInvoke.param){
-                    addValue(paramValue, arg, "UNKNOWN <"+ sootMethod.getSubSignature() + ">[$" + arg + "]");
+                });
+                timeoutTaskExecutor.shutdown();
+                if(paramValue.isEmpty()) {
+                    for (Integer arg : methodParamInvoke.param) {
+                        addValue(paramValue, arg, "UNKNOWN <" + sootMethod.getSubSignature() + ">[$" + arg + "]");
+                    }
                 }
             }
             methodParamInvoke.addParamValue(paramValue);
+            methodParamInvoke.solve();
             methodParamInvoke.param.clear();
         }
     }
@@ -515,922 +529,885 @@ public class MethodString {
 
     public static HashMap<Integer, SootField> GetSetField(SootMethod sootMethod){
 
-        if(sootMethod.getSignature().contains("AM_serverZone_URL(java.lang.String,int)"))
-            LOGGER.info("TARGET");
-        SootClass clz = sootMethod.getDeclaringClass();
-        HashMap<SootMethod, HashMap<Integer, SootField>> clzMethod = allClzWithSetFieldMethod.get(clz);
-
-        if(!clzMethod.containsKey(sootMethod))
-            clzMethod.put(sootMethod, new HashMap<>());
-        else
-            return clzMethod.get(sootMethod);
-
-        HashMap<Integer, SootField> fieldWithParam = clzMethod.get(sootMethod);
-        if(isStandardLibraryClass(clz)) return fieldWithParam;
-
-        HashMap<Value, List<Integer>> localFromParam = new HashMap<>();
-        HashMap<Value, MethodParamInvoke> localFromParamInvoke = new HashMap<>();
-        HashMap<Value, SootField> localToFieldMap = new HashMap<>();
-        HashMap<Value, List<String>> localToString = new HashMap<>();
-        HashMap<Value, AbstractClz> localToCLz = new HashMap<>();
-        HashMap<Value, List<List<String>>> localArray = new HashMap<>();
-
-        if(visitedMethod.contains(sootMethod.getSignature())) return fieldWithParam;
-        visitedMethod.add(sootMethod.getSignature());
-
-        Body body = null;
-
-
         try {
-            body = sootMethod.retrieveActiveBody();
-        } catch (Exception e) {
-            //LOGGER.error("Could not retrieved the active body {} because {}", sootMethod, e.getLocalizedMessage());
-        }
-        //LOGGER.info("THE METHOD NOW: {}", sootMethod);
-        if(body != null) {
+            if (sootMethod.getSignature().contains("AM_serverZone_URL(java.lang.String,int)"))
+                LOGGER.info("TARGET");
+            SootClass clz = sootMethod.getDeclaringClass();
+            HashMap<SootMethod, HashMap<Integer, SootField>> clzMethod = allClzWithSetFieldMethod.get(clz);
 
-            for (Unit unit : body.getUnits()) {
-                if(unit.toString().contains("$r1 = staticinvoke <com.gooclient.anycam.activity.settings.update.MyHttp: java.lang.String encryption(java.lang.String,java.lang.String)>"))
-                    LOGGER.info("ggg");
-                Stmt stmt = (Stmt) unit;
-                if(stmt instanceof IdentityStmt){
-                    Value rightOp = ((IdentityStmt) stmt).getRightOp();
-                    Value leftOp = ((IdentityStmt) stmt).getLeftOp();
-                    if(rightOp instanceof ParameterRef){
-                        int index = ((ParameterRef) rightOp).getIndex();
-                        addValue(localFromParam,leftOp, index);
-                       // LOGGER.info("275: localFromParam : {}-{}", leftOp, index);
-                    }
-                }
-                else if(stmt instanceof AssignStmt){
-                    Value rightOp = ((AssignStmt) stmt).getRightOp();
-                    Value leftOp = ((AssignStmt) stmt).getLeftOp();
-                    if(rightOp instanceof NewArrayExpr){
-                        NewArrayExpr arrayExpr = (NewArrayExpr) rightOp;
-                        if(arrayExpr.getType().toString().contains("byte")) continue;
-                        Integer index = (Integer) SimulateUtil.getConstant(arrayExpr.getSize());
-                        if(index != null && index > 0 && index < 100){
-                            List<List<String>> arrayList = new ArrayList<>();
-                            int i = 0;
-                            while(i < index) {
-                                arrayList.add(new ArrayList<>());
-                                i++;
+            if (!clzMethod.containsKey(sootMethod))
+                clzMethod.put(sootMethod, new HashMap<>());
+            else
+                return clzMethod.get(sootMethod);
+
+            HashMap<Integer, SootField> fieldWithParam = clzMethod.get(sootMethod);
+            if (isStandardLibraryClass(clz)) return fieldWithParam;
+
+            HashMap<Value, List<Integer>> localFromParam = new HashMap<>();
+            HashMap<Value, MethodParamInvoke> localFromParamInvoke = new HashMap<>();
+            HashMap<Value, SootField> localToFieldMap = new HashMap<>();
+            HashMap<Value, List<String>> localToString = new HashMap<>();
+            HashMap<Value, AbstractClz> localToCLz = new HashMap<>();
+            HashMap<Value, List<List<String>>> localArray = new HashMap<>();
+
+            if (visitedMethod.contains(sootMethod.getSignature())) return fieldWithParam;
+            visitedMethod.add(sootMethod.getSignature());
+
+            Body body = null;
+
+
+            try {
+                body = sootMethod.retrieveActiveBody();
+            } catch (Exception e) {
+                //LOGGER.error("Could not retrieved the active body {} because {}", sootMethod, e.getLocalizedMessage());
+            }
+            //LOGGER.info("THE METHOD NOW: {}", sootMethod);
+            if (body != null) {
+                for (Unit unit : body.getUnits()) {
+                    if (unit.toString().contains("$r1 = staticinvoke <com.gooclient.anycam.activity.settings.update.MyHttp: java.lang.String encryption(java.lang.String,java.lang.String)>"))
+                        LOGGER.info("ggg");
+                    Stmt stmt = (Stmt) unit;
+                    if (stmt instanceof IdentityStmt) {
+                        Value rightOp = ((IdentityStmt) stmt).getRightOp();
+                        Value leftOp = ((IdentityStmt) stmt).getLeftOp();
+                        if (rightOp instanceof ParameterRef) {
+                            int index = ((ParameterRef) rightOp).getIndex();
+                            addValue(localFromParam, leftOp, index);
+                            // LOGGER.info("275: localFromParam : {}-{}", leftOp, index);
+                        }
+                    } else if (stmt instanceof AssignStmt) {
+                        Value rightOp = ((AssignStmt) stmt).getRightOp();
+                        Value leftOp = ((AssignStmt) stmt).getLeftOp();
+                        if (rightOp instanceof NewArrayExpr) {
+                            NewArrayExpr arrayExpr = (NewArrayExpr) rightOp;
+                            if (arrayExpr.getType().toString().contains("byte")) continue;
+                            Integer index = (Integer) SimulateUtil.getConstant(arrayExpr.getSize());
+                            if (index != null && index > 0 && index < 100) {
+                                List<List<String>> arrayList = new ArrayList<>();
+                                int i = 0;
+                                while (i < index) {
+                                    arrayList.add(new ArrayList<>());
+                                    i++;
+                                }
+                                localArray.put(leftOp, arrayList);
+                                //LOGGER.info("297: New local Array: {}, {}, {},{}", stmt, leftOp, arrayList, index);
+                            } else {
+                                localArray.remove(leftOp);
                             }
-                            localArray.put(leftOp, arrayList);
-                            //LOGGER.info("297: New local Array: {}, {}, {},{}", stmt, leftOp, arrayList, index);
-                        }
-                        else{
-                            localArray.remove(leftOp);
-                        }
-                    }
-                    else if(leftOp instanceof Local){
-                        // localArray Value assigned new value
-                        //todo right is fieldREF, right is staticinvoke,.
+                        } else if (leftOp instanceof Local) {
+                            // localArray Value assigned new value
+                            //todo right is fieldREF, right is staticinvoke,.
 
-                        if(localFromParam.containsKey(rightOp)) {
-                            List<Integer> keys = localFromParam.get(rightOp);
-                            localFromParam.put(leftOp, keys);
-                        }
-
-                        if(localFromParamInvoke.containsKey(rightOp)){
-                            localFromParamInvoke.put(leftOp, localFromParamInvoke.get(rightOp));
-                            localArray.remove(leftOp);
-                            localToString.remove(leftOp);
-                            localFromParam.remove(leftOp); //update the value
-                        }
-
-                        if(rightOp instanceof Local){
-                            if(localToCLz.containsKey(rightOp))
-                                localToCLz.put(leftOp, localToCLz.get(rightOp));
-                        }
-                        else if(rightOp instanceof CastExpr){
-                            Value op = ((CastExpr) rightOp).getOp();
-                            if(localToCLz.containsKey(op))
-                                localToCLz.put(leftOp, localToCLz.get(op));
-                            if(localFromParam.containsKey(op)){
-                                if(!leftOp.equals(op))
-                                    localFromParam.remove(leftOp);
-                                addValue(localFromParam, leftOp, localFromParam.get(op));
+                            if (localFromParam.containsKey(rightOp)) {
+                                List<Integer> keys = localFromParam.get(rightOp);
+                                localFromParam.put(leftOp, keys);
                             }
-                        }
-                        else if(rightOp instanceof ArrayRef) {
-                            ArrayRef arrayRef = (ArrayRef) rightOp;
-                            Value arrayBase = arrayRef.getBase();
-                            localArray.remove(leftOp);
 
-                            Object obj = SimulateUtil.getConstant(arrayRef.getIndex());
-                            if (obj instanceof Integer) {
-                                int arrayIndex = (Integer) obj;
-                                if (localArray.containsKey(arrayBase)) {
-                                    try{
-                                        List<List<String>> array = localArray.get(arrayBase);
-                                        if(array.size() - 1 < arrayIndex) continue;
-                                        List<String> arrayValue = array.get(arrayIndex);
-                                        if(arrayValue.isEmpty()) continue;
-                                        String invokeSigStr = null;
-                                        List<Integer> arrayID = getArrayFieldIndex(arrayValue);
-                                        if (!arrayID.isEmpty()) {
-                                            if(arrayValue.get(0).startsWith("MethodParamInvoke")){
-                                                invokeSigStr = getInvokeSigOfString(arrayValue.get(0));
-                                                List<String> tmp = new ArrayList<>(arrayValue);
-                                                tmp.set(0, Objects.requireNonNullElse(invokeSigStr, "null"));
-                                                MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, arrayID, tmp);
-                                                localFromParamInvoke.put(leftOp, methodParamInvoke);
+                            if (localFromParamInvoke.containsKey(rightOp)) {
+                                localFromParamInvoke.put(leftOp, localFromParamInvoke.get(rightOp));
+                                localArray.remove(leftOp);
+                                localToString.remove(leftOp);
+                                localFromParam.remove(leftOp); //update the value
+                            }
 
-                                                localToString.remove(leftOp);
-                                                localFromParam.remove(leftOp);
-                                                localToCLz.remove(leftOp);
-                                            }
-                                            else {
-                                                List<Integer> params = new ArrayList<>();
-                                                for (int fromId : arrayID) {
-                                                    if (localFromParam.containsKey(arrayBase)) {
-                                                        if (localFromParam.get(arrayBase).contains(fromId)) {
-                                                            addValue(params, fromId);
-                                                        }
-                                                    }
-                                                }
-                                                if(arrayValue.get(0).startsWith("<") && !params.isEmpty()){
-                                                    MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, params, arrayValue);
+                            if (rightOp instanceof Local) {
+                                if (localToCLz.containsKey(rightOp))
+                                    localToCLz.put(leftOp, localToCLz.get(rightOp));
+                            } else if (rightOp instanceof CastExpr) {
+                                Value op = ((CastExpr) rightOp).getOp();
+                                if (localToCLz.containsKey(op))
+                                    localToCLz.put(leftOp, localToCLz.get(op));
+                                if (localFromParam.containsKey(op)) {
+                                    if (!leftOp.equals(op))
+                                        localFromParam.remove(leftOp);
+                                    addValue(localFromParam, leftOp, localFromParam.get(op));
+                                }
+                            } else if (rightOp instanceof ArrayRef) {
+                                ArrayRef arrayRef = (ArrayRef) rightOp;
+                                Value arrayBase = arrayRef.getBase();
+                                localArray.remove(leftOp);
+
+                                Object obj = SimulateUtil.getConstant(arrayRef.getIndex());
+                                if (obj instanceof Integer) {
+                                    int arrayIndex = (Integer) obj;
+                                    if (localArray.containsKey(arrayBase)) {
+                                        try {
+                                            List<List<String>> array = localArray.get(arrayBase);
+                                            if (array.size() - 1 < arrayIndex) continue;
+                                            List<String> arrayValue = array.get(arrayIndex);
+                                            if (arrayValue.isEmpty()) continue;
+                                            String invokeSigStr = null;
+                                            List<Integer> arrayID = getArrayFieldIndex(arrayValue);
+                                            if (!arrayID.isEmpty()) {
+                                                if (arrayValue.get(0).startsWith("MethodParamInvoke")) {
+                                                    invokeSigStr = getInvokeSigOfString(arrayValue.get(0));
+                                                    List<String> tmp = new ArrayList<>(arrayValue);
+                                                    tmp.set(0, Objects.requireNonNullElse(invokeSigStr, "null"));
+                                                    MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, arrayID, tmp);
                                                     localFromParamInvoke.put(leftOp, methodParamInvoke);
 
                                                     localToString.remove(leftOp);
                                                     localFromParam.remove(leftOp);
                                                     localToCLz.remove(leftOp);
+                                                } else {
+                                                    List<Integer> params = new ArrayList<>();
+                                                    for (int fromId : arrayID) {
+                                                        if (localFromParam.containsKey(arrayBase)) {
+                                                            if (localFromParam.get(arrayBase).contains(fromId)) {
+                                                                addValue(params, fromId);
+                                                            }
+                                                        }
+                                                    }
+                                                    if (arrayValue.get(0).startsWith("<") && !params.isEmpty()) {
+                                                        MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, params, arrayValue);
+                                                        localFromParamInvoke.put(leftOp, methodParamInvoke);
+
+                                                        localToString.remove(leftOp);
+                                                        localFromParam.remove(leftOp);
+                                                        localToCLz.remove(leftOp);
+                                                    } else {
+                                                        localFromParam.remove(leftOp);
+                                                        addValue(localFromParam, leftOp, params);
+                                                    }
                                                 }
-                                                else{
-                                                    localFromParam.remove(leftOp);
-                                                    addValue(localFromParam, leftOp, params);
-                                                }
+                                            } else {
+                                                localFromParam.remove(leftOp); //update the value
+                                                localToString.put(leftOp, arrayValue);
                                             }
-                                        }
-                                        else {
-                                            localFromParam.remove(leftOp); //update the value
-                                            localToString.put(leftOp, arrayValue);
-                                        }
 
-                                    }
-                                    catch (Exception e){
-                                        //LOGGER.error("325: array index over, {},{},{},{}", clz, sootMethod, unit, localArray.get(arrayBase));
+                                        } catch (Exception e) {
+                                            //LOGGER.error("325: array index over, {},{},{},{}", clz, sootMethod, unit, localArray.get(arrayBase));
+                                        }
+                                    } else if (localFromParamInvoke.containsKey(arrayBase)) {
+                                        MethodParamInvoke methodParamInvoke = new MethodParamInvoke(localFromParamInvoke.get(arrayBase));
+                                        methodParamInvoke.addMethodInvoke(arrayRef.toString());
+                                        localFromParamInvoke.put(leftOp, methodParamInvoke);
+                                        localFromParam.remove(leftOp); //update the value
                                     }
                                 }
-                                else if(localFromParamInvoke.containsKey(arrayBase)){
-                                    MethodParamInvoke methodParamInvoke = new MethodParamInvoke(localFromParamInvoke.get(arrayBase));
-                                    methodParamInvoke.addMethodInvoke(arrayRef.toString());
-                                    localFromParamInvoke.put(leftOp, methodParamInvoke);
+                            } else if (rightOp instanceof NewExpr) {
+                                SootClass sootClz = ((NewExpr) rightOp).getBaseType().getSootClass();
+                                String clzName = ((NewExpr) rightOp).getBaseType().getClassName();
+                                if (MethodLocal.isCommonClz(clzName)) {
+                                    AbstractClz abstractClz = MethodLocal.CreateCommonClz(sootClz, sootMethod);
+                                    if (abstractClz != null)
+                                        localToCLz.put(leftOp, abstractClz);
+                                    localFromParamInvoke.remove(leftOp);
+                                    localArray.remove(leftOp);
+                                    localToString.remove(leftOp);
+                                    localFromParam.remove(leftOp);
+
+                                }
+                                //TODO cla simulate
+
+                            } else if (rightOp instanceof Constant) {
+                                Object obj = SimulateUtil.getConstant(rightOp);
+                                if (obj != null) {
+                                    addValue(localToString, leftOp, obj.toString());
+                                    localFromParamInvoke.remove(leftOp);
+
+                                    SootField sootField = localToFieldMap.remove(leftOp);
+                                    AbstractClz abstractClz = localToCLz.remove(leftOp);
+                                    if (abstractClz != null && sootField != null) {
+                                        abstractClz.solve();
+                                        if (abstractClz.isSolved())
+                                            addValue(fieldToString, sootField.toString(), abstractClz.toString());
+                                    }
                                     localFromParam.remove(leftOp); //update the value
+                                    localToCLz.remove(leftOp);
+
                                 }
-                            }
-                        } else if (rightOp instanceof NewExpr) {
-                            SootClass sootClz = ((NewExpr) rightOp).getBaseType().getSootClass();
-                            String clzName = ((NewExpr) rightOp).getBaseType().getClassName();
-                            if(MethodLocal.isCommonClz(clzName)) {
-                                AbstractClz abstractClz = MethodLocal.CreateCommonClz(sootClz, sootMethod);
-                                if(abstractClz !=null)
-                                    localToCLz.put(leftOp, abstractClz);
+                            } else if (rightOp instanceof FieldRef) {
+                                SootField field = ((FieldRef) rightOp).getField();
+                                if (fieldToString.containsKey(field.toString())) {
+                                    localToString.put(leftOp, fieldToString.get((field.toString())));
+                                } else {
+                                    addValue(localToString, leftOp, field.toString());
+                                }
                                 localFromParamInvoke.remove(leftOp);
+                                localFromParam.remove(leftOp); //update the value
                                 localArray.remove(leftOp);
-                                localToString.remove(leftOp);
-                                localFromParam.remove(leftOp);
-
-                            }
-                            //TODO cla simulate
-
-                        } else if(rightOp instanceof Constant){
-                            Object obj = SimulateUtil.getConstant(rightOp);
-                            if(obj != null) {
-                                addValue(localToString,leftOp,obj.toString());
-                                localFromParamInvoke.remove(leftOp);
 
                                 SootField sootField = localToFieldMap.remove(leftOp);
                                 AbstractClz abstractClz = localToCLz.remove(leftOp);
-                                if(abstractClz != null && sootField != null){
+                                if (abstractClz != null && sootField != null) {
                                     abstractClz.solve();
-                                    if(abstractClz.isSolved())
+                                    if (abstractClz.isSolved())
                                         addValue(fieldToString, sootField.toString(), abstractClz.toString());
                                 }
-                                localFromParam.remove(leftOp); //update the value
-                                localToCLz.remove(leftOp);
 
-                            }
-                        }
-                        else if(rightOp instanceof FieldRef){
-                            SootField field = ((FieldRef) rightOp).getField();
-                            if(fieldToString.containsKey(field.toString())) {
-                                localToString.put(leftOp, fieldToString.get((field.toString())));
-                            }
-                            else{
-                                addValue(localToString, leftOp, field.toString());
-                            }
-                            localFromParamInvoke.remove(leftOp);
-                            localFromParam.remove(leftOp); //update the value
-                            localArray.remove(leftOp);
+                                if (field.getType() instanceof RefType) {
+                                    RefType refType = (RefType) field.getType();
+                                    if (refType.getClassName().contains("Map")) {
+                                        localToFieldMap.put(leftOp, field);
+                                        //Todo UPDATE FIELD STRING
+                                        HashmapClz hashmapClz = new HashmapClz(refType.getSootClass(), sootMethod);
+                                        localToCLz.put(leftOp, hashmapClz);
 
-                            SootField sootField = localToFieldMap.remove(leftOp);
-                            AbstractClz abstractClz = localToCLz.remove(leftOp);
-                            if(abstractClz != null && sootField != null){
-                                abstractClz.solve();
-                                if(abstractClz.isSolved())
-                                    addValue(fieldToString, sootField.toString(), abstractClz.toString());
-                            }
-
-                            if(field.getType() instanceof RefType){
-                                RefType refType = (RefType) field.getType();
-                                if(refType.getClassName().contains("Map")) {
-                                    localToFieldMap.put(leftOp, field);
-                                    //Todo UPDATE FIELD STRING
-                                    HashmapClz hashmapClz = new HashmapClz(refType.getSootClass(), sootMethod);
-                                    localToCLz.put(leftOp, hashmapClz);
-
-                                    localToString.remove(leftOp);
-                                }
-                            }
-
-                        }
-                        else if(rightOp instanceof InvokeExpr){
-                            try{
-                                SootMethod method = ((InvokeExpr) rightOp).getMethod();
-                                if((methodToFieldString.containsKey(method) && !CallGraph.callBackClassesWithPoint.containsKey(sootMethod.getDeclaringClass())) || MethodString.getMethodToString().containsKey(method)) {
-                                    if (methodToString.containsKey(method)) {
-                                        localToString.put(leftOp, MethodString.getMethodToString().get(method));
-                                    } else if (methodToFieldString.containsKey(method)) {
-                                        if (fieldToString.containsKey(methodToFieldString.get(method))) {
-                                            List<String> tmp = fieldToString.get(methodToFieldString.get(method));
-                                            localToString.put(leftOp, tmp);
-                                            addValue(methodToString, method, tmp);
-                                        } else {
-                                            localToString.put(leftOp, new ArrayList<>(List.of(methodToFieldString.get(method))));
-                                        }
-                                    }
-                                    localFromParam.remove(leftOp);
-                                    localFromParamInvoke.remove(leftOp);
-                                    localToCLz.remove(leftOp);
-                                }
-                                else if(rightOp instanceof InstanceInvokeExpr){
-                                    Value rightBase = ((InstanceInvokeExpr) rightOp).getBase();
-                                    Integer baseParam = -1;
-                                    if(localFromParam.containsKey(rightBase))
-                                        baseParam = localFromParam.get(rightBase).get(0);
-                                    HashMap<Value, List<String>>  paramValueWithStrings = new HashMap<>();
-                                    HashMap<Integer, List<String>> paramIndexWithStrings = new HashMap<>();
-
-                                    int index = 0;
-                                    for(Value arg : ((InstanceInvokeExpr) rightOp).getArgs()){
-                                        if(localToCLz.containsKey(arg)){
-                                            AbstractClz abstractClz = localToCLz.get(arg);
-                                            abstractClz.solve();
-                                            if(abstractClz.isSolved()){
-                                                paramValueWithStrings.put(arg, new ArrayList<>(List.of(abstractClz.toString())));
-
-                                            }
-                                            if(localFromParam.containsKey(arg)){
-                                                addValue(localFromParam, rightBase, localFromParam.get(arg));
-                                            }
-                                        }
-                                        else if(arg instanceof Constant){
-                                            Object obj = SimulateUtil.getConstant(arg);
-                                            if(obj != null){
-                                                String objString = obj.toString();
-                                                paramValueWithStrings.put(arg, new ArrayList<>(List.of(objString)));
-                                            }
-                                        }
-                                        else if(localArray.containsKey(arg)){
-                                            if(localFromParam.containsKey(arg)){
-                                               addValue(localFromParam, rightBase, localFromParam.get(arg));
-                                            }
-                                            paramValueWithStrings.put(arg, new ArrayList<>(List.of(getContent(localArray.get(arg)))));
-                                        }
-                                        else if(localToString.containsKey(arg) ){
-                                            paramValueWithStrings.put(arg, localToString.get(arg));
-                                        }
-                                        else if(localFromParamInvoke.containsKey(arg)){
-                                            addValue(localFromParam, rightBase, localFromParamInvoke.get(arg).param);
-                                            MethodParamInvoke methodParamInvoke = new MethodParamInvoke(localFromParamInvoke.get(arg));
-                                            paramValueWithStrings.put(arg, new ArrayList<>(List.of(getContent(methodParamInvoke.invokeMethodSig))));
-                                        }
-                                        else if(localFromParam.containsKey(arg)){
-                                            addValue(localFromParam, rightBase, localFromParam.get(arg));
-                                            paramValueWithStrings.put(arg, MethodString.paramListToString(localFromParam.get(arg)));
-                                        }
-                                        if(paramValueWithStrings.containsKey(arg))
-                                            paramIndexWithStrings.put(index, paramValueWithStrings.get(arg));
-                                        index++;
-
-                                    }
-                                    if(localToCLz.containsKey(rightBase)){
-                                        ValueContext valueContext = new ValueContext(sootMethod, unit, paramValueWithStrings);
-                                        AbstractClz abstractClz = localToCLz.get(rightBase);
-                                        abstractClz.addValueContexts(valueContext);
-                                        abstractClz.solve();
-                                        if(localToFieldMap.containsKey(rightBase) && abstractClz.isSolved())
-                                            addValue(fieldToString, localToFieldMap.get(rightBase).toString(), new ArrayList<>(List.of(abstractClz.toString())));
-
-                                        localToCLz.put(leftOp, localToCLz.get(rightBase));
-                                        localFromParamInvoke.remove(leftOp);
-                                        localArray.remove(leftOp);
-
-                                        if(!leftOp.equals(rightBase)) {// assignment , leftOp = rightBase
-                                            localFromParam.remove(leftOp);
-                                            if (localFromParam.containsKey(rightBase)) {
-                                                addValue(localFromParam, leftOp, localFromParam.get(rightBase));
-                                            }
-                                        }
-
-                                    }  else if(localFromParamInvoke.containsKey(rightBase)){
-                                        MethodParamInvoke methodParamInvokeBase = localFromParamInvoke.get(rightBase);
-                                        MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, methodParamInvokeBase.param, methodParamInvokeBase.invokeMethodSig);
-                                        if(localFromParam.containsKey(rightBase))
-                                            addValue(methodParamInvoke.param, localFromParam.get(rightBase));
-                                        if(method.getDeclaringClass().getName().contains("String"))
-                                            methodParamInvoke.addMethodInvoke(method.getName() + paramIndexWithStrings);
-                                        else
-                                            methodParamInvoke.addMethodInvoke(method.getSignature() + paramIndexWithStrings);
-                                        localFromParamInvoke.put(leftOp, methodParamInvoke);
-                                        localArray.remove(leftOp);
                                         localToString.remove(leftOp);
-                                        localFromParam.remove(leftOp); //update the value
-                                        localToCLz.remove(leftOp);
-                                        localToFieldMap.remove(leftOp);
+                                    }
+                                }
 
-                                    } else if(localFromParam.containsKey(rightBase)){
-                                        String clzName = method.getDeclaringClass().getName();
-                                        if(!clzName.contains("ViewBinding") && !clzName.contains("Dialog") && !clzName.contains("panel") && !clzName.contains("widget")) {
-                                            MethodParamInvoke methodParamInvoke;
-                                            if(baseParam > -1) {
-                                                methodParamInvoke = new MethodParamInvoke(sootMethod, localFromParam.get(rightBase), "Base=$[" + baseParam + "]");
-                                                if(method.getDeclaringClass().getName().contains("String"))
-                                                    methodParamInvoke.addMethodInvoke(method.getName() + paramIndexWithStrings);
-                                                else
-                                                    methodParamInvoke.addMethodInvoke(method.getSignature() + paramIndexWithStrings);
+                            } else if (rightOp instanceof InvokeExpr) {
+                                try {
+                                    SootMethod method = ((InvokeExpr) rightOp).getMethod();
+                                    if ((methodToFieldString.containsKey(method) && !CallGraph.callBackClassesWithPoint.containsKey(sootMethod.getDeclaringClass())) || MethodString.getMethodToString().containsKey(method)) {
+                                        if (methodToString.containsKey(method)) {
+                                            localToString.put(leftOp, MethodString.getMethodToString().get(method));
+                                        } else if (methodToFieldString.containsKey(method)) {
+                                            if (fieldToString.containsKey(methodToFieldString.get(method))) {
+                                                List<String> tmp = fieldToString.get(methodToFieldString.get(method));
+                                                localToString.put(leftOp, tmp);
+                                                addValue(methodToString, method, tmp);
+                                            } else {
+                                                localToString.put(leftOp, new ArrayList<>(List.of(methodToFieldString.get(method))));
                                             }
-                                            else {
-                                                methodParamInvoke = new MethodParamInvoke(sootMethod, localFromParam.get(rightBase), method.getSignature() + paramIndexWithStrings);
+                                        }
+                                        localFromParam.remove(leftOp);
+                                        localFromParamInvoke.remove(leftOp);
+                                        localToCLz.remove(leftOp);
+                                    } else if (rightOp instanceof InstanceInvokeExpr) {
+                                        Value rightBase = ((InstanceInvokeExpr) rightOp).getBase();
+                                        Integer baseParam = -1;
+                                        if (localFromParam.containsKey(rightBase))
+                                            baseParam = localFromParam.get(rightBase).get(0);
+                                        HashMap<Value, List<String>> paramValueWithStrings = new HashMap<>();
+                                        HashMap<Integer, List<String>> paramIndexWithStrings = new HashMap<>();
+
+                                        int index = 0;
+                                        for (Value arg : ((InstanceInvokeExpr) rightOp).getArgs()) {
+                                            if (localToCLz.containsKey(arg)) {
+                                                AbstractClz abstractClz = localToCLz.get(arg);
+                                                abstractClz.solve();
+                                                if (abstractClz.isSolved()) {
+                                                    paramValueWithStrings.put(arg, new ArrayList<>(List.of(abstractClz.toString())));
+
+                                                }
+                                                if (localFromParam.containsKey(arg)) {
+                                                    addValue(localFromParam, rightBase, localFromParam.get(arg));
+                                                }
+                                            } else if (arg instanceof Constant) {
+                                                Object obj = SimulateUtil.getConstant(arg);
+                                                if (obj != null) {
+                                                    String objString = obj.toString();
+                                                    paramValueWithStrings.put(arg, new ArrayList<>(List.of(objString)));
+                                                }
+                                            } else if (localArray.containsKey(arg)) {
+                                                if (localFromParam.containsKey(arg)) {
+                                                    addValue(localFromParam, rightBase, localFromParam.get(arg));
+                                                }
+                                                paramValueWithStrings.put(arg, new ArrayList<>(List.of(getContent(localArray.get(arg)))));
+                                            } else if (localToString.containsKey(arg)) {
+                                                paramValueWithStrings.put(arg, localToString.get(arg));
+                                            } else if (localFromParamInvoke.containsKey(arg)) {
+                                                addValue(localFromParam, rightBase, localFromParamInvoke.get(arg).param);
+                                                MethodParamInvoke methodParamInvoke = new MethodParamInvoke(localFromParamInvoke.get(arg));
+                                                paramValueWithStrings.put(arg, new ArrayList<>(List.of(getContent(methodParamInvoke.invokeMethodSig))));
+                                            } else if (localFromParam.containsKey(arg)) {
+                                                addValue(localFromParam, rightBase, localFromParam.get(arg));
+                                                paramValueWithStrings.put(arg, MethodString.paramListToString(localFromParam.get(arg)));
                                             }
+                                            if (paramValueWithStrings.containsKey(arg))
+                                                paramIndexWithStrings.put(index, paramValueWithStrings.get(arg));
+                                            index++;
+
+                                        }
+                                        if (localToCLz.containsKey(rightBase)) {
+                                            ValueContext valueContext = new ValueContext(sootMethod, unit, paramValueWithStrings);
+                                            AbstractClz abstractClz = localToCLz.get(rightBase);
+                                            abstractClz.addValueContexts(valueContext);
+                                            abstractClz.solve();
+                                            if (localToFieldMap.containsKey(rightBase) && abstractClz.isSolved())
+                                                addValue(fieldToString, localToFieldMap.get(rightBase).toString(), new ArrayList<>(List.of(abstractClz.toString())));
+
+                                            localToCLz.put(leftOp, localToCLz.get(rightBase));
+                                            localFromParamInvoke.remove(leftOp);
+                                            localArray.remove(leftOp);
+
+                                            if (!leftOp.equals(rightBase)) {// assignment , leftOp = rightBase
+                                                localFromParam.remove(leftOp);
+                                                if (localFromParam.containsKey(rightBase)) {
+                                                    addValue(localFromParam, leftOp, localFromParam.get(rightBase));
+                                                }
+                                            }
+
+                                        } else if (localFromParamInvoke.containsKey(rightBase)) {
+                                            MethodParamInvoke methodParamInvokeBase = localFromParamInvoke.get(rightBase);
+                                            MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, methodParamInvokeBase.param, methodParamInvokeBase.invokeMethodSig);
+                                            if (localFromParam.containsKey(rightBase))
+                                                addValue(methodParamInvoke.param, localFromParam.get(rightBase));
+                                            if (method.getDeclaringClass().getName().contains("String"))
+                                                methodParamInvoke.addMethodInvoke(method.getName() + paramIndexWithStrings);
+                                            else
+                                                methodParamInvoke.addMethodInvoke(method.getSignature() + paramIndexWithStrings);
                                             localFromParamInvoke.put(leftOp, methodParamInvoke);
                                             localArray.remove(leftOp);
-                                            localFromParam.remove(leftOp);
-
                                             localToString.remove(leftOp);
+                                            localFromParam.remove(leftOp); //update the value
                                             localToCLz.remove(leftOp);
                                             localToFieldMap.remove(leftOp);
-                                        }
-                                    }
-                                }
-                                else if(rightOp instanceof StaticInvokeExpr){
-                                    StaticInvokeExpr staticInvokeExpr = (StaticInvokeExpr) rightOp;
-                                    HashMap<Integer, List<String>>  paramIndexWithStrings = new HashMap<>();
-                                    List<Integer> fromParamArg = new ArrayList<>();
-                                    int index = 0;
-                                    for(Value arg : staticInvokeExpr.getArgs()){
-                                        if(localToCLz.containsKey(arg)){
-                                            AbstractClz abstractClz = localToCLz.get(arg);
-                                            abstractClz.solve();
-                                            if(abstractClz.isSolved()){
-                                                paramIndexWithStrings.put(index, new ArrayList<>(List.of(abstractClz.toString())));
-                                            }
-                                            if(localFromParam.containsKey(arg)){
-                                                if(localToString.containsKey(arg)){
-                                                    paramIndexWithStrings.remove(index);
-                                                    addValue(paramIndexWithStrings, index, localToString.get(arg));
+
+                                        } else if (localFromParam.containsKey(rightBase)) {
+                                            String clzName = method.getDeclaringClass().getName();
+                                            if (!clzName.contains("ViewBinding") && !clzName.contains("Dialog") && !clzName.contains("panel") && !clzName.contains("widget")) {
+                                                MethodParamInvoke methodParamInvoke;
+                                                if (baseParam > -1) {
+                                                    methodParamInvoke = new MethodParamInvoke(sootMethod, localFromParam.get(rightBase), "Base=$[" + baseParam + "]");
+                                                    if (method.getDeclaringClass().getName().contains("String"))
+                                                        methodParamInvoke.addMethodInvoke(method.getName() + paramIndexWithStrings);
+                                                    else
+                                                        methodParamInvoke.addMethodInvoke(method.getSignature() + paramIndexWithStrings);
+                                                } else {
+                                                    methodParamInvoke = new MethodParamInvoke(sootMethod, localFromParam.get(rightBase), method.getSignature() + paramIndexWithStrings);
                                                 }
-                                                else
+                                                localFromParamInvoke.put(leftOp, methodParamInvoke);
+                                                localArray.remove(leftOp);
+                                                localFromParam.remove(leftOp);
+
+                                                localToString.remove(leftOp);
+                                                localToCLz.remove(leftOp);
+                                                localToFieldMap.remove(leftOp);
+                                            }
+                                        }
+                                    } else if (rightOp instanceof StaticInvokeExpr) {
+                                        StaticInvokeExpr staticInvokeExpr = (StaticInvokeExpr) rightOp;
+                                        HashMap<Integer, List<String>> paramIndexWithStrings = new HashMap<>();
+                                        List<Integer> fromParamArg = new ArrayList<>();
+                                        int index = 0;
+                                        for (Value arg : staticInvokeExpr.getArgs()) {
+                                            if (localToCLz.containsKey(arg)) {
+                                                AbstractClz abstractClz = localToCLz.get(arg);
+                                                abstractClz.solve();
+                                                if (abstractClz.isSolved()) {
+                                                    paramIndexWithStrings.put(index, new ArrayList<>(List.of(abstractClz.toString())));
+                                                }
+                                                if (localFromParam.containsKey(arg)) {
+                                                    if (localToString.containsKey(arg)) {
+                                                        paramIndexWithStrings.remove(index);
+                                                        addValue(paramIndexWithStrings, index, localToString.get(arg));
+                                                    } else
+                                                        addValue(fromParamArg, localFromParam.get(arg));
+                                                }
+                                            } else if (arg instanceof Constant) {
+                                                Object obj = SimulateUtil.getConstant(arg);
+                                                if (obj != null) {
+                                                    String objString = obj.toString();
+                                                    paramIndexWithStrings.put(index, new ArrayList<>(List.of(objString)));
+                                                }
+                                            } else if (localArray.containsKey(arg)) {
+                                                if (localFromParam.containsKey(arg)) {
                                                     addValue(fromParamArg, localFromParam.get(arg));
-                                            }
-                                        }
-                                        else if(arg instanceof Constant){
-                                            Object obj = SimulateUtil.getConstant(arg);
-                                            if(obj != null){
-                                                String objString = obj.toString();
-                                                paramIndexWithStrings.put(index, new ArrayList<>(List.of(objString)));
-                                            }
-                                        }
-                                        else if(localArray.containsKey(arg)){
-                                            if(localFromParam.containsKey(arg)){
-                                                addValue(fromParamArg, localFromParam.get(arg));
-                                            }
-                                            paramIndexWithStrings.put(index, new ArrayList<>(List.of(getContent(localArray.get(arg)))));
-                                        }
-                                        else if(localToString.containsKey(arg) ){
-                                            paramIndexWithStrings.put(index, localToString.get(arg));
-                                        }
-                                        else if(localFromParamInvoke.containsKey(arg)){
-                                            addValue(fromParamArg, localFromParamInvoke.get(arg).param);
-                                            MethodParamInvoke methodParamInvoke = new MethodParamInvoke(localFromParamInvoke.get(arg));
-                                            paramIndexWithStrings.put(index, new ArrayList<>(methodParamInvoke.invokeMethodSig));
-                                        }
-                                        else if(localFromParam.containsKey(arg)){
-                                            addValue(fromParamArg, localFromParam.get(arg));
-                                            paramIndexWithStrings.put(index, MethodString.paramListToString(localFromParam.get(arg)));
-                                        }
-                                        index++;
-                                    }
-                                    List<String> returnResult = MethodLocal.getStaticInvokeReturn(staticInvokeExpr, paramIndexWithStrings);
-                                    MethodParamInvoke methodParamInvoke;
-                                    if(!returnResult.isEmpty()) {
-                                        if(fromParamArg.isEmpty()) {
-                                            localToString.put(leftOp, returnResult);
-                                            localFromParamInvoke.remove(leftOp);
-                                            localArray.remove(leftOp);
-                                            localFromParam.remove(leftOp);
-                                            continue;
-                                        }
-                                        else{
-                                            methodParamInvoke = new MethodParamInvoke(sootMethod, fromParamArg, returnResult);
-                                        }
-                                    }
-                                    else{
-                                        methodParamInvoke = new MethodParamInvoke(sootMethod, fromParamArg, method.getSignature() + getContent(paramIndexWithStrings));
-                                        if(fromParamArg.isEmpty())
-                                            methodParamInvoke.addParamValue(paramIndexWithStrings);
-                                        if(method.getReturnType() instanceof ArrayType){
-                                            ArrayType arrayType = (ArrayType) method.getReturnType();
-                                            if(arrayType.toString().toLowerCase().contains("byte")) continue;
-                                            int LEN = 10;
-                                            List<List<String>> arrayList = new ArrayList<>();
-                                            List<String> arrayValue = new ArrayList<>();
-                                            if(fromParamArg.isEmpty() && !methodParamInvoke.invokeMethodSig.isEmpty())
-                                                arrayValue.add(getContent(methodParamInvoke.invokeMethodSig));
-                                            else {
-                                                arrayValue.add(methodParamInvoke.toString());
-                                                localFromParam.put(leftOp, fromParamArg);
-                                            }
-                                            int i = 0;
-                                            while(i < LEN) {
-                                                List<String> tmpValue = new ArrayList<>(arrayValue);
-                                                tmpValue.add("get(" + i + ")");
-                                                arrayList.add(tmpValue);
-                                                i++;
-                                            }
-                                            localArray.put(leftOp, arrayList);
-
-                                            localFromParamInvoke.remove(leftOp);
-                                            localToString.remove(leftOp);
-                                            localToCLz.remove(leftOp);
-                                            localToFieldMap.remove(leftOp);
-                                            //LOGGER.info("297: New local Array: {}, {}, {},{}", stmt, leftOp, arrayList, index);
-
-                                        }
-                                    }
-                                    if(!(method.getReturnType() instanceof ArrayType)) {
-                                        localFromParamInvoke.put(leftOp, methodParamInvoke);
-                                        localArray.remove(leftOp);
-                                        localToString.remove(leftOp);
-                                        localToCLz.remove(leftOp);
-                                        localToFieldMap.remove(leftOp);
-                                        localFromParam.remove(leftOp);
-                                    }
-                                    //update the value
-                                }
-
-                            }
-                            catch (Exception e){LOGGER.error(e);}
-
-                        }
-                    }
-                    else if(leftOp instanceof FieldRef){
-                        FieldRef leftFiledRef = (FieldRef)leftOp;
-                        SootField leftField = leftFiledRef.getField();
-                        if(leftField.toString().contains("requestSign"))
-                            LOGGER.info("got");
-                        if(localToCLz.containsKey(rightOp) && !localFromParam.containsKey(rightOp)){
-                            AbstractClz abstractClz = localToCLz.get(rightOp);
-                            abstractClz.solve();
-                            if(abstractClz.isSolved())
-                                addValue(fieldToString, leftField.toString(), abstractClz.toString());
-                        }
-                        else if(localToString.containsKey(rightOp)){
-                            addValue(fieldToString,leftField.toString(),localToString.get(rightOp));
-                            //LOGGER.info("331:New Field with String: {}:{}; {}", leftField, localToString.get(rightOp), fieldToString.get(leftField.toString()).toString());
-                            //localToString.remove(rightOp);
-                            if(methodToFieldString.containsValue(leftField.toString())){
-                                SootMethod method = getKeyByValue(methodToFieldString, leftField.toString());
-                                if(method !=null) {
-                                    methodToString.put(method, fieldToString.get(leftField.toString()));
-                                    TryAddStringToInterface(method);
-                                    //LOGGER.info("335:New Method To String: " + method.getSignature() + ":" + fieldToString.get(leftField.toString()) + ";" + methodToString.get(method).toString());
-                                }
-                            }
-                        }
-                        else if(rightOp instanceof Constant){
-                            if(rightOp instanceof NullConstant) continue;
-                            Object obj = SimulateUtil.getConstant(rightOp);
-                            if(obj == null) continue;
-                            if(obj.toString().isEmpty()) continue;
-                            addValue(fieldToString, leftField.toString(), obj.toString());
-                            //LOGGER.info("New Field with String: " + leftField + ":" + rightOp + ";" + fieldToString.get(leftField.toString()).toString());
-                            if (methodToFieldString.containsValue(leftField.toString())) {
-                                SootMethod method = getKeyByValue(methodToFieldString, leftField.toString());
-                                if(method != null){
-                                    addValue(methodToString, method, obj.toString());
-                                    TryAddStringToInterface(method);
-                                    //LOGGER.info("141:New Method To String: " + method.getSignature() + ":" + rightOp + ";" + methodToString.get(method).toString());
-                                }
-                            }
-                        }
-
-                        if(localFromParamInvoke.containsKey(rightOp)){
-                            MethodParamInvoke methodParamInvoke = localFromParamInvoke.get(rightOp);
-                            if(methodParamInvoke.param.isEmpty()) {
-                                addValue(fieldToString, leftField.toString(), getContent(methodParamInvoke.invokeMethodSig));
-                                LLMQuery.generate(methodParamInvoke);
-                            }
-                            else
-                                addMethodInvokeSetField(leftField, methodParamInvoke);
-                            if(leftField.getType() instanceof RefType){ //check class instance field
-                                String clzName = ((RefType) leftField.getType()).getClassName();
-                                if(CallGraph.outerInnerClasses.containsKey(clzName)){
-                                    List<SootField> allFields = classWithOuterInnerFields.get(clzName);
-                                    for(SootField field : allFields){
-                                        addMethodInvokeSetField(field, new MethodParamInvoke(methodParamInvoke));
-                                    }
-                                }
-                            }
-                        }
-                        else if(localArray.containsKey(rightOp)){
-                            if(!fieldToString.containsKey(leftField.toString()))
-                                fieldToString.put(leftField.toString(), new ArrayList<>());
-                            addArrayStringTo(localArray.get(rightOp), fieldToString.get(leftField.toString()));
-                            //LOGGER.info("337: New Field with Array String: {}==>{}--{}", localArray.get(rightOp), leftField, fieldToString.get(leftField.toString()));
-                        }
-                        else if(localFromParam.containsKey(rightOp)){
-                            List<Integer> indexes = localFromParam.get(rightOp);
-                            for(Integer index: indexes) {
-                                if(leftField.toString().contains("panel") || leftField.toString().contains("ViewBinding")) continue;
-                                fieldWithParam.put(index, leftField);
-                            }
-
-                            MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, indexes);
-                            if(localToCLz.containsKey(rightOp)){
-                                methodParamInvoke.addMethodInvoke(localToCLz.get(rightOp).toString());
-                                addMethodInvokeSetField(leftField, methodParamInvoke);
-                            }
-
-                            if(!indexes.isEmpty() && leftField.getType() instanceof RefType ){
-                                String clzName = ((RefType) leftField.getType()).getClassName();
-                                if(CallGraph.outerInnerClasses.containsKey(clzName)){
-                                    methodParamInvoke.addMethodInvoke(getContent(paramListToString(indexes)));
-                                    List<SootField> allFields = classWithOuterInnerFields.get(clzName);
-                                    for(SootField field : allFields){
-                                        if(isStandardLibraryClass(field.getDeclaringClass())) continue;
-                                        if(field.toString().contains("panel") || field.toString().contains("ViewBinding") || field.toString().contains("this$0")) continue;
-                                        addMethodInvokeSetField(field, methodParamInvoke);
-                                    }
-                                }
-                            }
-
-                        }
-
-
-                    }
-                    else if(leftOp instanceof ArrayRef){
-                        ArrayRef arrayRef = (ArrayRef) leftOp;
-                        Integer arrayIndex = (Integer) SimulateUtil.getConstant(arrayRef.getIndex());
-                        Value base = arrayRef.getBase();
-                        if(localArray.containsKey(base)) {
-                            if (arrayIndex != null) {
-                                try {
-                                    List<String> arrayValue = localArray.get(base).get(arrayIndex);
-
-                                    if (rightOp instanceof Constant) {
-                                        Object obj = SimulateUtil.getConstant(rightOp);
-                                        if(obj != null)
-                                            addValue(arrayValue, obj.toString());
-                                    }
-                                    else if(localToString.containsKey(rightOp)){
-                                        addValue(arrayValue, localToString.get(rightOp));
-                                    }
-                                    else if(localToCLz.containsKey(rightOp)){
-                                        AbstractClz abstractClz = localToCLz.get(rightOp);
-                                        abstractClz.solve();
-                                        if(abstractClz.isSolved()) {
-                                            arrayValue.clear();
-                                            arrayValue.add(abstractClz.toString());
-                                        }
-                                        if(localFromParam.containsKey(rightOp)){
-                                            addValue(localFromParam, base, localFromParam.get(rightOp));
-                                        }
-                                    }
-                                    else if (localFromParam.containsKey(rightOp)) {
-                                        arrayValue.clear();
-                                        arrayValue.addAll(MethodString.paramListToString(localFromParam.get(rightOp)));
-                                        addValue(localFromParam, base, localFromParam.get(rightOp));
-                                    }
-                                    else if (localFromParamInvoke.containsKey(rightOp)){
-                                        MethodParamInvoke methodParamInvoke = new MethodParamInvoke(localFromParamInvoke.get(rightOp));
-                                        addValue(localFromParam, base, methodParamInvoke.param);
-                                        arrayValue.clear();
-                                        arrayValue.addAll(new ArrayList<>(methodParamInvoke.invokeMethodSig));
-
-                                    }
-                                }
-                                catch (Exception e){
-                                    //LOGGER.error("348: array index over, {},{},{},{}", clz, sootMethod, unit, localArray.get(base));
-                                }
-                            }
-                        }
-                        else {
-                            //TODO
-                        }
-                    }
-                }
-                else if(stmt instanceof InvokeStmt){
-                    //LOGGER.info("291: Invoke: {}", stmt);
-                    boolean isNeedInvoke = false;
-                    Value base = null;
-                    if(stmt.getInvokeExpr() instanceof InstanceInvokeExpr)
-                        base = ((InstanceInvokeExpr) stmt.getInvokeExpr()).getBase();
-                    HashMap<Integer, Constant> paramWithConstant = new HashMap<>();
-                    ValueContext valueContext = new ValueContext(sootMethod, unit);
-                    //TODO check method solved.
-                    HashMap<Integer, Value> localToParam = new HashMap<>();
-                    int index = 0;
-                    for(Value param: stmt.getInvokeExpr().getArgs()){
-                        if(param instanceof Constant){
-                            paramWithConstant.put(index, (Constant) param);
-                            //LOGGER.info("304: param constant: {}--{}-{}",stmt.getInvokeExpr(),param, index);
-                            isNeedInvoke = true;
-                        }else if (localToString.containsKey(param)){
-                            isNeedInvoke = true;
-                            localToParam.put(index, param);
-                            paramWithConstant.put(index, null);
-                            addValue(valueContext.getCurrentValues(), param, localToString.get(param));
-                        }else if(localArray.containsKey(param)){
-                            isNeedInvoke = true;
-                            List<String> paramList = new ArrayList<>();
-                            for (List<String> strs : localArray.get(param)) {
-                                paramList.add(getContent(strs));
-                            }
-                            localToParam.put(index, param);
-                            localToString.put(param, paramList);
-                            paramWithConstant.put(index, null);
-                            addValue(valueContext.getCurrentValues(), param, localToString.get(param));
-                        }
-                        else if(localToCLz.containsKey(param)){
-                            isNeedInvoke = true;
-                            addValue(valueContext.getCurrentValues(), param, localToCLz.get(param).toString());
-                            if(localFromParam.containsKey(param)){
-                                if(base != null && localToCLz.containsKey(base)) {
-                                    addValue(localFromParam, base, localFromParam.get(param));
-                                }
-                            }
-                        }
-                        else if(localFromParam.containsKey(param)) {
-                            isNeedInvoke = true;
-                            localToParam.put(index, param);
-                            addValue(valueContext.getCurrentValues(), param, paramListToString(localFromParam.get(param)));
-
-                            if(base != null && localToCLz.containsKey(base)) {
-                                addValue(localFromParam, base, localFromParam.get(param));
-                            }
-                            //LOGGER.info("301: localFromParam: {},{}", param, index);
-                        } else if (localFromParamInvoke.containsKey(param)) {
-                            isNeedInvoke = true;
-                            localToParam.put(index, param);
-
-                            if(base != null && localToCLz.containsKey(base)) {
-                                addValue(valueContext.getCurrentValues(), param, getContent(localFromParamInvoke.get(param).invokeMethodSig));
-                                addValue(localFromParam, base, localFromParamInvoke.get(param).param);
-                            }
-                            else{
-                                addValue(valueContext.getCurrentValues(), param, localFromParamInvoke.get(param).toString()); //todo
-                            }
-                        }
-
-                        index++;
-                    }
-                    if(isNeedInvoke) {
-                        SootMethod invokeMethod = stmt.getInvokeExpr().getMethod();
-                        HashMap<Integer, SootField> invokeResult;
-                        if (invokeMethod.getDeclaringClass().equals(clz)) {
-                            //LOGGER.info("311: Go to Invoke: {}", invokeMethod);
-                            invokeResult = GetSetField(invokeMethod);
-                            if(invokeResult.isEmpty()){
-                                clzMethod.remove(invokeMethod);
-                            }
-                            //LOGGER.info("313: Get Invoke result: {}", invokeResult);
-                        } else if(base != null && localToCLz.containsKey(base)){
-                            invokeResult = null;
-                            AbstractClz abstractClz = localToCLz.get(base);
-                            abstractClz.addValueContexts(valueContext);
-                            abstractClz.solve();
-                            if(localToFieldMap.containsKey(base) && abstractClz.isSolved())
-                                addValue(fieldToString, localToFieldMap.get(base).toString(), new ArrayList<>(List.of(abstractClz.toString())));
-                        }  else {
-                            HashMap<SootMethod, HashMap<Integer, SootField>> invokeClzResult;
-                            //LOGGER.info("316: Go to Clz :{}", invokeMethod.getDeclaringClass().getName());
-                            invokeClzResult = GetMethodSetField(invokeMethod.getDeclaringClass());
-                            invokeResult = invokeClzResult.get(invokeMethod);
-                            //LOGGER.info("319: Get Clz result:{}", invokeResult);
-                        }
-                        HashMap<SootField, List<MethodParamInvoke>> tempMethodInvoke = new HashMap<>();
-                        //Check if invoke method has been analyzed, and merge the method with invoke method by param transfer.
-                        if(methodToInvokeSetFields.containsKey(invokeMethod)){
-                            for(SootField field : methodToInvokeSetFields.get(invokeMethod)){
-                                List<MethodParamInvoke> methodParamInvokes = FieldSetByMethodInvoke.get(field);
-                                for(MethodParamInvoke methodParamInvoke: methodParamInvokes) {
-                                    if(!methodParamInvoke.sootMethod.equals(invokeMethod)) continue;
-                                    for(Integer paramIndex : methodParamInvoke.param) {
-                                        if(paramWithConstant.containsKey(paramIndex)){
-                                            if(paramWithConstant.get(paramIndex) != null){
-                                                Object obj = SimulateUtil.getConstant(paramWithConstant.get(paramIndex));
-                                                if(obj != null)
-                                                    addValue(methodParamInvoke.paramValue, paramIndex, obj.toString());
-                                            }
-                                        }
-                                        if (localToParam.containsKey(paramIndex)) {
-                                            Value localValue = localToParam.get(paramIndex);
-                                            if (localFromParamInvoke.containsKey(localValue)) {
-                                                MethodParamInvoke methodInvoke = localFromParamInvoke.get(localValue);
-                                                methodInvoke.addMethodInvoke(methodParamInvoke.invokeMethodSig);
-                                                //todo more analysis. maybe del the original methodParamInvoke.
-                                                addValue(tempMethodInvoke, field, methodInvoke);
-                                                //LOGGER.warn("509: GetMethodInvokeSetField: {} -> {}", field, methodInvokeSetField.get(field).toString());
-                                            }
-                                            else if(localToString.containsKey(localValue)){
-                                                addValue(methodParamInvoke.paramValue, paramIndex, localToString.get(localValue));
-                                            }
-                                            else if(localArray.containsKey(localValue)){
-                                                addValue(methodParamInvoke.paramValue, paramIndex, getContent(localArray.get(localValue)));
-                                            }
-                                            else if(localToCLz.containsKey(localValue)){
-                                                addValue(methodParamInvoke.paramValue, paramIndex, localToCLz.get(localValue).toString());
-                                            }
-                                            else {
-                                                List<Integer> indexes = localFromParam.get(localValue);
-                                                if (indexes.isEmpty()) continue;
-                                                String clzName = sootMethod.getDeclaringClass().getName();
-                                                if (!clzName.contains("ViewBinding") && !clzName.contains("Dialog") && !clzName.contains("panel") && !clzName.contains("widget")) {
-                                                    MethodParamInvoke newMethodParamInvoke = new MethodParamInvoke(sootMethod, indexes, methodParamInvoke.invokeMethodSig);
-                                                    addValue(tempMethodInvoke, field, newMethodParamInvoke);
-                                                    //LOGGER.warn("515: GetMethodInvokeSetField: {} -> {}", field, methodInvokeSetField.get(field).toString());
                                                 }
+                                                paramIndexWithStrings.put(index, new ArrayList<>(List.of(getContent(localArray.get(arg)))));
+                                            } else if (localToString.containsKey(arg)) {
+                                                paramIndexWithStrings.put(index, localToString.get(arg));
+                                            } else if (localFromParamInvoke.containsKey(arg)) {
+                                                addValue(fromParamArg, localFromParamInvoke.get(arg).param);
+                                                MethodParamInvoke methodParamInvoke = new MethodParamInvoke(localFromParamInvoke.get(arg));
+                                                paramIndexWithStrings.put(index, new ArrayList<>(methodParamInvoke.invokeMethodSig));
+                                            } else if (localFromParam.containsKey(arg)) {
+                                                addValue(fromParamArg, localFromParam.get(arg));
+                                                paramIndexWithStrings.put(index, MethodString.paramListToString(localFromParam.get(arg)));
                                             }
+                                            index++;
                                         }
-                                    }
-                                }
-                            }
-                        }
-
-                        for(SootField field :tempMethodInvoke.keySet()){
-                            for(MethodParamInvoke methodParamInvoke: tempMethodInvoke.get(field))
-                                addMethodInvokeSetField(field, methodParamInvoke);
-                        }
-
-                        //invoke Result only contains that param to field directly
-                        if(invokeResult != null){
-                            if (!invokeResult.isEmpty() && !localToParam.isEmpty()){
-                                for(Integer id: localToParam.keySet()){
-                                    if(invokeResult.containsKey(id)) {
-                                        SootField field = invokeResult.get(id);
-                                        if (localFromParamInvoke.containsKey(localToParam.get(id))) {
-                                            MethodParamInvoke methodParamInvoke = localFromParamInvoke.get(localToParam.get(id));
-                                            addMethodInvokeSetField(field, methodParamInvoke);
-                                            // LOGGER.warn("532: GetMethodInvokeSetField: {} -> {}", field, methodInvokeSetField.get(field).toString());
-                                        } else if(localFromParam.containsKey(localToParam.get(id))){
-                                            List<Integer> indexes = localFromParam.get(localToParam.get(id));
-                                            for (Integer paramIndex : indexes) {
-                                                if (field.toString().contains("panel") || field.toString().contains("ViewBinding"))
-                                                    continue;
-                                                fieldWithParam.put(paramIndex, field);
-                                            }
-                                            //LOGGER.info("309: GetSetField: {}--{}--{}",clz, invokeMethod, fieldWithParam);
-                                        }
-                                    }
-
-                                }
-
-                            }
-                            if(!paramWithConstant.isEmpty()){
-                                //LOGGER.info("331: Constant param: Method: {}-- Result: {}-- constant: {}", invokeMethod,invokeResult, paramWithConstant);
-                                for(Integer constIndex: paramWithConstant.keySet()) {
-                                    if (invokeResult.containsKey(constIndex)) {
-                                        SootField field = invokeResult.get(constIndex);
-                                        if (paramWithConstant.get(constIndex) == null) {
-                                            for (String str : localToString.get(localToParam.get(constIndex))) {
-                                                if(str.equals(field.toString())) continue;
-                                                addValue(fieldToString, field.toString(), str);
-                                                //LOGGER.info("434: New local param To field: {} <= {}", field.toString(), str);
+                                        List<String> returnResult = MethodLocal.getStaticInvokeReturn(staticInvokeExpr, paramIndexWithStrings);
+                                        MethodParamInvoke methodParamInvoke;
+                                        if (!returnResult.isEmpty()) {
+                                            if (fromParamArg.isEmpty()) {
+                                                localToString.put(leftOp, returnResult);
+                                                localFromParamInvoke.remove(leftOp);
+                                                localArray.remove(leftOp);
+                                                localFromParam.remove(leftOp);
+                                                continue;
+                                            } else {
+                                                methodParamInvoke = new MethodParamInvoke(sootMethod, fromParamArg, returnResult);
                                             }
                                         } else {
-                                            Object constObj = SimulateUtil.getConstant(paramWithConstant.get(constIndex));
-                                            if(constObj.toString().isEmpty()) continue;
-                                            if (field != null && constObj != null) {
-                                                if (!fieldToString.containsKey(field.toString()))
-                                                    fieldToString.put(field.toString(), new ArrayList<>());
-                                                List<String> fieldValues = fieldToString.get(field.toString());
-                                                List<Integer> arrayID = getArrayFieldIndex(fieldValues);
-                                                if (!arrayID.isEmpty()) {
-                                                    for(int fromId : arrayID) {
-                                                        if (constIndex.equals(fromId)) {
-                                                            fieldValues.replaceAll(s -> s.replace("$[" + fromId + "]", constObj.toString()));
-                                                            //LOGGER.info("445: New Array Param To field: {}, {}", fieldValues, arrayID);
-                                                        }
-                                                    }
+                                            methodParamInvoke = new MethodParamInvoke(sootMethod, fromParamArg, method.getSignature() + getContent(paramIndexWithStrings));
+                                            if (fromParamArg.isEmpty()) {
+                                                methodParamInvoke.addParamValue(paramIndexWithStrings);
+                                                methodParamInvoke.solve();
+                                            }
+                                            if (method.getReturnType() instanceof ArrayType) {
+                                                ArrayType arrayType = (ArrayType) method.getReturnType();
+                                                if (arrayType.toString().toLowerCase().contains("byte")) continue;
+                                                int LEN = 10;
+                                                List<List<String>> arrayList = new ArrayList<>();
+                                                List<String> arrayValue = new ArrayList<>();
+                                                if (fromParamArg.isEmpty() && !methodParamInvoke.invokeMethodSig.isEmpty())
+                                                    arrayValue.add(getContent(methodParamInvoke.invokeMethodSig));
+                                                else {
+                                                    arrayValue.add(methodParamInvoke.toString());
+                                                    localFromParam.put(leftOp, fromParamArg);
+                                                }
+                                                int i = 0;
+                                                while (i < LEN) {
+                                                    List<String> tmpValue = new ArrayList<>(arrayValue);
+                                                    tmpValue.add("get(" + i + ")");
+                                                    arrayList.add(tmpValue);
+                                                    i++;
+                                                }
+                                                localArray.put(leftOp, arrayList);
+
+                                                localFromParamInvoke.remove(leftOp);
+                                                localToString.remove(leftOp);
+                                                localToCLz.remove(leftOp);
+                                                localToFieldMap.remove(leftOp);
+                                                //LOGGER.info("297: New local Array: {}, {}, {},{}", stmt, leftOp, arrayList, index);
+
+                                            }
+                                        }
+                                        if (!(method.getReturnType() instanceof ArrayType)) {
+                                            localFromParamInvoke.put(leftOp, methodParamInvoke);
+                                            localArray.remove(leftOp);
+                                            localToString.remove(leftOp);
+                                            localToCLz.remove(leftOp);
+                                            localToFieldMap.remove(leftOp);
+                                            localFromParam.remove(leftOp);
+                                        }
+                                        //update the value
+                                    }
+
+                                } catch (Exception e) {
+                                    LOGGER.error(e);
+                                }
+
+                            }
+                        } else if (leftOp instanceof FieldRef) {
+                            FieldRef leftFiledRef = (FieldRef) leftOp;
+                            SootField leftField = leftFiledRef.getField();
+                            if (leftField.toString().contains("requestSign"))
+                                LOGGER.info("got");
+                            if (localToCLz.containsKey(rightOp) && !localFromParam.containsKey(rightOp)) {
+                                AbstractClz abstractClz = localToCLz.get(rightOp);
+                                abstractClz.solve();
+                                if (abstractClz.isSolved())
+                                    addValue(fieldToString, leftField.toString(), abstractClz.toString());
+                            } else if (localToString.containsKey(rightOp)) {
+                                addValue(fieldToString, leftField.toString(), localToString.get(rightOp));
+                                //LOGGER.info("331:New Field with String: {}:{}; {}", leftField, localToString.get(rightOp), fieldToString.get(leftField.toString()).toString());
+                                //localToString.remove(rightOp);
+                                if (methodToFieldString.containsValue(leftField.toString())) {
+                                    SootMethod method = getKeyByValue(methodToFieldString, leftField.toString());
+                                    if (method != null) {
+                                        methodToString.put(method, fieldToString.get(leftField.toString()));
+                                        TryAddStringToInterface(method);
+                                        //LOGGER.info("335:New Method To String: " + method.getSignature() + ":" + fieldToString.get(leftField.toString()) + ";" + methodToString.get(method).toString());
+                                    }
+                                }
+                            } else if (rightOp instanceof Constant) {
+                                if (rightOp instanceof NullConstant) continue;
+                                Object obj = SimulateUtil.getConstant(rightOp);
+                                if (obj == null) continue;
+                                if (obj.toString().isEmpty()) continue;
+                                addValue(fieldToString, leftField.toString(), obj.toString());
+                                //LOGGER.info("New Field with String: " + leftField + ":" + rightOp + ";" + fieldToString.get(leftField.toString()).toString());
+                                if (methodToFieldString.containsValue(leftField.toString())) {
+                                    SootMethod method = getKeyByValue(methodToFieldString, leftField.toString());
+                                    if (method != null) {
+                                        addValue(methodToString, method, obj.toString());
+                                        TryAddStringToInterface(method);
+                                        //LOGGER.info("141:New Method To String: " + method.getSignature() + ":" + rightOp + ";" + methodToString.get(method).toString());
+                                    }
+                                }
+                            }
+
+                            if (localFromParamInvoke.containsKey(rightOp)) {
+                                MethodParamInvoke methodParamInvoke = localFromParamInvoke.get(rightOp);
+                                if (methodParamInvoke.param.isEmpty()) {
+                                    addValue(fieldToString, leftField.toString(), getContent(methodParamInvoke.invokeMethodSig));
+                                    LLMQuery.generate(methodParamInvoke);
+                                } else
+                                    addMethodInvokeSetField(leftField, methodParamInvoke);
+                                if (leftField.getType() instanceof RefType) { //check class instance field
+                                    String clzName = ((RefType) leftField.getType()).getClassName();
+                                    if (CallGraph.outerInnerClasses.containsKey(clzName)) {
+                                        List<SootField> allFields = classWithOuterInnerFields.get(clzName);
+                                        for (SootField field : allFields) {
+                                            addMethodInvokeSetField(field, new MethodParamInvoke(methodParamInvoke));
+                                        }
+                                    }
+                                }
+                            } else if (localArray.containsKey(rightOp)) {
+                                if (!fieldToString.containsKey(leftField.toString()))
+                                    fieldToString.put(leftField.toString(), new ArrayList<>());
+                                addArrayStringTo(localArray.get(rightOp), fieldToString.get(leftField.toString()));
+                                //LOGGER.info("337: New Field with Array String: {}==>{}--{}", localArray.get(rightOp), leftField, fieldToString.get(leftField.toString()));
+                            } else if (localFromParam.containsKey(rightOp)) {
+                                List<Integer> indexes = localFromParam.get(rightOp);
+                                for (Integer index : indexes) {
+                                    if (leftField.toString().contains("panel") || leftField.toString().contains("ViewBinding"))
+                                        continue;
+                                    fieldWithParam.put(index, leftField);
+                                }
+
+                                MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, indexes);
+                                if (localToCLz.containsKey(rightOp)) {
+                                    methodParamInvoke.addMethodInvoke(localToCLz.get(rightOp).toString());
+                                    addMethodInvokeSetField(leftField, methodParamInvoke);
+                                }
+
+                                if (!indexes.isEmpty() && leftField.getType() instanceof RefType) {
+                                    String clzName = ((RefType) leftField.getType()).getClassName();
+                                    if (CallGraph.outerInnerClasses.containsKey(clzName)) {
+                                        methodParamInvoke.addMethodInvoke(getContent(paramListToString(indexes)));
+                                        List<SootField> allFields = classWithOuterInnerFields.get(clzName);
+                                        for (SootField field : allFields) {
+                                            if (isStandardLibraryClass(field.getDeclaringClass())) continue;
+                                            if (field.toString().contains("panel") || field.toString().contains("ViewBinding") || field.toString().contains("this$0"))
+                                                continue;
+                                            addMethodInvokeSetField(field, methodParamInvoke);
+                                        }
+                                    }
+                                }
+
+                            }
+
+
+                        } else if (leftOp instanceof ArrayRef) {
+                            ArrayRef arrayRef = (ArrayRef) leftOp;
+                            Integer arrayIndex = (Integer) SimulateUtil.getConstant(arrayRef.getIndex());
+                            Value base = arrayRef.getBase();
+                            if (localArray.containsKey(base)) {
+                                if (arrayIndex != null) {
+                                    try {
+                                        List<String> arrayValue = localArray.get(base).get(arrayIndex);
+
+                                        if (rightOp instanceof Constant) {
+                                            Object obj = SimulateUtil.getConstant(rightOp);
+                                            if (obj != null)
+                                                addValue(arrayValue, obj.toString());
+                                        } else if (localToString.containsKey(rightOp)) {
+                                            addValue(arrayValue, localToString.get(rightOp));
+                                        } else if (localToCLz.containsKey(rightOp)) {
+                                            AbstractClz abstractClz = localToCLz.get(rightOp);
+                                            abstractClz.solve();
+                                            if (abstractClz.isSolved()) {
+                                                arrayValue.clear();
+                                                arrayValue.add(abstractClz.toString());
+                                            }
+                                            if (localFromParam.containsKey(rightOp)) {
+                                                addValue(localFromParam, base, localFromParam.get(rightOp));
+                                            }
+                                        } else if (localFromParam.containsKey(rightOp)) {
+                                            arrayValue.clear();
+                                            arrayValue.addAll(MethodString.paramListToString(localFromParam.get(rightOp)));
+                                            addValue(localFromParam, base, localFromParam.get(rightOp));
+                                        } else if (localFromParamInvoke.containsKey(rightOp)) {
+                                            MethodParamInvoke methodParamInvoke = new MethodParamInvoke(localFromParamInvoke.get(rightOp));
+                                            addValue(localFromParam, base, methodParamInvoke.param);
+                                            arrayValue.clear();
+                                            arrayValue.addAll(new ArrayList<>(methodParamInvoke.invokeMethodSig));
+
+                                        }
+                                    } catch (Exception e) {
+                                        //LOGGER.error("348: array index over, {},{},{},{}", clz, sootMethod, unit, localArray.get(base));
+                                    }
+                                }
+                            } else {
+                                //TODO
+                            }
+                        }
+                    } else if (stmt instanceof InvokeStmt) {
+                        //LOGGER.info("291: Invoke: {}", stmt);
+                        boolean isNeedInvoke = false;
+                        Value base = null;
+                        if (stmt.getInvokeExpr() instanceof InstanceInvokeExpr)
+                            base = ((InstanceInvokeExpr) stmt.getInvokeExpr()).getBase();
+                        HashMap<Integer, Constant> paramWithConstant = new HashMap<>();
+                        ValueContext valueContext = new ValueContext(sootMethod, unit);
+                        //TODO check method solved.
+                        HashMap<Integer, Value> localToParam = new HashMap<>();
+                        int index = 0;
+                        for (Value param : stmt.getInvokeExpr().getArgs()) {
+                            if (param instanceof Constant) {
+                                paramWithConstant.put(index, (Constant) param);
+                                //LOGGER.info("304: param constant: {}--{}-{}",stmt.getInvokeExpr(),param, index);
+                                isNeedInvoke = true;
+                            } else if (localToString.containsKey(param)) {
+                                isNeedInvoke = true;
+                                localToParam.put(index, param);
+                                paramWithConstant.put(index, null);
+                                addValue(valueContext.getCurrentValues(), param, localToString.get(param));
+                            } else if (localArray.containsKey(param)) {
+                                isNeedInvoke = true;
+                                List<String> paramList = new ArrayList<>();
+                                for (List<String> strs : localArray.get(param)) {
+                                    paramList.add(getContent(strs));
+                                }
+                                localToParam.put(index, param);
+                                localToString.put(param, paramList);
+                                paramWithConstant.put(index, null);
+                                addValue(valueContext.getCurrentValues(), param, localToString.get(param));
+                            } else if (localToCLz.containsKey(param)) {
+                                isNeedInvoke = true;
+                                addValue(valueContext.getCurrentValues(), param, localToCLz.get(param).toString());
+                                if (localFromParam.containsKey(param)) {
+                                    if (base != null && localToCLz.containsKey(base)) {
+                                        addValue(localFromParam, base, localFromParam.get(param));
+                                    }
+                                }
+                            } else if (localFromParam.containsKey(param)) {
+                                isNeedInvoke = true;
+                                localToParam.put(index, param);
+                                addValue(valueContext.getCurrentValues(), param, paramListToString(localFromParam.get(param)));
+
+                                if (base != null && localToCLz.containsKey(base)) {
+                                    addValue(localFromParam, base, localFromParam.get(param));
+                                }
+                                //LOGGER.info("301: localFromParam: {},{}", param, index);
+                            } else if (localFromParamInvoke.containsKey(param)) {
+                                isNeedInvoke = true;
+                                localToParam.put(index, param);
+
+                                if (base != null && localToCLz.containsKey(base)) {
+                                    addValue(valueContext.getCurrentValues(), param, getContent(localFromParamInvoke.get(param).invokeMethodSig));
+                                    addValue(localFromParam, base, localFromParamInvoke.get(param).param);
+                                } else {
+                                    addValue(valueContext.getCurrentValues(), param, localFromParamInvoke.get(param).toString()); //todo
+                                }
+                            }
+
+                            index++;
+                        }
+                        if (isNeedInvoke) {
+                            SootMethod invokeMethod = stmt.getInvokeExpr().getMethod();
+                            HashMap<Integer, SootField> invokeResult = null;
+                            if (invokeMethod.getDeclaringClass().equals(clz)) {
+                                //LOGGER.info("311: Go to Invoke: {}", invokeMethod);
+                                invokeResult = GetSetField(invokeMethod);
+                                if (invokeResult.isEmpty()) {
+                                    clzMethod.remove(invokeMethod);
+                                }
+                                //LOGGER.info("313: Get Invoke result: {}", invokeResult);
+                            } else if (base != null && localToCLz.containsKey(base)) {
+                                invokeResult = null;
+                                AbstractClz abstractClz = localToCLz.get(base);
+                                abstractClz.addValueContexts(valueContext);
+                                abstractClz.solve();
+                                if (localToFieldMap.containsKey(base) && abstractClz.isSolved())
+                                    addValue(fieldToString, localToFieldMap.get(base).toString(), new ArrayList<>(List.of(abstractClz.toString())));
+                            } else if(invokeMethod.getSignature().contains("java.lang.String replace")){
+                                if(localToString.containsKey(base) && paramWithConstant.size()==2){
+                                    List<String> tmpResult = localToString.get(base);
+                                    Object obj0 = SimulateUtil.getConstant(paramWithConstant.get(0));
+                                    Object obj1 = SimulateUtil.getConstant(paramWithConstant.get(1));
+                                    if(obj0 != null && obj1 != null)
+                                        tmpResult.replaceAll(s -> s.replace(obj0.toString(), obj1.toString()));
+                                    invokeResult = null;
+                                }
+                            }else{
+                                HashMap<SootMethod, HashMap<Integer, SootField>> invokeClzResult;
+                                //LOGGER.info("316: Go to Clz :{}", invokeMethod.getDeclaringClass().getName());
+                                invokeClzResult = GetMethodSetField(invokeMethod.getDeclaringClass());
+                                invokeResult = invokeClzResult.get(invokeMethod);
+                                //LOGGER.info("319: Get Clz result:{}", invokeResult);
+                            }
+                            HashMap<SootField, List<MethodParamInvoke>> tempMethodInvoke = new HashMap<>();
+                            //Check if invoke method has been analyzed, and merge the method with invoke method by param transfer.
+                            if (methodToInvokeSetFields.containsKey(invokeMethod)) {
+                                for (SootField field : methodToInvokeSetFields.get(invokeMethod)) {
+                                    List<MethodParamInvoke> methodParamInvokes = FieldSetByMethodInvoke.get(field);
+                                    for (MethodParamInvoke methodParamInvoke : methodParamInvokes) {
+                                        if (!methodParamInvoke.sootMethod.equals(invokeMethod)) continue;
+                                        for (Integer paramIndex : methodParamInvoke.param) {
+                                            if (paramWithConstant.containsKey(paramIndex)) {
+                                                if (paramWithConstant.get(paramIndex) != null) {
+                                                    Object obj = SimulateUtil.getConstant(paramWithConstant.get(paramIndex));
+                                                    if (obj != null)
+                                                        methodParamInvoke.addParamValue(paramIndex, obj.toString());
+                                                }
+                                            }
+                                            if (localToParam.containsKey(paramIndex)) {
+                                                Value localValue = localToParam.get(paramIndex);
+                                                if (localFromParamInvoke.containsKey(localValue)) {
+                                                    MethodParamInvoke methodInvoke = localFromParamInvoke.get(localValue);
+                                                    methodInvoke.addMethodInvoke(methodParamInvoke.invokeMethodSig);
+                                                    //todo more analysis. maybe del the original methodParamInvoke.
+                                                    addValue(tempMethodInvoke, field, methodInvoke);
+                                                    //LOGGER.warn("509: GetMethodInvokeSetField: {} -> {}", field, methodInvokeSetField.get(field).toString());
+                                                } else if (localToString.containsKey(localValue)) {
+                                                    methodParamInvoke.addParamValue(paramIndex, localToString.get(localValue));
+                                                } else if (localArray.containsKey(localValue)) {
+                                                    methodParamInvoke.addParamValue(paramIndex, getContent(localArray.get(localValue)));
+                                                } else if (localToCLz.containsKey(localValue)) {
+                                                    methodParamInvoke.addParamValue(paramIndex, localToCLz.get(localValue).toString());
                                                 } else {
-                                                    addValue(fieldToString, field.toString(), constObj.toString());
-                                                    if (methodToFieldString.containsValue(field.toString())) {
-                                                        SootMethod method = getKeyByValue(methodToFieldString, field.toString());
-                                                        if (method != null) {
-                                                            methodToString.put(method, fieldToString.get(field.toString()));
-                                                            TryAddStringToInterface(method);
-                                                            //LOGGER.info("488:New Method To String: " + method.getSignature() + ":" + fieldToString.get(field.toString()) + ";" + methodToString.get(method).toString());
-                                                        }
+                                                    List<Integer> indexes = localFromParam.get(localValue);
+                                                    if (indexes.isEmpty()) continue;
+                                                    String clzName = sootMethod.getDeclaringClass().getName();
+                                                    if (!clzName.contains("ViewBinding") && !clzName.contains("Dialog") && !clzName.contains("panel") && !clzName.contains("widget")) {
+                                                        MethodParamInvoke newMethodParamInvoke = new MethodParamInvoke(sootMethod, indexes, methodParamInvoke.invokeMethodSig);
+                                                        addValue(tempMethodInvoke, field, newMethodParamInvoke);
+                                                        //LOGGER.warn("515: GetMethodInvokeSetField: {} -> {}", field, methodInvokeSetField.get(field).toString());
                                                     }
                                                 }
-                                                //LOGGER.info("320: New Field with String: " + field + ":" + constObj + ";" + fieldToString.get(field.toString()).toString());
                                             }
                                         }
                                     }
                                 }
                             }
-                        }else if(index == 2 && !paramWithConstant.isEmpty()){
 
-                            boolean maybeCache = false;
-                            String[] str = new String[2];
-                            int num = 0;
-                            Constant ob0 = paramWithConstant.get(0);
+                            for (SootField field : tempMethodInvoke.keySet()) {
+                                for (MethodParamInvoke methodParamInvoke : tempMethodInvoke.get(field))
+                                    addMethodInvokeSetField(field, methodParamInvoke);
+                            }
 
-                            if(ob0!=null) {
-                                maybeCache = true;
-                                Object ob = SimulateUtil.getConstant(ob0);
-                                if(ob!= null)
-                                    str[0] = ob.toString();
-                                else
-                                    maybeCache = false;
-                            }else continue;
+                            //invoke Result only contains that param to field directly
+                            if (invokeResult != null) {
+                                if (!invokeResult.isEmpty() && !localToParam.isEmpty()) {
+                                    for (Integer id : localToParam.keySet()) {
+                                        if (invokeResult.containsKey(id)) {
+                                            SootField field = invokeResult.get(id);
+                                            if (localFromParamInvoke.containsKey(localToParam.get(id))) {
+                                                MethodParamInvoke methodParamInvoke = localFromParamInvoke.get(localToParam.get(id));
+                                                addMethodInvokeSetField(field, methodParamInvoke);
+                                                // LOGGER.warn("532: GetMethodInvokeSetField: {} -> {}", field, methodInvokeSetField.get(field).toString());
+                                            } else if (localFromParam.containsKey(localToParam.get(id))) {
+                                                List<Integer> indexes = localFromParam.get(localToParam.get(id));
+                                                for (Integer paramIndex : indexes) {
+                                                    if (field.toString().contains("panel") || field.toString().contains("ViewBinding"))
+                                                        continue;
+                                                    fieldWithParam.put(paramIndex, field);
+                                                }
+                                                //LOGGER.info("309: GetSetField: {}--{}--{}",clz, invokeMethod, fieldWithParam);
+                                            }
+                                        }
 
-                            if(paramWithConstant.containsKey(1)) {
-                                Constant ob1 = paramWithConstant.get(1);
-                                if (ob1 == null)
-                                    str[1] = getContent(localToString.get(localToParam.get(1)));
-                                else {
-                                    Object ob = SimulateUtil.getConstant(ob1);
+                                    }
+
+                                }
+                                if (!paramWithConstant.isEmpty()) {
+                                    //LOGGER.info("331: Constant param: Method: {}-- Result: {}-- constant: {}", invokeMethod,invokeResult, paramWithConstant);
+                                    for (Integer constIndex : paramWithConstant.keySet()) {
+                                        if (invokeResult.containsKey(constIndex)) {
+                                            SootField field = invokeResult.get(constIndex);
+                                            if (paramWithConstant.get(constIndex) == null) {
+                                                for (String str : localToString.get(localToParam.get(constIndex))) {
+                                                    if (str.equals(field.toString())) continue;
+                                                    addValue(fieldToString, field.toString(), str);
+                                                    //LOGGER.info("434: New local param To field: {} <= {}", field.toString(), str);
+                                                }
+                                            } else {
+                                                Object constObj = SimulateUtil.getConstant(paramWithConstant.get(constIndex));
+                                                if (constObj.toString().isEmpty()) continue;
+                                                if (field != null && constObj != null) {
+                                                    if (!fieldToString.containsKey(field.toString()))
+                                                        fieldToString.put(field.toString(), new ArrayList<>());
+                                                    List<String> fieldValues = fieldToString.get(field.toString());
+                                                    List<Integer> arrayID = getArrayFieldIndex(fieldValues);
+                                                    if (!arrayID.isEmpty()) {
+                                                        for (int fromId : arrayID) {
+                                                            if (constIndex.equals(fromId)) {
+                                                                fieldValues.replaceAll(s -> s.replace("$[" + fromId + "]", constObj.toString()));
+                                                                //LOGGER.info("445: New Array Param To field: {}, {}", fieldValues, arrayID);
+                                                            }
+                                                        }
+                                                    } else {
+                                                        addValue(fieldToString, field.toString(), constObj.toString());
+                                                        if (methodToFieldString.containsValue(field.toString())) {
+                                                            SootMethod method = getKeyByValue(methodToFieldString, field.toString());
+                                                            if (method != null) {
+                                                                methodToString.put(method, fieldToString.get(field.toString()));
+                                                                TryAddStringToInterface(method);
+                                                                //LOGGER.info("488:New Method To String: " + method.getSignature() + ":" + fieldToString.get(field.toString()) + ";" + methodToString.get(method).toString());
+                                                            }
+                                                        }
+                                                    }
+                                                    //LOGGER.info("320: New Field with String: " + field + ":" + constObj + ";" + fieldToString.get(field.toString()).toString());
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if (index == 2 && !paramWithConstant.isEmpty()) {
+
+                                boolean maybeCache = false;
+                                String[] str = new String[2];
+                                int num = 0;
+                                Constant ob0 = paramWithConstant.get(0);
+
+                                if (ob0 != null) {
+                                    maybeCache = true;
+                                    Object ob = SimulateUtil.getConstant(ob0);
                                     if (ob != null)
-                                        str[1] = ob.toString();
+                                        str[0] = ob.toString();
                                     else
                                         maybeCache = false;
+                                } else continue;
+
+                                if (paramWithConstant.containsKey(1)) {
+                                    Constant ob1 = paramWithConstant.get(1);
+                                    if (ob1 == null)
+                                        str[1] = getContent(localToString.get(localToParam.get(1)));
+                                    else {
+                                        Object ob = SimulateUtil.getConstant(ob1);
+                                        if (ob != null)
+                                            str[1] = ob.toString();
+                                        else
+                                            maybeCache = false;
+                                    }
+                                } else if (localToParam.containsKey(1)) {
+                                    MethodParamInvoke methodParamInvoke = localFromParamInvoke.get(localToParam.get(1));
+                                    if (methodParamInvoke != null && methodToFieldString.containsKey(methodParamInvoke.sootMethod)) {
+                                        maybeCache = true;
+                                        str[1] = methodParamInvoke.toString();
+                                    } else maybeCache = false;
                                 }
-                            }
-                            else if(localToParam.containsKey(1)){
-                                MethodParamInvoke methodParamInvoke = localFromParamInvoke.get(localToParam.get(1));
-                                if(methodParamInvoke != null && methodToFieldString.containsKey(methodParamInvoke.sootMethod)){
-                                    maybeCache = true;
-                                    str[1] = methodParamInvoke.toString();
-                                }
-                                else maybeCache = false;
-                            }
-                            if(maybeCache && str[0] !=null && str[1] != null) {
-                                SootClass invokeClz = invokeMethod.getDeclaringClass();
-                                if(!isStandardLibraryClass(invokeClz)) {
-                                    if (!classMaybeCache.containsKey(invokeClz))
-                                        classMaybeCache.put(invokeClz, new HashMap<>());
-                                    addValue(classMaybeCache.get(invokeClz), str[0], str[1]);
-                                    //LOGGER.warn("[ClassMaybeCache]: {}", classMaybeCache.get(invokeClz));
+                                if (maybeCache && str[0] != null && str[1] != null) {
+                                    SootClass invokeClz = invokeMethod.getDeclaringClass();
+                                    if (!isStandardLibraryClass(invokeClz)) {
+                                        if (!classMaybeCache.containsKey(invokeClz))
+                                            classMaybeCache.put(invokeClz, new HashMap<>());
+                                        addValue(classMaybeCache.get(invokeClz), str[0], str[1]);
+                                        //LOGGER.warn("[ClassMaybeCache]: {}", classMaybeCache.get(invokeClz));
+                                    }
                                 }
                             }
                         }
-                    }
-                }
-                else if (stmt instanceof ReturnStmt) {
-                    Value returnOP = ((ReturnStmt) stmt).getOp();
-                    String returnType = sootMethod.getReturnType().toString().toLowerCase();
-                    if(localFromParamInvoke.containsKey(returnOP)){
-                        //TODO methodReturnParamInvoke.
-                        if(methodReturnParamInvoke.containsKey(sootMethod)) {
-                            if(methodReturnParamInvoke.get(sootMethod).invokeMethodSig.toString().length() < localFromParamInvoke.get(returnOP).invokeMethodSig.toString().length())
+                    } else if (stmt instanceof ReturnStmt) {
+                        Value returnOP = ((ReturnStmt) stmt).getOp();
+                        String returnType = sootMethod.getReturnType().toString().toLowerCase();
+                        if (localFromParamInvoke.containsKey(returnOP)) {
+                            if (methodReturnParamInvoke.containsKey(sootMethod)) {
+                                if (methodReturnParamInvoke.get(sootMethod).invokeMethodSig.toString().length() < localFromParamInvoke.get(returnOP).invokeMethodSig.toString().length())
+                                    methodReturnParamInvoke.put(sootMethod, localFromParamInvoke.get(returnOP));
+                            } else {
                                 methodReturnParamInvoke.put(sootMethod, localFromParamInvoke.get(returnOP));
-                        }
-                        else{
-                            methodReturnParamInvoke.put(sootMethod, localFromParamInvoke.get(returnOP));
-                        }
-                    }
-                    else if(localFromParam.containsKey(returnOP) && localToCLz.containsKey(returnOP)){
-                        AbstractClz abstractClz = localToCLz.get(returnOP);
-                        abstractClz.solve();
-                        if(abstractClz.isSolved()) {
-                            MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, localFromParam.get(returnOP), abstractClz.toString());
-                            if(methodReturnParamInvoke.containsKey(sootMethod)) {
-                                if(methodReturnParamInvoke.get(sootMethod).invokeMethodSig.toString().length() < methodParamInvoke.invokeMethodSig.toString().length())
+                            }
+                        } else if (localFromParam.containsKey(returnOP) && localToCLz.containsKey(returnOP)) {
+                            AbstractClz abstractClz = localToCLz.get(returnOP);
+                            abstractClz.solve();
+                            if (abstractClz.isSolved()) {
+                                MethodParamInvoke methodParamInvoke = new MethodParamInvoke(sootMethod, localFromParam.get(returnOP), abstractClz.toString());
+                                if (methodReturnParamInvoke.containsKey(sootMethod)) {
+                                    if (methodReturnParamInvoke.get(sootMethod).invokeMethodSig.toString().length() < methodParamInvoke.invokeMethodSig.toString().length())
+                                        methodReturnParamInvoke.put(sootMethod, methodParamInvoke);
+                                } else {
                                     methodReturnParamInvoke.put(sootMethod, methodParamInvoke);
-                            }else{
-                                methodReturnParamInvoke.put(sootMethod, methodParamInvoke);
+                                }
                             }
                         }
-                    }
-                    if(localToString.containsKey(returnOP)){
-                        addValue(methodToString, sootMethod, localToString.get(returnOP));
-                        if(returnType.contains("url") || returnType.contains("string")){
-                            String returnStr = localToString.get(returnOP).toString();
-                            if(returnStr.startsWith("<") && returnStr.endsWith(">"))
-                                continue;
-                            if(isFirmRelatedUrl(returnStr))
-                                LOGGER.debug("FIND local URL: {} ,from method {} ", returnStr, sootMethod);
+                        if (localToString.containsKey(returnOP)) {
+                            addValue(methodToString, sootMethod, localToString.get(returnOP));
+                            if (returnType.contains("url") || returnType.contains("string")) {
+                                String returnStr = localToString.get(returnOP).toString();
+                                if (returnStr.startsWith("<") && returnStr.endsWith(">"))
+                                    continue;
+                                if (isFirmRelatedUrl(returnStr))
+                                    LOGGER.debug("FIND local URL: {} ,from method {} ", returnStr, sootMethod);
+                            }
                         }
                     }
                 }
             }
+            return fieldWithParam;
         }
-        return fieldWithParam;
+        catch (Exception e){
+            LOGGER.error("Exception in GetAllMethodSetField: {}", e.getMessage());
+            return new HashMap<>();
+        }
     }
 
     public static List<String> paramListToString(List<Integer> params){
@@ -1493,7 +1470,7 @@ public class MethodString {
         }
         return className.startsWith("java.") || className.startsWith("javax.")
                 || className.startsWith("android.") || className.startsWith("androidx.")||className.startsWith("kotlin.") || className.startsWith("rx.")
-                 || className.startsWith("okhttp3") || className.startsWith("retrofit2.");
+                 || className.startsWith("okhttp3") || className.startsWith("retrofit2.") || className.startsWith("org.");
     }
 
     public static boolean isStandardLibraryField(String Fieldstr) {
@@ -1507,8 +1484,8 @@ public class MethodString {
                 || fieldString.startsWith("<okhttp3") || fieldString.startsWith("<retrofit2.");
     }
 
-    public static List<String> library = List.of("bumptech", "com.xiaomi", "com.android","com.google", "com.amazonaws", "thingclips", "okio", "alipay.sdk", "com.huawei", "com.tencent",
-            "org.apache","jsonobjectparent","io.reactivex", "facebook", "crashsdk", "cn.jpush", "cn.jiguang", "eventbus", "bouncycastle", "spongycastle", "openssl", "com.stripe", "com.blankj", "com.alibaba",
+    public static List<String> library = List.of("bumptech", "com.xiaomi", "com.android","com.google", "com.amazonaws", "thingclips", "okio", "alipay.sdk", "com.huawei","com.tuya.", "com.tencent",
+            "org.apache","jsonobjectparent","io.", "facebook", "crashsdk", "cn.jpush", "cn.jiguang", "eventbus", "bouncycastle", "spongycastle", "openssl", "com.stripe", "com.blankj", "com.alibaba",
             "com.amap.","com.scwang","mikephil", "dialog","umeng", "panel", "airbnb", "freshchat", "webview", "widget", "com.baidu", ".video.", "com.meizu", "cn.sharesdk","com.taobao.", "greenrobot", ".push.", ".channel.", ".android.",".crash.");
 
     public static <K, V> K getKeyByValue(Map<K, V> map, V value) {
@@ -1615,37 +1592,42 @@ public class MethodString {
     }
 
     public static String getContent(Object obj) {
-        if (obj instanceof List<?>) {
-            List<?> list = (List<?>) obj;
-            if(list.isEmpty()) return "";
-            if (list.size() == 1) {
-                Object firstElement = list.get(0);
-                return getContent(firstElement);
-            } else {
-                // 返回 List 的 toString() 形式
-                List<String> stringList = new ArrayList<>();
-                for (Object element : list) {
-                    stringList.add(getContent(element));
+        try {
+            if (obj instanceof List<?>) {
+                List<?> list = (List<?>) obj;
+                if (list.isEmpty()) return "";
+                if (list.size() == 1) {
+                    Object firstElement = list.get(0);
+                    return getContent(firstElement);
+                } else {
+                    // 返回 List 的 toString() 形式
+                    List<String> stringList = new ArrayList<>();
+                    for (Object element : list) {
+                        stringList.add(getContent(element));
+                    }
+                    return stringList.toString();
                 }
-                return stringList.toString();
+            } else if (obj instanceof Map<?, ?>) {
+                Map<?, ?> map = (Map<?, ?>) obj;
+                StringBuilder sb = new StringBuilder("{");
+                boolean first = true;
+                for (Map.Entry<?, ?> entry : map.entrySet()) {
+                    if (!first) sb.append(", ");
+                    sb.append(getContent(entry.getKey())).append("=").append(getContent(entry.getValue()));
+                    first = false;
+                }
+                sb.append("}");
+                return sb.toString();
+            } else if (obj instanceof String) {
+                return (String) obj;
+            } else if (obj == null) {
+                return "null";
+            } else {
+                return obj.toString();
             }
-        } else if (obj instanceof Map<?, ?>) {
-            Map<?, ?> map = (Map<?, ?>) obj;
-            StringBuilder sb = new StringBuilder("{");
-            boolean first = true;
-            for (Map.Entry<?, ?> entry : map.entrySet()) {
-                if (!first) sb.append(", ");
-                sb.append(getContent(entry.getKey())).append("=").append(getContent(entry.getValue()));
-                first = false;
-            }
-            sb.append("}");
-            return sb.toString();
-        } else if (obj instanceof String) {
-            return (String) obj;
-        } else if(obj == null){
-            return "null";
-        } else{
-            return obj.toString();
+        }
+        catch (Exception e){
+            return "";
         }
     }
 

@@ -2,40 +2,31 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="FirmProj.main:jar2" />
+      <artifact name="FirmProj.main:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="fix bugs, change the param's string, &#10;optimize the list string">
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallBackPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/JSONObjectClz.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/FileUtility.java" afterDir="false" />
+    <list default="true" id="d2943ecc-0ccc-4a62-9192-6d7a30dda41a" name="Changes" comment="8-28/ V1.0">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/FirmProj_main_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/TimeoutTaskExecutor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodParamInvoke.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodParamInvoke.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/base/RetrofitPoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/AbstractHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/AbstractHttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/CallFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/CallFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/ConverterClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/ConverterClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/ConverterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/ConverterFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/CustomHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/CustomHttpClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/HttpClientFind.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/HttpClientFind.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/Interceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/Interceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildFind.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/RetrofitBuildPoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/client/okHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/client/okHttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraphNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/graph/CallGraphNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/HashmapClz.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/UrlClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/UrlClz.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/FirmwareRelated.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/FirmwareRelated.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/LLMQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/LLMQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/StringClz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/objectSim/StringClz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/BlockGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/FileUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/FileUtility.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/QueryJson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/firmproj/utility/QueryJson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/TimeWatcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/firmproj/utility/UrlInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
     </list>
     <list id="28af94af-eb16-46e5-bd45-48575d194720" name="New changelist" comment="New changelist" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,6 +51,17 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="FirmProj" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FirmProj" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FirmProj" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -113,18 +115,21 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Application.javaAPp.executor": "Debug",
     "Gradle.Build FirmProj.executor": "Run",
-    "Gradle.FirmProj [:Main.main()].executor": "Run",
+    "Gradle.FirmProj [:Main.main()].executor": "Debug",
+    "Gradle.FirmProj [clean].executor": "Run",
+    "Gradle.FirmProj [jar].executor": "Run",
     "Java Scratch.Java.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ToolWindowStatistic.ShowToolbar": "false",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/data/wenzhi/FirmProj/src",
+    "last_opened_file_path": "/data/wenzhi/FirmProj/src/main/resources/log4j2.xml",
     "onboarding.tips.debug.path": "D:/BaiduSyncdisk/Iot/FirmProj/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.19157721",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15384616",
+    "project.structure.side.proportion": "0.20683454",
     "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
@@ -139,13 +144,17 @@
       <recent name="$PROJECT_DIR$/src/main/java" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="firmproj.objectSim" />
       <recent name="FirmProj.base" />
       <recent name="FirmProj.graph" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.FirmProj [jar]">
     <configuration name="javaAPp" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -155,12 +164,67 @@
       <output_file path="$PROJECT_DIR$/logs/1.log" />
       <option name="MAIN_CLASS_NAME" value="firmproj.main.Main" />
       <module name="FirmProj.main" />
-      <option name="PROGRAM_PARAMETERS" value="-p libs/android.jar -o results -a $PROJECT_DIR$/../APKS/yingsheng.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
+      <option name="PROGRAM_PARAMETERS" value="-p libs/android.jar -o results/ -a $PROJECT_DIR$/../APKS/yandex.apk -dj libs/dex_tools_2.1/d2j-dex2jar.sh" />
       <option name="VM_PARAMETERS" value="-Xmx819200m" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="FirmProj [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="FirmProj [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.javaAPp" />
+      <item itemvalue="Gradle.FirmProj [clean]" />
+      <item itemvalue="Gradle.FirmProj [jar]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.FirmProj [jar]" />
+        <item itemvalue="Gradle.FirmProj [clean]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -324,7 +388,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723125624701</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="8-28/ V1.0">
+      <option name="closed" value="true" />
+      <created>1724832798510</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1724832798510</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -357,7 +429,8 @@
     <MESSAGE value="add methodReturnParamInvoke, retrieve field's value in methodParamInvoke. add url client/clz identify, fix getinvokeExprValues bug." />
     <MESSAGE value="fix arrayRef param transfer, complete the paramInvoke Transfer." />
     <MESSAGE value="fix bugs, change the param's string, &#10;optimize the list string" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bugs, change the param's string, &#10;optimize the list string" />
+    <MESSAGE value="8-28/ V1.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="8-28/ V1.0" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -374,15 +447,15 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/firmproj/base/MethodString.java</url>
-          <line>993</line>
+          <line>980</line>
           <option name="timeStamp" value="188" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/firmproj/base/MethodLocal.java</url>
-          <line>757</line>
+          <line>758</line>
           <option name="timeStamp" value="190" />
         </line-breakpoint>
-        <breakpoint type="java-exception">
+        <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="2" />
         </breakpoint>

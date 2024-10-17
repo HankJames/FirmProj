@@ -7,11 +7,18 @@ plugins {
 mainClassName = 'firmproj.main.Main'
 
 jar {
+    archiveBaseName = 'firmProj'
+    archiveVersion = '1.0'
     manifest {
         attributes(
+                "Manifest-Version": 1.0,
                 'Main-Class': 'firmproj.main.Main'
         )
     }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 group 'edu.sdu.cst.iot'
