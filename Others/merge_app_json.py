@@ -71,9 +71,9 @@ def merge_json_files(a_path, b_path, output_path):
 
 def main():
     # 替换为你的实际文件路径
-    a_path = '/data/wenzhi/Result/IoT-VER/Result_Extract/no_answer_apps.json'
-    b_path = '/data/wenzhi/Result/LOCAL_APK_1/Result_Extract/no_answer_apps.json'
-    output_path = '/data/wenzhi/Result/all_no_answer_apps.json'
+    a_path = ''
+    b_path = ''
+    output_path = ''
 
     merge_json_files(a_path, b_path, output_path)
 

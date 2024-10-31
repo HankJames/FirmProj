@@ -46,5 +46,5 @@ def rename_and_merge_folders(target_dir):
 
 
 if __name__ == "__main__":
-    target_dir = "/data/wenzhi/Result/IoT-VER"
+    target_dir = ""
     rename_and_merge_folders(target_dir)

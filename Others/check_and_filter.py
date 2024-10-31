@@ -9,7 +9,7 @@ def get_files_in_folder(folder_path):
 
 def check_overlap_and_merge_files(folders):
     """检查四个文件夹之间是否有重叠，并在有重叠时合并文件（保持重叠文件一份）"""
-    merged_folder = '/data/wenzhi/BLE_APK/No_Dup_APKS'
+    merged_folder = 'YOUR DIR'
     all_files = set()
     overlapping_files = set()  # 用于存储重叠文件
 
@@ -50,5 +50,5 @@ def check_overlap_and_merge_files(folders):
 # 示例用法
 # folders = ['APP1', 'APP2', 'APP3', 'APP4']
 
-folders = ['/data/wenzhi/BLE_APK/', '/data/wenzhi/LOCAL_APK']
+folders = ['', '']
 check_overlap_and_merge_files(folders)

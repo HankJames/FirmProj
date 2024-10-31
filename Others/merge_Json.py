@@ -83,9 +83,9 @@ def merge_json_files(a_path, b_path, c_path):
 
 def main():
     # 替换为实际的文件路径
-    a_path = '/data/wenzhi/Androzoo/Result/Result_Extract/result.json'
-    b_path = '/data/wenzhi/Result/extract_result.json'
-    c_path = '/data/wenzhi/Result/extract_result.json'
+    a_path = ''
+    b_path = ''
+    c_path = ''
 
     merge_json_files(a_path, b_path, c_path)
     # num, filenum, files = count_JSON(c_path)

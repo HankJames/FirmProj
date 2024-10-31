@@ -80,10 +80,10 @@ def analyze_json_values(file_path):
 
 def main():
     # 替换为你的实际文件路径
-    file_path = '/data/wenzhi/Result/download_new_manual.json'
-    folder_path = '/data/wenzhi/Result/IoT-VER'
-    folder_path1 = '/data/wenzhi/Androzoo/Result'
-    folder_path2 = '/data/wenzhi/Result/LOCAL_APK_1'
+    file_path = ''
+    folder_path = ''
+    folder_path1 = ''
+    folder_path2 = ''
     #analyze_json_values(file_path)
 
     analyze_json_complete_0(folder_path)

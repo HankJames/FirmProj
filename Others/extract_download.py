@@ -151,11 +151,11 @@ def print_distri(outStr, num, Size):
           " 95%: ", Size[len(Size) * 95 // 100])
 
 if __name__ == "__main__":
-    apk_directory = "/data/wenzhi/IoT-Companion-Apps"
+    apk_directory = ""
     all_apk = os.listdir(apk_directory)
-    local_apk = os.listdir("/data/wenzhi/LOCAL_APK")
+    local_apk = os.listdir("")
     all_apk.extend(local_apk)
     all_apk = set(all_apk)
     all_apk_num = len(all_apk)
-    root_directory = '/data/wenzhi/Result/IoT-VER'
+    root_directory = ''
     extract_files(root_directory)

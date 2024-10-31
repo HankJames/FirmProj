@@ -7,7 +7,7 @@ import argparse
 import time
 
 # 定义要扫描的目录
-output = "/data/wenzhi/BLE_APK/IoT-From-BLE"
+output = ""
 logging.getLogger("androguard").setLevel(logging.ERROR)
 logging.getLogger("androguard.core").setLevel(logging.ERROR)
 logging.getLogger("androguard.core.axml").setLevel(logging.ERROR)

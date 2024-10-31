@@ -2,8 +2,8 @@ import json
 import os
 import shutil
 
-base_dir = '/data/wenzhi/Androzoo/Result'
-output_dir = '/data/wenzhi/Androzoo/Result/Result_Extract'
+base_dir = ''
+output_dir = ''
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)

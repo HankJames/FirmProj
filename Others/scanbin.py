@@ -42,8 +42,8 @@ def extract_bin_files(apk_path, output_dir):
         遍历指定路径中的所有apk文件，搜索并提取.apk中的.bin文件到指定的输出目录中。
     """
     client = OpenAI(
-        api_key="sk-r42s0LzOFAEn5kxaB61c645bE7B840DaA56fF36bB81aF191",
-        base_url="https://chatapi.nloli.xyz/v1"
+        api_key="KEY",
+        base_url="URL"
     )
     with open('prompt_scanbin.txt', 'r', encoding='utf-8') as file:
         prompt = file.read()
@@ -150,8 +150,8 @@ whitewords = ["fw", "flash", "ota", "firmware", "v1.0", "dfu"]
 blackwords = ["config", "default", "datafile", "debug", "128x128\online", "model", "plugin", "cache", "ui_biz", "fonts", "images", "changeplay.bin"]
 
 if __name__ == '__main__':
-    apk_path = '/data/wenzhi/LOCAL_APK'  # APK文件所在目录
-    output_dir = '/data/wenzhi/Result/LOCAL_APK_1'  # 提取文件的输出目录
+    apk_path = ''  # APK文件所在目录
+    output_dir = ''  # 提取文件的输出目录
     hard_dict = extract_bin_files(apk_path, output_dir)
     json_str = json.dumps(hard_dict, indent=4)
     with open(output_dir + '/firmware_info.json', 'w') as json_file:

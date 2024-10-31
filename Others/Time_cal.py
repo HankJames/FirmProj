@@ -102,5 +102,5 @@ def main(target_path):
 
 if __name__ == "__main__":
     # 目标路径可以修改为你需要检查的目录
-    target_path = '/data/wenzhi/Result/LOCAL_APK_1'
+    target_path = ''
     main(target_path)
