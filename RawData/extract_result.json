@@ -1,0 +1,4231 @@
+{
+    "com.linsi.gsmalarmsystem.apk": [
+        "sys.zip"
+    ],
+    "com.esites.trivoly.apk": [
+        "buzzfw_0_10_0_0.img",
+        "BuzzFw_1_0_1_0.img",
+        "buzzfw_1_0_0_0.img"
+    ],
+    "com.sunkare.app.android.heater.apk": [
+        "W315-04_v3.7_20171123B.bin",
+        "W312_v3.3_HW3.1_20161125A.bin",
+        "W315-01_v3.7_20171123A.bin",
+        "W311T_v3.4_HW5.0_20170410A.bin",
+        "W314_v3.2_HW3.2_20160512A.bin",
+        "W310_v3.3_HW3.0_20161125B.bin",
+        "W312_v3.3_HW3.1_20161125B.bin",
+        "W310_v3.3_HW3.0_20161125A.bin",
+        "W314_v3.2_HW3.2_20160512B.bin",
+        "W315-01_v3.7_20171123B.bin",
+        "W311T_v3.4_HW5.0_20170410B.bin",
+        "W315-04_v3.7_20171123A.bin"
+    ],
+    "com.innosonian.braydenpro.apk": [
+        "app_dfu_package.zip"
+    ],
+    "com.sonymobile.smartconnect.smartwatch2.apk": [
+        "bl.bin",
+        "asw.bin"
+    ],
+    "com.idutex.alonevehicle.E4.apk": [
+        "Link_U4.bin",
+        "TLink.bin",
+        "Link_X6.bin",
+        "Link_X59.bin",
+        "Link_CVD.bin",
+        "CVDLink.bin",
+        "ELink.bin",
+        "ULink.bin",
+        "X5Link.bin",
+        "Link_CVDX.bin",
+        "Link_X5.bin",
+        "EWLink.bin"
+    ],
+    "com.lightingsoft.arcolis.apk": [
+        "Esp82xx-user1.bin",
+        "esp8285.bin"
+    ],
+    "com.thermostat.smart.apk": [
+        "mesh_ota_v1.2.bin"
+    ],
+    "com.mcking.sportdetector.apk": [
+        "Baidu-OPPO-1.0.8.bin",
+        "Baidu-OPPO-1.1.8.bin"
+    ],
+    "com.aesopower.android.lupirock.apk": [
+        "APR-LuPiRock-AD-1818-A0171225a1.aprom",
+        "CNT-LuPiRock-AD-20171120a1-2017-11-20-18-51-06.bin",
+        "CNT-LuPiRock-2017-05-11-17-50-18.bin",
+        "APR-LuPiRock-AD-1818-A0171214a2.aprom",
+        "APR-LuPiRock-AD-1818-A0171221a1.aprom"
+    ],
+    "com.zte.grandband.apk": [
+        "ziku24_all.bin"
+    ],
+    "com.foreversport.heart.apk": [
+        "I7DFU-HW2.3-SW1.0.4.1.zip",
+        "I7DFU-HW2.3-SW1.0.4.2.zip",
+        "V6_1.0.0.14.zip"
+    ],
+    "com.fdore.cxwlocator.apk": [
+        "changeplay.bin"
+    ],
+    "com.dashrobotics.kamigami2.apk": [
+        "firmware_bundle.zip"
+    ],
+    "com.phorus.playfi.apk": [
+        "onkyo1.zip",
+        "helo1.zip"
+    ],
+    "com.bose.monet.apk": [
+        "mock_firmware_update.dfu"
+    ],
+    "com.roadpia.cubebox.apk": [
+        "obd.bin"
+    ],
+    "com.qcymall.googleearphonesetup.apk": [
+        "ht01.zip",
+        "t7s.zip",
+        "t6.zip",
+        "t5.zip"
+    ],
+    "no.nordicsemi.android.nrfbeacon.nearby.apk": [
+        "ble_app_beacon_v1_1_0_s110_v7_1_0.zip"
+    ],
+    "com.blumfeldt.app.android.heater.apk": [
+        "W315-04_v3.7_20171123B.bin",
+        "W312_v3.3_HW3.1_20161125A.bin",
+        "W315-01_v3.7_20171123A.bin",
+        "W311T_v3.4_HW5.0_20170410A.bin",
+        "W314_v3.2_HW3.2_20160512A.bin",
+        "W310_v3.3_HW3.0_20161125B.bin",
+        "W312_v3.3_HW3.1_20161125B.bin",
+        "W310_v3.3_HW3.0_20161125A.bin",
+        "W314_v3.2_HW3.2_20160512B.bin",
+        "W315-01_v3.7_20171123B.bin",
+        "W311T_v3.4_HW5.0_20170410B.bin",
+        "W315-04_v3.7_20171123A.bin"
+    ],
+    "com.ability.Link123Plus.apk": [
+        "dsc_fw_v03400.zip"
+    ],
+    "com.lge.media.lgpocketphoto.apk": [
+        "TMD_replace_g1_v009_140124.bin"
+    ],
+    "ch.aritec.aritag.apk": [
+        "aritag.img"
+    ],
+    "com.f2e.base.framework.apk": [
+        "ziku24_all.bin"
+    ],
+    "com.qblinks.tracmo.apk": [
+        "g3_std_app_oad.bin"
+    ],
+    "com.yeelight.cherry.apk": [
+        "gingko_1.9.7.bin"
+    ],
+    "com.sonymobile.hostapp.swr30.apk": [
+        "firmware.bin"
+    ],
+    "com.twinkly.apk": [
+        "xled.elf-0x00000.bin",
+        "xled.elf-0x40000.bin",
+        "xmusic32.bin",
+        "xled32_24.bin",
+        "xled32.bin",
+        "xled32_23.bin"
+    ],
+    "com.bosch_connectivity.tdl.apk": [
+        "TDL_R2_signed_production.bin"
+    ],
+    "com.ws.mesh.litex_smart.apk": [
+        "light_8266_135.bin",
+        "light_8266_132.bin",
+        "light_8266_136.bin"
+    ],
+    "com.revogi.home.apk": [
+        "smartlink_switch6.bin",
+        "smartlink_switch1.bin",
+        "easylink_switch1.bin",
+        "easylink_switch6.bin",
+        "easylink_switch4.bin"
+    ],
+    "com.shirajo.smart.watch.apk": [
+        "RT729_device(V3.3.6.6.0).img",
+        "RT822_device(V4.3.6.6.0).img"
+    ],
+    "com.mcc.ul.example.dout.demo.apk": [
+        "USB_DIO32HS.bin"
+    ],
+    "com.philips.lighting.hue.apk": [
+        "bsb001_image_01036659.fw"
+    ],
+    "com.xtooltech.FleX.apk": [
+        "vci3a.bin",
+        "vci38.bin"
+    ],
+    "com.excheer.watchassistant.apk": [
+        "device_ff.bin"
+    ],
+    "com.golife.fit.ncsist.apk": [
+        "GOLiFE_CAREONE_4.zip",
+        "GOLiFE_CARE2HR_149.bin"
+    ],
+    "com.quantavici.apps.weardasun.apk": [
+        "child_dfu_package.zip"
+    ],
+    "com.mywatt.home.apk": [
+        "switch1_9_23.bin"
+    ],
+    "com.aimpro21.m3hpa_si.apk": [
+        "RFB06-OAD-ImageB-V16.bin",
+        "RFB06-OAD-ImageB-V17.bin",
+        "RFB06-OAD-ImageA-V16.bin",
+        "RFB06-OAD-ImageA-V17.bin"
+    ],
+    "com.google.android.apps.chromecast.app.apk": [
+        "GQq1.bin"
+    ],
+    "us.nonda.ckf.apk": [
+        "iHere3_5_update_FWV0908_OTA.img",
+        "ihere_update_OTA_FW0605.img",
+        "iHere3_5_update_FWV0930_OTA.img",
+        "iHereOta0504.img"
+    ],
+    "com.gostorylink.miotstorylink.apk": [
+        "eCos.bin"
+    ],
+    "com.eon.home.apk": [
+        "smartlink_switch6.bin",
+        "smartlink_switch1.bin",
+        "smartlink_switch1_9_location_1.bin",
+        "plc_switch6.bin",
+        "plc_switch1.bin"
+    ],
+    "com.ryan.magicconnect.apk": [
+        "15_0019.bin",
+        "02_004C.bin",
+        "FC_0004.bin",
+        "09_000A.bin",
+        "FE_004C.bin",
+        "FD_004A.bin",
+        "0B_000B.bin",
+        "02_004D.bin",
+        "01_004D.bin"
+    ],
+    "com.startup.code.ikecin.apk": [
+        "magic.gz"
+    ],
+    "cn.lelight.publicble.apk": [
+        "ir_wrgb_3_8269_20190713_v6.bin",
+        "light[WRGB]_2_8266_20190713v6.bin",
+        "IR[WRGB]_3_8269_20190713v6.bin",
+        "light[WYRGB]_2_8266_20190713v6.bin",
+        "light_wyrgb_2_8266_20190713_v6.bin",
+        "light_wrgb_2_8266_20190713_v6.bin",
+        "light[WRGB]_3_8269_20190817v8.bin"
+    ],
+    "com.duokan.phone.remotecontroller.apk": [
+        "bootloader.zip",
+        "ota.zip"
+    ],
+    "lvbu.wang.lvbuforeignmobile.apk": [
+        "MINI_BIKE_OS.bin"
+    ],
+    "us.daikin.wwapp.apk": [
+        "dkacstm-wlan-F-2_9_0.bin"
+    ],
+    "com.brighteyeinnovationsllc.itens.apk": [
+        "iTENS.bin"
+    ],
+    "com.accent_systems.ibks_config_tool.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "sd_bl_app_pkg_card_ibks52_V2_2018_08_16_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip"
+    ],
+    "fr.solem.solemwf.apk": [
+        "wf_mb_4_2_6_eu_app2.bin",
+        "wf_mb_4_2_6_eu_app1.bin",
+        "wf_mb_4_2_6_us_app2.bin",
+        "wf_is_912_4_2_5_app2.bin",
+        "wfw_rel_2_5_9.bin",
+        "wf_is_912_4_2_5_app1.bin",
+        "wf_is_4_2_5_app2.bin",
+        "wf_mb_4_2_6_us_app1.bin",
+        "blnr.bin",
+        "wf_is_4_2_5_app1.bin",
+        "wf_ol_4_2_5_app1.bin",
+        "wf_ol_4_2_5_app2.bin"
+    ],
+    "de.volkswagen.pap.apk": [
+        "Touareg.bin"
+    ],
+    "cn.aavi.leaf.apk": [
+        "fota_56_1.bin",
+        "fota_56_2.bin"
+    ],
+    "com.sonymobile.hostapp.everest.apk": [
+        "boot_fw.bin",
+        "app_fw.bin",
+        "hr_fw.bin"
+    ],
+    "com.dixons.smartband.apk": [
+        "imageA_2540_v07.bin",
+        "imageA_2541_v07.bin",
+        "mkt17024_v231np_864r1.zip"
+    ],
+    "com.zengge.telinkmeshlight.apk": [
+        "01_0050.bin",
+        "22_0002.bin",
+        "15_001B.bin",
+        "0B_000B.bin",
+        "80C5_0004.bin",
+        "2B_0002.bin",
+        "59_0002.bin",
+        "58_0004.bin",
+        "80A2_0005.bin",
+        "15_001A.bin",
+        "09_000A.bin",
+        "FC_0004.bin",
+        "2C_0002.bin",
+        "80BB_0006.bin",
+        "80A2_0004.bin",
+        "02_0050.bin",
+        "22_0004.bin",
+        "47_0003.bin",
+        "4C_0002.bin",
+        "80BF_0003.bin",
+        "09_000C.bin",
+        "01_004E.bin",
+        "02_004E.bin"
+    ],
+    "com.zencontrol.commissioning_tool.apk": [
+        "ChillRelayControllerBank1_0_13.000D.bin",
+        "GenIIIEMDriver.0114.WIFI.bin",
+        "GenIIIEMDriver.0110.WIFI.bin",
+        "GenIIIEMDriver.0112.WIFI.bin",
+        "GenIIIEMDriver.010B.WIFI.bin",
+        "ChillHVLEDDriverBank1_0_13.000D.bin",
+        "GenIIIEMDriver.0111.WIFI.bin",
+        "GenIIIEMDriver.0117.WIFI.bin",
+        "ChillSCIGateway512.0097.WIFI.bin",
+        "GenIIIEMDriver.010C.WIFI.bin",
+        "ChillHVLEDDriverBank1_0_15.000F.bin",
+        "GenIIIEMDriver.010F.WIFI.bin",
+        "GenIIIEMDriver.0116.WIFI.bin",
+        "GenIIIEMDriver.010D.WIFI.bin"
+    ],
+    "com.zhuhui.ai.apk": [
+        "changeplay.bin"
+    ],
+    "com.hubble.smartnursery.apk": [
+        "air_pur_0014_01.06.10.bin",
+        "dm_0005_01.06.16.bin",
+        "dm_0005_01.06.12.bin",
+        "am163_0163_01.06.30.bin",
+        "hum1_0008_01.06.18.bin",
+        "hum2_0013_02.02.18.bin",
+        "am162_0162_01.06.36.bin",
+        "am164_0164_01.06.24.bin",
+        "am162_0162_01.06.38.bin"
+    ],
+    "com.telink.bluetooth.mesh_home.apk": [
+        "light_8266_135.bin"
+    ],
+    "rongtai.imperial.apk": [
+        "rt6800.bin"
+    ],
+    "com.mapmyrun.android2.apk": [
+        "ua_footpod129.bin",
+        "ua_footpod1310.bin"
+    ],
+    "de.eq3.ble.key.android.apk": [
+        "update_ota.bin",
+        "T4.bin"
+    ],
+    "com.idooworld.com.apk": [
+        "mesh_ota_v1.2.bin"
+    ],
+    "com.theswitchbot.switchbot.apk": [
+        "wolinkmini_app_v12.zip",
+        "wolinkmini_app_v14.zip",
+        "wolinkmini_app_v17.zip",
+        "wolink_app_v41.zip",
+        "wolinkmini_app_v11.zip",
+        "wolinkmini_app_v13.zip",
+        "wolink_app_v43.zip",
+        "wolinkmini_app_v8.zip",
+        "wolink_app_v39.zip",
+        "wofan_app_v10.zip",
+        "wolinkmini_app_v16.zip"
+    ],
+    "tw.com.bltc.eyeconexpro.apk": [
+        "Light_8258_v0.2_20200211_1031.bin",
+        "FirebeeExt_8258_v0.6_20210724_0044.bin",
+        "Light_8258_v0.5_20210809_1458.bin",
+        "ENDO_Light_B0.3_20191017_1332.bin",
+        "TelinkMeshLight_8258_v0.4_20191128_1324.bin",
+        "light_8266_remote_control_v1.3_20191127_1042.bin",
+        "TelinkMeshLight_v0.L_20200211_1746.bin"
+    ],
+    "com.keeproduct.smartHome.apk": [
+        "light_8267.bin",
+        "light_8266-version-20160809.bin",
+        "light_8266.bin",
+        "BLELight_boot_r25.bin"
+    ],
+    "com.diing.kamartaj.apk": [
+        "firmware.zip"
+    ],
+    "com.nexzgroup.nexzscan.apk": [
+        "NLLink.bin",
+        "code_it.bin",
+        "code_tw.bin",
+        "NDLink_2_0.bin",
+        "ELink.bin",
+        "code_sp.bin"
+    ],
+    "com.elstatgroup.elstat.live.oem.apk": [
+        "EMS100_D76_ts8_17032016_01_CS46_boot.bin",
+        "emd_firmware_v_3_3_0.zip",
+        "CMS100_U81_23092016_CS213_boot.bin",
+        "emd_firmware_v_3_6_2.zip",
+        "CMS100_U80_13072016_CS250_boot.bin",
+        "CMS200_U74_10122015_CS133_boot.bin",
+        "emd_firmware_v_3_2_7.zip",
+        "CMS200_U81_23092016_CS136_boot.bin",
+        "CMS200_U80_14072016_CS167_boot.bin",
+        "CMS100_U74_09122015_CS19_boot.bin",
+        "EMS100_D74_09122015_CS42_boot.bin",
+        "emd_firmware_v_3_3_1.zip",
+        "EMS100_D81_23092016_CS244_boot.bin",
+        "EMS100_D80_13072016_CS219_boot.bin"
+    ],
+    "com.vimar.viewblepro.apk": [
+        "FW_Intercom_1_6_0.zip",
+        "FW_Clima_Zone_Mesh_1_3_0.zip",
+        "FW_CardReader.zip",
+        "FW_Relay_ZigBee.zip",
+        "FW_Deviatore_Zigbee_2_0_4.zip",
+        "FW_Radar_Wall_Mesh_1_5_10.zip",
+        "Zigbee_FW_Tapparella_2_0_3.zip",
+        "FW_Dimmer_Mesh_1_1_3.zip",
+        "FW_CardReader_Mesh_1_0_34.zip",
+        "FW_Misuratore.zip",
+        "FW_Misuratore_Mesh_1_8_0.zip",
+        "FW_Relay_Mesh_2_1_0.zip",
+        "FW_Comando_Connesso_Mesh_1_0_8.zip",
+        "FW_Deviatore.zip",
+        "FW_Tapparella_Mesh_1_7_4.zip",
+        "FW_Dimmer_Mesh_0_1_3.zip",
+        "FW_Ragnetto_Relay_Mesh_2_1_0.zip",
+        "FW_PocketSwitch.zip",
+        "Zigbee_FW_Ragnetto_Tapparella_1_0_3.zip",
+        "FW_Deviatore_ZigBee.zip",
+        "FW_Radar_Ceiling_Mesh_2_0_3.zip",
+        "FW_Ragnetto_Tapparella.zip",
+        "FW_Relay_Zigbee_2_2_6.zip",
+        "FW_Contatto_magnetico_Mesh_1_0_0.zip",
+        "FW_Tapparella_ZigBee.zip",
+        "FW_Tapparella.zip",
+        "FW_Dimmer_Mesh_1_0_0.zip",
+        "FW_Ragnetto_Tapparella_Mesh_2_0_3.zip",
+        "FW_PocketSwitch_Tasca_2_0_5.zip",
+        "FW_Dimmer_ZigBee_1_0_0.zip",
+        "FW_Ragnetto_Tapparella_Mesh_1_7_1.zip",
+        "ZigBee_FW_Ragnetto_Relay_1_0_3.zip",
+        "FW_Relay.zip",
+        "FW_Ragnetto_Tapparella_ZigBee.zip",
+        "FW_Radar_Ceiling_Mesh_1_5_10.zip",
+        "FW_Relay_Mesh_1_8_8.zip",
+        "FW_CardReader_Mesh_2_0_4.zip",
+        "FW_PocketSwitch_Tasca_1_0_35.zip",
+        "FW_Clima_Zone.zip",
+        "FW_Clima_Zone_ZigBee_1_0_0.zip",
+        "FW_Deviatore_Mesh_1_7_6.zip",
+        "FW_Ragnetto_Relay.zip",
+        "FW_Radar_Wall_2_0_11.zip",
+        "FW_Deviatore_Mesh_2_0_6.zip",
+        "FW_Tapparella_Mesh_2_0_3.zip",
+        "FW_Ragnetto_Relay_ZigBee.zip",
+        "FW_Ragnetto_Relay_Mesh_1_8_3.zip",
+        "FW_Contatto_magnetico.zip"
+    ],
+    "com.yitechnology.kamihome.apk": [
+        "IOTC.zip"
+    ],
+    "com.alpinawatches.alpinerx.apk": [
+        "firmware_v43_7_5_41.zip",
+        "firmware_v39_7_5_41.zip",
+        "firmware_v40_7_5_41.zip",
+        "firmware_v38_7_5_41.zip"
+    ],
+    "lvbu.wang.spain.lvbuforeignmobile.apk": [
+        "MINI_BIKE_OS.bin"
+    ],
+    "com.daye.dayeapp.apk": [
+        "DY00243_20181210.bin",
+        "DY01256_20190508.bin",
+        "DY01243_20181210.bin",
+        "DY02256_20190508.bin",
+        "DY02243_20181210.bin",
+        "AutoMower.bin",
+        "DY12256_20190508.bin",
+        "DY11243_20181210.bin",
+        "DY12243_20181210.bin",
+        "DY11256_20190508.bin",
+        "DY00256_20190508.bin"
+    ],
+    "com.bitaxon.app.ew002.wizard.freebuds.apk": [
+        "ew002_right.bin",
+        "ew002_left.bin"
+    ],
+    "com.SwitchmateHome.SimplySmartHome.apk": [
+        "cube_rev001_apponly_2_9_65_prod.zip"
+    ],
+    "com.mcicontainers.starcool.apk": [
+        "S0354_18.bin",
+        "S0356_02.bin",
+        "s0354_00.bin",
+        "S0356_81.bin",
+        "s0356_81.bin",
+        "S0354_00.bin",
+        "s0354_18.bin"
+    ],
+    "atbs.bt6000s.boot.apk": [
+        "bt6800.bin",
+        "bt6800_0.bin"
+    ],
+    "com.lavadip.skeye.apk": [
+        "EB.bin",
+        "sp.bin",
+        "MI.bin"
+    ],
+    "com.w2.apps.go.apk": [
+        "firmware.zip"
+    ],
+    "com.bluetooth.led.apk": [
+        "13.Ebin",
+        "19.Ebin",
+        "15.Ebin",
+        "14.Ebin",
+        "21.Ebin",
+        "20.Ebin"
+    ],
+    "com.azerware.stagmodbus.ble.sensortag.apk": [
+        "SensorTagImgB.bin",
+        "SensorTagImgA.bin"
+    ],
+    "cn.appscomm.smartpiece.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "tw.com.bltc.ebeeapp.apk": [
+        "Light_8258_v0.9_20220803_1653.bin",
+        "FirebeeExt_8258_v0.9_20221017_1146.bin",
+        "TelinkMeshLight_8258_v0.2_20190502_1055.bin",
+        "light_8266_remote_control_v1.5_20220912_1123.bin",
+        "TelinkMeshLight_v0.I_20190510_1129.bin",
+        "ENDO_Light_B0.3_20191017_1332.bin",
+        "FireBee_8269_v0.O_20211014_1143.bin",
+        "TelinkMeshLight_v0.L_20200211_1746.bin"
+    ],
+    "com.aukey.smart.apk": [
+        "mesh_ota_v1.2.bin"
+    ],
+    "com.rongtai.fitnesschair.pegasus.smart.apk": [
+        "RT6923.bin"
+    ],
+    "com.robo.programming.apk": [
+        "update.bin",
+        "update2.bin",
+        "update3.bin"
+    ],
+    "com.venstar.configurator.apk": [
+        "tempsensor.bin",
+        "servicepack.bin"
+    ],
+    "com.beewi.trackerpad.apk": [
+        "BBD100_FW18.bin"
+    ],
+    "com.spirit_labs.sense.apk": [
+        "1.0.10.zip"
+    ],
+    "jp.e3e.airmon.apk": [
+        "sBCN-AirMon_MAIN(v0.01.22).bin"
+    ],
+    "com.wifi.dayeapp.apk": [
+        "DY00243_20181210.bin",
+        "DY01256_20190508.bin",
+        "DY01243_20181210.bin",
+        "DY02256_20190508.bin",
+        "DY02243_20181210.bin",
+        "AutoMower.bin",
+        "DY12256_20190508.bin",
+        "DY11243_20181210.bin",
+        "DY12243_20181210.bin",
+        "DY11256_20190508.bin",
+        "DY00256_20190508.bin"
+    ],
+    "co.trendsolar.m2m.apk": [
+        "solarboxfw_25.bin",
+        "B_factory.bin",
+        "solarboxfw_26.bin",
+        "solarboxfw.bin",
+        "A.bin"
+    ],
+    "com.trendmicro.homenetworksecurity.apk": [
+        "diamond_nmap7.70.bin"
+    ],
+    "com.leedarson.ble.apk": [
+        "dim_2.0.bin",
+        "RM_CCT_BLE_TSLR8267_NPA_LDS_NK_B10A8_F1_SVN40_V2.1.bin",
+        "light_8267_RGBW_V2.0.bin",
+        "light_8267_CCT_V2.0.bin",
+        "cct_21.bin",
+        "light_8267_DIM_V2.0.bin",
+        "dim-bulb.bin",
+        "cc-temp.bin",
+        "Light_CCT_BLE_TLSR8267_NPA_LDS_NK_B2DM_F1_SVN29_V2.1.bin"
+    ],
+    "com.braven.bravenactive.apk": [
+        "blade_le_v1_4_0_20170809.bin",
+        "teton_v1_2_0_20170810.bin"
+    ],
+    "pl.dtm.chrono.apk": [
+        "chrono_firmware_v1.06.bin"
+    ],
+    "de.eq3.ble.android.apk": [
+        "bleupdate.bin",
+        "bleupdate_2.bin"
+    ],
+    "com.transway.fiiapp.apk": [
+        "o2_v1.1.9.bin"
+    ],
+    "com.connectedlife.inrange.apk": [
+        "European.rom",
+        "FindText.rom"
+    ],
+    "com.blustream.boveda.apk": [
+        "98.img",
+        "pe.img",
+        "tkl302.img",
+        "blustream302.img",
+        "taylor303.img",
+        "humiditrak302.img"
+    ],
+    "com.directau.fyndralert.apk": [
+        "ASI-805_iOS_65b_20170322.bin",
+        "ASI-805_iOS_66a_20170406.bin",
+        "Companion_Android_62a.bin",
+        "WISO_Android_62b.bin",
+        "ASI-807_iOS_64a.bin",
+        "ASI-805_iOS_66b_20170406.bin",
+        "ASI-805_iOS_67b.bin",
+        "WISO_Android_62a.bin",
+        "ASI-807_iOS_64b.bin",
+        "ASI-805_iOS_65a_20170322.bin",
+        "ASI-801_iOS_65a.bin",
+        "ASI-805_iOS_67a.bin",
+        "ASI-801_iOS_65b.bin"
+    ],
+    "it.centrosistemi.marlin.apk": [
+        "init-r29169.zip"
+    ],
+    "com.bm_innovations.sim_cpr.apk": [
+        "simCPR-0.9.2.bin"
+    ],
+    "com.inboardtechnology.inboard.apk": [
+        "DFU_RFLX.bin",
+        "DFU_M1_A.bin",
+        "DFU_M1_B.bin"
+    ],
+    "com.daye.thingcom.mower_wifi_ble.apk": [
+        "DY00243_20181210.bin",
+        "DY01256_20190508.bin",
+        "DY01243_20181210.bin",
+        "DY02256_20190508.bin",
+        "DY02243_20181210.bin",
+        "AutoMower.bin",
+        "DY12256_20190508.bin",
+        "DY11243_20181210.bin",
+        "DY12243_20181210.bin",
+        "DY11256_20190508.bin",
+        "DY00256_20190508.bin"
+    ],
+    "com.isport.lidl.apk": [
+        "W311N_lidl_V88.85.bin",
+        "W311N_lidl_V88.92.bin",
+        "W311N_lidl_V88.77.bin",
+        "W311N_lidl_V90.23.bin",
+        "W311N_lidl_V88.36.bin",
+        "W311N_lidl_V88.91.bin"
+    ],
+    "com.shirajo.tinwoo.apk": [
+        "RT729_device(V3.3.6.6.0).img",
+        "RT822_device(V4.3.6.6.0).img"
+    ],
+    "com.easyfit.heart.apk": [
+        "I7DFU-HW2.3-SW1.0.4.1.zip",
+        "I7DFU-HW2.3-SW1.0.4.2.zip",
+        "V6_1.0.0.14.zip"
+    ],
+    "com.nx.smbt5.a.android.apk": [
+        "nx_RS25F1_mtk-1611_027_v4.bin",
+        "nx_g45c8-bmt_mtk-1611_018_v4.bin",
+        "nx_g95Filament-2cct_mtk-1611_025_v4.bin",
+        "nx_a60f6-cl-bmt_mtk-1611_023_v4.bin",
+        "nx_par16c8-bmt_mtk-1611_032_v4.bin",
+        "nx_par16a3v3-bmt_mtk-1611_022_v4.bin",
+        "nx_c35c8-bmt_mtk-1611_017_v4.bin",
+        "nx_Planura-OJA_mtk-1611_026_v4.bin",
+        "nx_a60c8-bmt_mtk-1611_033_v4.bin",
+        "nx_a60f6-m-bmt_mtk-1611_031_v4.bin",
+        "nx_g80Filament-2cct_mtk-1611_024_v4.bin"
+    ],
+    "com.arcdevices.smartvs.release.apk": [
+        "smvs_sb.bin"
+    ],
+    "com.mipow.androidplaybulbcolor.apk": [
+        "bootloader_fixer_v0.img"
+    ],
+    "com.lumenplay.apk": [
+        "stm32_update_ws2811.bin",
+        "stm32_update_st300982.bin",
+        "nrf51822_image.bin"
+    ],
+    "obdhightech.com.chevrolet.chevrolettroublecode.elm327.obd2.chevroletsys.chevroletsysscanfree.apk": [
+        "chevrolet.bin"
+    ],
+    "com.enormous.whistle.apk": [
+        "SensorTagImgB.bin",
+        "SensorTagImgA.bin"
+    ],
+    "com.desn.moreCar.apk": [
+        "gmap.bin"
+    ],
+    "com.qudelix.qudelix.apk": [
+        "Qudelix5K.v3.0.7.Lot6.bin",
+        "Qudelix5K.v1.8.1.Lot6.bin",
+        "Qudelix5K.v1.8.1.bin",
+        "QudelixT71.v1.4.10.bin",
+        "Qudelix5K.v3.0.7.bin"
+    ],
+    "com.genesis.teksta.toucan.en_uk.apk": [
+        "Manley_WWE_SP_8k.bin",
+        "Manley_UK_SP_8K.bin"
+    ],
+    "com.bixolon.android.apk": [
+        "rx_383_ks5601.bin",
+        "rx_jap.bin",
+        "rx_383_jap.bin",
+        "rx_ks5601.bin",
+        "st_jap.bin",
+        "nec_jap.bin",
+        "nec_ks5601.bin"
+    ],
+    "com.brilliantts.ecard.apk": [
+        "SM_BLE_074_OTA.img",
+        "SM_MCU_Main_040_0142_OTA.bin"
+    ],
+    "com.taichuan.phone.u9.gateway.apk": [
+        "TC-U9HW-A-Upgrade.bin"
+    ],
+    "com.norav.BlueMobile.apk": [
+        "simulator.bin"
+    ],
+    "com.dacuda.apps.pocketscan.apk": [
+        "pocketscan_firmware_486.bin"
+    ],
+    "com.Laerdal.QCPRPlugin.apk": [
+        "fw_resusci_family_ble_1_4_0_86.zip",
+        "fw_little_anne_main_1_4_1_124.zip",
+        "fw_resusci_family_main_1_2_0_56.zip",
+        "fw_can_app_4_aedlink_1_1_0_19.zip",
+        "fw_can_app_23_cprrainterface_1_2_0_21.zip",
+        "fw_resusci_family_ble_1_2_2_50.zip",
+        "fw_little_junior_main_1_4_2_159.zip",
+        "fw_can_app_28_resuscipower_1_0_0_22.zip",
+        "fw_can_app_8_cpr_1_0_0_14.zip",
+        "fw_little_baby_main_0_45_1_69.zip",
+        "fw_resusci_family_ble_1_2_2_54.zip",
+        "fw_can_app_28_resuscipower_1_1_0_25.zip",
+        "fw_little_anne_main_1_4_2_165.zip",
+        "fw_little_baby_main_0_47_1_72.zip",
+        "fw_resusci_family_ble_1_7_0_100.zip",
+        "fw_resusci_family_main_1_3_0_79.zip",
+        "fw_little_anne_main_6_4_2_177_dfu_singapore.zip",
+        "fw_resusci_family_main_1_5_0_97.zip",
+        "fw_little_anne_main_1_4_1_127.zip",
+        "fw_resusci_family_ble_1_3_0_77.zip",
+        "fw_resusci_family_ble_1_5_0_89.zip",
+        "fw_can_app_4_aedlink_1_2_1_24.zip",
+        "fw_resusci_family_ble_1_2_2_55.zip",
+        "fw_little_junior_main_1_2_1_109.zip",
+        "fw_little_baby_main_0_48_1_77.zip",
+        "fw_resusci_family_ble_1_2_0_48.zip",
+        "fw_can_app_28_resuscipower_1_2_0_27.zip",
+        "fw_resusci_family_main_1_8_0_122.zip",
+        "fw_little_junior_main_1_4_2_134.zip",
+        "fw_little_anne_main_1_4_2_146.zip",
+        "fw_can_app_23_cprrainterface_1_0_0_13.zip",
+        "fw_resusci_family_main_1_7_0_111.zip"
+    ],
+    "com.desay.weilyne.apk": [
+        "ziku24_all.bin"
+    ],
+    "com.newbeem.iplug.apk": [
+        "NB1000_V2_34_OTA.bin"
+    ],
+    "com.cumulocity.cloudsensor.apk": [
+        "CC2650SensorTag_BLE_All_v1.12.bin",
+        "CC2650SensorTag_ZigBee_All.bin",
+        "SensorTagImgB.bin",
+        "CC2650SensorTag_BLE_All_v0.91.bin",
+        "CC2650SensorTag_BLE_All_v1.01.bin",
+        "CC2650SensorTag_BLE_App_Light_v1.12.bin",
+        "CC2650SensorTag_BLE_App_LCD_v1.12.bin",
+        "SensorTagImgA.bin"
+    ],
+    "chunfeng.andriod.ble.chunfengautoEN.apk": [
+        "A3-B.bin",
+        "A3-A.bin",
+        "A2-B.bin",
+        "A2-A.bin",
+        "A1-A.bin",
+        "A1-B.bin"
+    ],
+    "com.homelifefit.heart.apk": [
+        "1.0.4.9-1.zip",
+        "1.0.1.28-1.img",
+        "I7DFU-HW2.3-SW1.0.4.1.zip",
+        "I7DFU-HW2.3-SW1.0.4.2.zip",
+        "V6_1.0.0.14.zip"
+    ],
+    "tw.com.icm.vdialogue_f1.apk": [
+        "S0_100.bin",
+        "S0_400.bin"
+    ],
+    "com.shenzhen.android.orbit.apk": [
+        "ORBIT_v2.11.zip",
+        "key531_019.img",
+        "ORBIT_v1.07.zip",
+        "card_047.img",
+        "card_041.img",
+        "ORBIT_035.img",
+        "ORBIT_038.img",
+        "glasses_033.img"
+    ],
+    "com.hyst.base.feverhealthy.apk": [
+        "TP_201113.bin",
+        "ziku24_all.bin"
+    ],
+    "com.ydzncd.yuefitpro.apk": [
+        "v2_3_6_3_0.img",
+        "v3_3_6_3_0.img",
+        "v33_33_3_0_0.img",
+        "v4_3_6_3_0.img"
+    ],
+    "air.fr.ducrot.consoelec.apk": [
+        "edf.bluetic.dongle.fw.0.423.2+oad-rle-test-1.bin",
+        "edf.bluetic.dongle.fw.0.423.2.oad-rle-test-1.bin",
+        "edf.bluetic.dongle.fw.0.423.2.tV2_170307.bin",
+        "edf.bluetic.dongle.fw.0.423.2+oad-rle-test-2.bin"
+    ],
+    "one.shade.app.apk": [
+        "app_dfu_package_eclipse_v2.zip",
+        "app_dfu_package_eclipse_full_v16.zip",
+        "dfu_sd_bl_12_3_to_15_2.zip",
+        "app_dfu_package_orb_v2.zip",
+        "app_dfu_package_orb_full_v17.zip",
+        "app_dfu_package_eclipse_110_v2.zip"
+    ],
+    "co.blustor.gatekeeper.apk": [
+        "Firmware_dev_v7-7-13.bin"
+    ],
+    "com.vvvital.smartvs.wellness.apk": [
+        "smvs_sb.bin"
+    ],
+    "com.szabh.sma_new.apk": [
+        "sma10b_v119.zip"
+    ],
+    "com.volkano.trojanhealth.apk": [
+        "time_bottom_1.bin",
+        "3_time_bottom.bin",
+        "clockzd.bin",
+        "240280_YX_top.bin",
+        "time_left_1.bin",
+        "squarescreen.bin",
+        "time_right_2.bin",
+        "time_left_2.bin",
+        "3_time_top.bin",
+        "240280_YX_left.bin",
+        "240280_YX_bottom.bin",
+        "240240_YX_left.bin",
+        "time_right_1.bin",
+        "240240_YX_bottom.bin",
+        "240240_YX_right.bin",
+        "240280_YX_right.bin",
+        "ota_test.bin",
+        "240240_YX_top.bin",
+        "roundscreen.bin"
+    ],
+    "com.baidu.input.apk": [
+        "cxt.bin",
+        "ch_cor2.bin",
+        "ltp.bin",
+        "iptwt_20151202.bin",
+        "sym2.bin",
+        "en2.bin",
+        "Wb98.bin",
+        "Wb.bin",
+        "Ft.bin",
+        "xhy.bin",
+        "bh2.bin",
+        "kp.bin",
+        "Hz.bin",
+        "cz2.bin",
+        "Uz2.bin"
+    ],
+    "com.solvaig.telecardian.client.apk": [
+        "firmware_06000_02_31_1100.rom",
+        "firmware_06000_23_90.bin",
+        "firmware_06000_70_1169.rom",
+        "firmware_06000_03_50_1133.rom",
+        "firmware_06000_23_39.bin",
+        "firmware_06000_60_1138.rom",
+        "firmware_12100_2_16.bin",
+        "firmware_06000_02_33_1100.rom",
+        "firmware_12010_2_16.bin",
+        "firmware_06000_03_51_1133.rom",
+        "fw_ecg_pce12_v18.bin",
+        "firmware_06000_04_22_1133.rom",
+        "fw_ecg_pce12_v20.bin",
+        "firmware_06000_60_1156.rom",
+        "firmware_06000_02_30_1100.rom",
+        "firmware_06000_02_331_1100.rom",
+        "firmware_06000_04_00_1133.rom",
+        "firmware_06000_03_41_1133.rom",
+        "firmware_06000_03_40_1133.rom"
+    ],
+    "rongtai.celebrity.apk": [
+        "rt6800.bin"
+    ],
+    "obdhightech.com.toyotadiagnostics.toyotasystem.toyotamilon.toyotatroublecode.toyotasysscanfree.apk": [
+        "ford.bin"
+    ],
+    "com.rencarehealth.mirhythm.apk": [
+        "mi_rhythm.bin",
+        "mi_boot.bin"
+    ],
+    "com.UI.LEDevice.apk": [
+        "Integral-BT.bin"
+    ],
+    "com.voltas.apk": [
+        "mesh_ota_v1.2.bin"
+    ],
+    "com.dwyerinst.airflowhood.apk": [
+        "new_firmware.bin"
+    ],
+    "kaz.bpmandroid.apk": [
+        "ThinBLE_1_0_12-A.bin",
+        "ThinBLE_1_0_12-B.bin"
+    ],
+    "com.awox.smart.control.apk": [
+        "EFrattina_c27_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeiling_30_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "eglo_smart_rcu_mesh.bin",
+        "EPanel_620_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ECeil_g38_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_225r_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "smart_ercu_4_0.bin",
+        "ESMLFm_w6_G95_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLFm_w6_ST64_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_620_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ERCU_Zm_jing_xun_4.60-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "EFueva_225s_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESMLm_w9w_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c13g_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SSMLm_c9_bpsemi_1.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_C9_bpsemi_1.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESMLm_w9n_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESpot_120_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLzm_c9_jing_xun_4.62-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "ESpot_c5_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_600_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_GE_jing_xun_4.23-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPendant_30_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c5_E14_luxon_5.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPanel_w_round_jing_xun_4.40-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SSMLm_c9i_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SSMLm_c9_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_600_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EFueva_300r_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPanel_600_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ERCU_3groups_Zm_jing_xun_4.60-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "EFueva_300s_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c5_E14_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_170_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ETriSpot_85_bpsemi_1.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "smart_ercu_wm_3_0.bin",
+        "ESpot_170_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EStrip_3m_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_GE_jing_xun_4.3-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_225_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300s_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeiling_30_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_225_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EFrancari_C_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_C9_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_c13g_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c13g_jing_xun_4.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESMLFm_w5w_A60_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeil_g80_jing_xun_4.40-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_w_rect_jing_xun_4.40-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ETriSpot_85_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c13gi_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c9_jing_xun_4.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EOutdoor_w14w_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EStrip_5m_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeil_g30_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESpot_120_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESMP_Bm10_GE_jing_xun_4.3-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "smart_ercu_1_0.bin",
+        "ESpot_170_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPendant_30_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "JBT_Gen_CCT_1_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_w9i_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "smart_epirm_1_0.bin",
+        "esmlzm_c9_1_0_8.bin",
+        "ESMLm_w9w_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_c13gi_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EGLO_ZM_Dimmable_jing_xun_4.60-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "ESpot_225_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SSMLm_c9i_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ECeiling_30_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeil_g60_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLFm_w5w_G95_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c9_bpsemi_1.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPanel_r600_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "JBT_Gen_Dim_1_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EStrip_5m_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_C9_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_450_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_120_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EFueva_300r_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EMarchesa_C_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300r_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_c5_E14_luxon_5.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "KSMLm_c13g_bpsemi_1.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ECeil_g38_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300s_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLFm_w5w_ST64_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_620_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_225_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c9i_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_FR_jing_xun_4.3-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "JBT_Gen_Full_1_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ETriSpot_85_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c9_jing_xun_4.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESMLzm_c13g_jing_xun_4.62-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "EFueva_225r_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPendant_30_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EGLO_ZM_TW_jing_xun_4.60-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "EPanel_300_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_c13gi_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPendant_20_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_w5_GU10_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_c5_E14_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c9_bpsemi_1.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EStrip_3m_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SSMLm_w9_bpsemi_1.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPanel_120_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_AUS_jing_xun_4.23-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_c13g_bpsemi_1.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_w9_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300s_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SSMLm_w9_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_FR_jing_xun_4.3-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_c9i_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_C9_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c5_E14_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c13g_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c5_E14_jing_xun_4.22-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeil_g30_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c5_GU10_luxon_5.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SSMLm_w9_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_w5w_E14_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EOutdoor_w14w_bpsemi_1.0-SmartLEDRx_2.2.6-21-gf65f46f-b_master_SmartLEDRx_2.2.bin",
+        "EStrip_5m_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPIR_Zm_jing_xun_4.64-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "KSMLm_c9_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_r300_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_w9n_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SSMLm_w9_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EFueva_225s_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_UK_jing_xun_4.23-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_300_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "Telink_Dongle_8267_tl_usb_dongle_8267-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPanel_300_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_c9i_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EBF_RGB_Zm_jing_xun_4.60-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "ESpot_225_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_W9_bpsemi_1.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SSMLm_c9i_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c13g_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_w9_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EGLO_ZM_RGB_TW_jing_xun_4.62-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "EPendant_20_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESMLFm_w6_G80_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c5_GU10_jing_xun_4.22-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFrattina_c18_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_225r_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "KSMLm_c5_E14_luxon_5.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ECeil_g38_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_C9_jing_xun_4.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "Telink_Dongle_8266_tl_usb_dongle_8266-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPanel_450_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "smart_ercu_5_0.bin",
+        "ESMLm_c9i_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_120_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_w5_E14_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_w_square_jing_xun_4.40-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c13gi_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFraioli_c17_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_225s_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_170_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESMP_Bm10_FR_jing_xun_4.23-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_300_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPanel_120_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c13g_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EStrip_3m_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c13gi_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ECeiling_w_jing_xun_4.40-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c9i_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SSMLm_c9_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SSMLm_w9_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMPWBm_jing_xun_4.3-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPanel_600_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300r_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c5_GU10_luxon_5.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ETriSpot_85_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPendant_30_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EStrip_3m_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EGLO_ZM_TW_jing_xun_4.62-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "ESMLm_c9i_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c9_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "awox_smart_rcu_mesh.bin",
+        "EFueva_225s_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c13gi_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c9_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_w5w_E14_luxon_5.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESMLzm_c5_E14_jing_xun_4.62-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "ESMLm_c13gi_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPanel_36W_square_jing_xun_4.40-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300r_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPanel_120_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_c9i_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_450_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESpot_120_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeil_g30_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_c13g_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EStrip_5m_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_c13g_jing_xun_4.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPendant_20_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "smart_ercu_2_0.bin",
+        "JBT_Gen_Full_1_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "smart_rcu_1_0.bin",
+        "SMLm_c5_GU10_luxon_5.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESMLm_c13g_jing_xun_4.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EPanel_r450_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_c5_GU10_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_225r_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_225r_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_w5_GU10_luxon_5.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ECeiling_30_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EGLO_ZM_RGB_TW_jing_xun_4.60-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "EFueva_225s_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESMLm_w9w_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_C9_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESMLm_c9i_jing_xun_4.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "EGLO_ZM_Dimmable_jing_xun_4.62-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "ESMLFzm_w6_TW_jing_xun_4.63-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "EPendant_20_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ETriSpot_85_jing_xun_4.31-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLFzm_w6_Dimm_jing_xun_4.63-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "EPanel_450_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_CH_jing_xun_4.23-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLzm_c5_GU10_jing_xun_4.62-SmartLightZ_2.0.34-34-g34e31f0c-b_DELIVERY_SmartLightZ_2.0.bin",
+        "SMLm_w5w_GU10_luxon_5.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ECeil_g30_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_w5w_GU10_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c9_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_170_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c5_GU10_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300s_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESpot_120_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "smart_rcu_2_0.bin",
+        "ECeil_g38_bpsemi_1.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "JBT_Gen_Full_1_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c5_GU10_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_120_10_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c13g_bpsemi_1.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SMLm_w5_E14_luxon_5.0-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "SSMLm_c9_jing_xun_4.1-SmartLEDRx_1.6.27-9-ge35ad59-b_DELIVERY_SmartLEDRx_1.6.bin",
+        "ESMLFm_w6_A60_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin"
+    ],
+    "com.digimax.dp5617.apk": [
+        "firmware.img",
+        "update.img",
+        "dp169_update_v11.img"
+    ],
+    "com.poolid.PrimeLab.apk": [
+        "stage.bin",
+        "coeff.bin",
+        "param.bin",
+        "addr.bin",
+        "staglang.bin",
+        "func.bin",
+        "firmware.bin",
+        "s_has_l.bin",
+        "unit.bin"
+    ],
+    "com.bellabeat.cacao.apk": [
+        "BTM-1.181015371.img"
+    ],
+    "com.embrlabs.embrwave.apk": [
+        "firmware.zip"
+    ],
+    "com.elementzonline.dhanish.mqtthome.apk": [
+        "Elementz_Sonoff.ino.bin"
+    ],
+    "com.beca.smart.apk": [
+        "mesh_ota_v1.2.bin"
+    ],
+    "com.wattbike.powerapp.apk": [
+        "firmware_cmicax_v10355_20230512.zip",
+        "atom_beta_firmware_v6_sd5.zip",
+        "atom_beta_firmware_v6_sd0_9.zip",
+        "atom_firmware_v1_sd0_9.zip",
+        "atom_2020_firmware_beta.zip",
+        "cm_db_firmware_v1.zip",
+        "atom_2020_firmware_stable.zip",
+        "atom_firmware_v1_sd5.zip",
+        "cm_db_firmware_stable.zip"
+    ],
+    "it.centrosistemi.ambrogioremote.apk": [
+        "bt121-1.bin",
+        "bootsd.zip",
+        "init-r25315.zip"
+    ],
+    "com.zepp.ztennis.apk": [
+        "ZeppSensor_3_5_1.bin"
+    ],
+    "applications.appytech.it.aernet.apk": [
+        "firmware-aerlink-0.11.7.bin",
+        "firmware-aerlink-0.11.8.bin",
+        "firmware-aerlink-0.12.0.bin"
+    ],
+    "com.cwb.glance.apk": [
+        "update_cb04.zip",
+        "update_cb02.zip",
+        "update_cb01.zip",
+        "update_cb03.zip"
+    ],
+    "com.healthy.iwownfit_pro.apk": [
+        "cep_pak.bin"
+    ],
+    "com.cerevo.simchanger.apk": [
+        "app_dfu_package_1_1_4.zip"
+    ],
+    "io.particle.android.app.apk": [
+        "b5som_tinker_1_4_5_b5som_2.bin",
+        "tinker_firmware_080_rc27_xenon.bin",
+        "tinker_firmware_080_rc27_boron.bin",
+        "tinker_firmware_080_rc27_argon.bin"
+    ],
+    "com.elgato.avea.apk": [
+        "ericino_2540_322.bin",
+        "caprino_b2540_296.bin",
+        "ericino_2540_324.bin",
+        "ericino_2540_328.bin",
+        "caprino_b2540_320.bin",
+        "ericino_2540_326.bin"
+    ],
+    "com.xtooltech.PS90UKJeep.apk": [
+        "vci.bin"
+    ],
+    "de.wisi.hfc_manager.apk": [
+        "VX57_01000058.bin",
+        "VX53_01000014.bin",
+        "VX52_01000014.bin",
+        "VX56_01000058.bin",
+        "LR27_01000100.bin"
+    ],
+    "com.xtooltech.iVCIX100T.apk": [
+        "vci.bin"
+    ],
+    "it.glucolog.lite.apk": [
+        "frmble.img"
+    ],
+    "cn.appscomm.cat.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "tw.com.emt.wenchinew.cmoretv.apk": [
+        "ILight.bin"
+    ],
+    "com.pslocks.blelocks.apk": [
+        "v180313_0.ota",
+        "firmware.zip",
+        "v180302_0.ota"
+    ],
+    "com.hubbleconnected.camthreehundred.apk": [
+        "SD_CarDV.bin"
+    ],
+    "com.awox.kerialed.apk": [
+        "EFrattina_c27_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeil_g38_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLFm_w6_G95_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "eglo_smart_rcu_mesh.bin",
+        "ESMLFm_w6_ST64_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "smart_ercu_4_0.bin",
+        "ERCU_Zm_jing_xun_4.60-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "EPanel_620_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_w9w_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c13g_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_120_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_GE_jing_xun_4.23-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_c5_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_600_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPendant_30_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EGLO_ZM_TW_jing_xun_4.62-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "EPanel_w_round_jing_xun_4.40-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EOutdoor_w14w_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SSMLm_c9i_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SSMLm_c9_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300s_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c5_E14_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "smart_ercu_wm_3_0.bin",
+        "ESpot_170_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EStrip_3m_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_GE_jing_xun_4.3-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_225_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300s_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeiling_30_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFrancari_C_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_C9_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_c13g_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLFm_w5w_A60_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeil_g80_jing_xun_4.40-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_w_rect_jing_xun_4.40-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ETriSpot_85_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c13gi_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EStrip_5m_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_170_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "smart_ercu_1_0.bin",
+        "EPendant_30_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "JBT_Gen_CCT_1_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "smart_epirm_1_0.bin",
+        "esmlzm_c9_1_0_8.bin",
+        "EGLO_ZM_Dimmable_jing_xun_4.62-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "ECeiling_30_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeil_g60_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLFm_w5w_G95_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_r600_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "JBT_Gen_Dim_1_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EGLO_ZM_TW_jing_xun_4.60-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "SMLm_C9_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_450_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300r_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EMarchesa_C_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300r_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeil_g38_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300s_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLFm_w5w_ST64_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_620_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_225_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c9i_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_FR_jing_xun_4.3-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "JBT_Gen_Full_1_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ETriSpot_85_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_225r_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EGLO_ZM_RGB_TW_jing_xun_4.62-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "SMLm_c13gi_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPendant_20_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_w5_GU10_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLFzm_w6_TW_jing_xun_4.63-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "SMLm_c5_E14_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_120_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_AUS_jing_xun_4.23-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLFzm_w6_Dimm_jing_xun_4.63-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "SMLm_w9_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SSMLm_w9_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_C9_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c5_E14_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c13g_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c5_E14_jing_xun_4.22-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeil_g30_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SSMLm_w9_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_w5w_E14_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EOutdoor_w14w_bpsemi_1.0-SmartLEDRx_2.2.6-21-gf65f46f-b_master_SmartLEDRx_2.2.bin",
+        "EStrip_5m_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c9_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_r300_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_w9n_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_225s_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_UK_jing_xun_4.23-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_300_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_300_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_c9i_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_225_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SSMLm_c9i_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c13g_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_w9_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLFm_w6_G80_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c5_GU10_jing_xun_4.22-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFrattina_c18_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c9i_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_w5_E14_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLzm_c9_jing_xun_4.62-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "EPanel_w_square_jing_xun_4.40-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c13gi_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFraioli_c17_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_225s_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EGLO_ZM_Dimmable_jing_xun_4.60-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "ESMP_Bm10_FR_jing_xun_4.23-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_120_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c13g_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EStrip_3m_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeiling_w_jing_xun_4.40-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SSMLm_c9_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SSMLm_w9_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLzm_c5_E14_jing_xun_4.62-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "EPanel_600_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_300r_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c9i_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c9_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_225s_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c13gi_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c9_bpsemi_1.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "awox_smart_rcu_mesh.bin",
+        "ESMLzm_c13g_jing_xun_4.62-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "EPanel_36W_square_jing_xun_4.40-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_c9i_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_120_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ECeil_g30_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_c13g_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPendant_20_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "smart_ercu_2_0.bin",
+        "JBT_Gen_Full_1_jing_xun_4.30-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "smart_rcu_1_0.bin",
+        "EPanel_r450_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_c5_GU10_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EFueva_225r_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EGLO_ZM_RGB_TW_jing_xun_4.60-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "EFueva_225r_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_w9w_jing_xun_4.20-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ETriSpot_85_jing_xun_4.31-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLzm_c5_GU10_jing_xun_4.62-SmartLightZ_1.0.192-192-geeecdaab-b_DELIVERY_SmartLightZ_1.0.bin",
+        "EPanel_450_bpsemi_1.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMP_Bm10_CH_jing_xun_4.23-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "SMLm_w5w_GU10_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c9_jing_xun_4.1-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_170_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "KSMLm_c5_GU10_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESpot_120_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "smart_rcu_2_0.bin",
+        "JBT_Gen_Full_1_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLm_c5_GU10_luxon_5.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "EPanel_120_10_jing_xun_4.0-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin",
+        "ESMLFm_w6_A60_jing_xun_4.21-SmartLEDRx_2.2.6-3-g0e69967-b_DELIVERY_SmartLEDRx_2.2.bin"
+    ],
+    "com.onemore.app.smartheadset.android.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "com.est.defa.apk": [
+        "705250_Futura_II_Wucu_P05_14.0.1.zip"
+    ],
+    "com.razer.opus.apk": [
+        "opus_bape_1_4_5_0.dfu",
+        "opus_midnight_blue_1_4_3_0.dfu",
+        "samantha_t1_01.00.33.00.bin",
+        "opus_black_1_4_4_0.dfu"
+    ],
+    "com.blumoo.apk": [
+        "app_sw_109.bin",
+        "app_sw_110.bin"
+    ],
+    "com.whoop.android.apk": [
+        "beacon-12_2_69_6_bootloader_app_softdevice-dfu.zip",
+        "beacon-12_3_0_47_bootloader_app_softdevice-dfu.zip",
+        "copley-8.21.1.0-3e0c296c96265588218e69c60d343f20.bin"
+    ],
+    "com.braven.bravenoutdoor.apk": [
+        "yosemite_v1_4_0_20180125.bin",
+        "moab_v1_4_0_20171218.bin",
+        "pro_le_fw_v1_12_0_20180110.bin"
+    ],
+    "com.sonicsensory.broadway.apk": [
+        "booms-pkg-v0.5.23-evt-2-2.bin"
+    ],
+    "cn.appscomm.traguardo.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "com.comnect.mesh.apk": [
+        "M405_Claro_HW_V2_kf_V1.0.3_2611_51_cn_release.bin"
+    ],
+    "com.outofgalaxy.h2opal.apk": [
+        "H2OPal_FW31_ImgB.bin",
+        "H2OPal_FW20e_ImgB.bin"
+    ],
+    "com.szjcyh.mysmart.apk": [
+        "gateway.bin",
+        "gdgateway.bin"
+    ],
+    "com.wowwee.lumi.apk": [
+        "lumi_stm32v1_16.bin",
+        "lumi_stm32v1_3.bin",
+        "lumi_stm32v1_6.bin",
+        "lumi_stm32v1_16rc1.bin",
+        "lumi_stm32v1_14.bin",
+        "lumi_stm32v1_10.bin",
+        "lumi_stm32v1_15.bin",
+        "lumi_stm32v1_16rc4.bin",
+        "lumi_stm32v1_5.bin",
+        "lumi_stm32v1_7.bin",
+        "lumi_stm32v1_11.bin"
+    ],
+    "com.starttofinish.configurator.apk": [
+        "tempsensor.bin",
+        "servicepack.bin"
+    ],
+    "com.xiaomi.hm.health.apk": [
+        "running.fw",
+        "Mili.fw",
+        "Mili_chongqing.fw",
+        "HM08.fw",
+        "HM03.fw",
+        "Mili_hankou.fw",
+        "Mili_pro_tph_as7000.fw",
+        "Mili_hr.fw",
+        "Mili_amazfit_kx.fw",
+        "Mili_pro.fw",
+        "HM05.fw",
+        "weight_scale2.fw",
+        "Mili_pro_tph.fw",
+        "HM07.fw",
+        "weight_bfs_h.fw",
+        "Mili_pro_53.fw",
+        "Mili_wuhan.fw",
+        "Huaihe_OTA.bin",
+        "HM0D.fw",
+        "Mili_amazfit.fw",
+        "HuaShan.fw",
+        "Mili_wuhan_tr.fw",
+        "weight.fw",
+        "Mili_qinling.fw",
+        "Mili_pro_i.fw",
+        "weight_bfs.fw",
+        "Mili_rocky.fw",
+        "Mili_1a.fw",
+        "Mili_pro_tph_indian.fw"
+    ],
+    "com.heimavista.pandoraSelfie.apk": [
+        "PTR360R.bin",
+        "PTR360D.bin"
+    ],
+    "it.casatelli.app.smartstoves.apk": [
+        "develop_unplug.bin",
+        "develop_plug.bin"
+    ],
+    "com.meross.ehome.apk": [
+        "mss310-us-v1-rc0115.bin",
+        "mss110-us-v1-rc0126.bin",
+        "msl120d-jp-v4-rc0105.bin",
+        "msh300-un-v2-rc0117.bin",
+        "mss210-us-v1-rc0110.bin",
+        "msl120d-eu-v4-rc0108.bin",
+        "mss425-us-v1-rc0110.bin",
+        "msl120d-us-v4-rc0110.bin",
+        "mss420f-us-v2-rc0105.bin",
+        "msl210-jp-v2-rc0119.bin",
+        "mss425f-fr-v1-rc0105.bin",
+        "mss510-us-v1-rc0112.bin",
+        "mss710-us-v3-rc0103.bin",
+        "mss426f-us-v2-rc0102.bin",
+        "msl120j-eu-v3-rc0104.bin",
+        "msh300-un-v4-rc0114.bin"
+    ],
+    "com.aegismobility.guardian.apk": [
+        "cogobeacon-nrf52-S132-Release-a_2.0.20-cigar_2.zip",
+        "cogobeacon-nrf52-S132-Release-bsa_2.0.20-usb_2.zip",
+        "cogobeacon-nrf52-S132-Release-bsa_v2.0.29-pebble_2.zip",
+        "cogobeacon-nrf52-S132-Release-bsa_v2.0.29-usb_2.zip",
+        "cogobeacon-nrf52-S132-Release-a_v2.0.29-obd_2.zip",
+        "bsafebeacon-S110-Release-sa_1.1.7-obd_1.zip",
+        "bsafebeacon-S110-Release-sa_1.1.7-usb_1.zip",
+        "cogobeacon-nrf52-S132-Release-a_2.0.20-obd_2.zip",
+        "cogobeacon-nrf52-S132-Release-bsa_v2.0.29-cigar_2.zip",
+        "cogobeacon-nrf52-S132-Release-a_v2.0.29-usb_2.zip",
+        "cogobeacon-nrf52-S132-Release-sa_v2.0.29-cigar_2.zip",
+        "cogobeacon-nrf52-S132-Release-a_v2.0.29-pebble_2.zip",
+        "cogobeacon-nrf52-S132-Release-sa_v2.0.29-usb_2.zip",
+        "bsafebeacon-S110-Release-bsa_1.1.7-cigar_1.zip",
+        "cogobeacon-nrf52-S132-Release-sa_2.0.20-cigar_2.zip",
+        "bsafebeacon-S110-Release-bsa_1.1.7-obd_1.zip",
+        "cogobeacon-nrf52-S132-Release-sa_2.0.20-fob_2.zip",
+        "bsafebeacon-S110-Release-bsa_1.1.7-usb_1.zip",
+        "cogobeacon-nrf52-S132-Release-sa_v2.0.29-pebble_2.zip",
+        "cogobeacon-nrf52-S132-Release-sa_v2.0.29-obd_2.zip",
+        "cogobeacon-nrf52-S132-Release-bsa_2.0.20-fob_2.zip",
+        "cogobeacon-nrf52-S132-Release-a_2.0.20-fob_2.zip",
+        "cogobeacon-nrf52-S132-Release-a_v2.0.29-cigar_2.zip",
+        "bsafebeacon-S110-Release-a_1.1.7-cigar_1.zip",
+        "cogobeacon-nrf52-S132-Release-sa_2.0.20-obd_2.zip",
+        "bsafebeacon-S110-Release-a_1.1.7-obd_1.zip",
+        "cogobeacon-nrf52-S132-Release-sa_2.0.20-usb_2.zip",
+        "bsafebeacon-S110-Release-a_1.1.7-usb_1.zip",
+        "cogobeacon-nrf52-S132-Release-bsa_2.0.20-cigar_2.zip",
+        "cogobeacon-nrf52-S132-Release-bsa_v2.0.29-obd_2.zip",
+        "cogobeacon-nrf52-S132-Release-bsa_2.0.20-obd_2.zip",
+        "bsafebeacon-S110-Release-sa_1.1.7-cigar_1.zip",
+        "cogobeacon-nrf52-S132-Release-a_2.0.20-usb_2.zip"
+    ],
+    "com.ecutek.ecuconnect.apk": [
+        "SimNissanGTR_RR.bin"
+    ],
+    "com.eneyovich.denik.apk": [
+        "KAONsetTopBox.zip",
+        "TOPFIELDsetTopBox.zip",
+        "SKYWORTHsetTopBox.zip",
+        "NILESATsetTopBox.zip",
+        "DISHsetTopBox.zip",
+        "UPCsetTopBox.zip",
+        "SKYWORTHtv.zip",
+        "SKYsetTopBox.zip",
+        "STAR SATsetTopBox.zip",
+        "GRUNDIGsetTopBox.zip",
+        "SAMSUNGsetTopBox.zip",
+        "DAEWOOtv.zip",
+        "PIONEERsetTopBox.zip",
+        "ECHOSTARsetTopBox.zip",
+        "CHANGHONGdvdBlueRayPlayer.zip",
+        "MOTOROLAsetTopBox.zip",
+        "FOXTELsetTopBox.zip",
+        "DVB-TsetTopBox.zip",
+        "TOSHIBAtv.zip",
+        "COSHIPsetTopBox.zip",
+        "SCIENTIFIC ATLANTAsetTopBox.zip",
+        "HUAWEIsetTopBox.zip",
+        "DSTVsetTopBox.zip",
+        "TOSHIBAsetTopBox.zip",
+        "HUMAXsetTopBox.zip",
+        "SHARPtv.zip",
+        "DOOMBOXsetTopBox.zip",
+        "TECOtv.zip",
+        "DOOPsetTopBox.zip",
+        "PACEsetTopBox.zip",
+        "LEBARAsetTopBox.zip",
+        "FARASSOOsetTopBox.zip",
+        "ARABSATsetTopBox.zip",
+        "SKYMASTERsetTopBox.zip",
+        "THOMSONsetTopBox.zip",
+        "VODAFONEsetTopBox.zip",
+        "PANASONICsetTopBox.zip",
+        "TELESTARsetTopBox.zip",
+        "SONYsetTopBox.zip",
+        "CHANGHONGsetTopBox.zip",
+        "HDSsetTopBox.zip",
+        "SFRsetTopBox.zip",
+        "CISCOsetTopBox.zip",
+        "AB CRYPTOBOXsetTopBox.zip",
+        "HAIERtv.zip",
+        "HITACHItv.zip",
+        "PHILIPSsetTopBox.zip",
+        "7 STAR DIGITALsetTopBox.zip",
+        "KATHREINsetTopBox.zip",
+        "HOMECASTsetTopBox.zip",
+        "DIRECTVsetTopBox.zip",
+        "OPTICUMsetTopBox.zip",
+        "VIDEOCONsetTopBox.zip",
+        "COMAGsetTopBox.zip",
+        "JIUZHOUsetTopBox.zip"
+    ],
+    "com.lsr.techtronic.apk": [
+        "f80_sys_mcuimg_104a.bin",
+        "f80_sys_mcuimg_104b.bin"
+    ],
+    "com.switchmatehome.switchmateapp.apk": [
+        "swm_bright_fw_1_26.zip",
+        "swm_old_fw_2_99_11.zip",
+        "swm_old_fw_2_32_3.zip",
+        "receptacle_fw_1_29_7.zip",
+        "receptacle_fw_1_26.zip",
+        "swm_old_fw_2_21.zip",
+        "swm_old_fw_booloader_new1.zip",
+        "swm_bright_fw_1_20.zip",
+        "receptacle_fw_1_29_9.zip",
+        "swm_bright_fw_1_19.zip",
+        "swm_bright_fw_1_30.zip",
+        "receptacle_fw_1_29_10.zip",
+        "receptacle_fw_1_29_6.zip",
+        "swm_bright_fw_2_99_3.zip",
+        "swm_bright_fw_1_39.zip",
+        "receptacle_fw_1_29_11.zip"
+    ],
+    "com.daye.dayeappNew.apk": [
+        "DY01256_20190508.bin",
+        "DY02256_20190508.bin",
+        "AutoMower.bin",
+        "DY12256_20190508.bin",
+        "DY11256_20190508.bin",
+        "DY00256_20190508.bin"
+    ],
+    "com.telink.bluetooth.bl.apk": [
+        "C-Life_Dongle_0114.bin",
+        "light_8267_ota.bin",
+        "C-Sleep_Dongle_0114.bin"
+    ],
+    "com.jellyfishtur.multylamp.WIFI_AWS_IOT_Jellyfish.apk": [
+        "CDB_RGBWW_TONGDENG_IP44_user2.bin",
+        "005_RGBWW_QIUXINGDENG_GU10_user1.bin",
+        "CDB_RGBWW_DENGTIAO_user1.bin",
+        "CDB_RGBWW_DENGTIAO_user2.bin",
+        "iHomma_RGBWW_QIUXINGDENG_user1.bin",
+        "CDB_RGBWW_QIUXINGDENG_user2.bin",
+        "CDB_QIUXINGDENG_KaiGuangTiaoGuang_user2.bin",
+        "005_RGBWW_QIUXINGDENG_GU10_user2.bin",
+        "CDB_QIUXINGDENG_KaiGuangTiaoGuang_user1.bin",
+        "020_RGBWW_QIUXINGDENG_user2.bin",
+        "JellyfishM_Giz_user2.bin",
+        "005_WW_QIUXINGDENG_E27_user2.bin",
+        "CDB_RGBWW_TONGDENG_IP44_user1.bin",
+        "020_RGBWW_MUSICLAMP_user1.bin",
+        "D02_RGBWW_user2.bin",
+        "CDB_RGBWW_MUSICLAMP_user1.bin",
+        "CDB_RGBWW_QIUXINGDENG_user1.bin",
+        "iHomma_RGBWW_QIUXINGDENG_user2.bin",
+        "020_RGBWW_QIUXINGDENG_user1.bin",
+        "020_RGBWW_MUSICLAMP_user2.bin",
+        "CDB_RGBWW_MUSICLAMP_user2.bin",
+        "CDB_DoufukuaiAndTiantianquan_user2.bin",
+        "CDB_RGBWW_TONGDENG_IP65_user2.bin",
+        "JellyfishM_Giz_user1.bin",
+        "005_WW_QIUXINGDENG_E27_user1.bin",
+        "CDB_RGBWW_TONGDENG_IP65_user1.bin",
+        "D02_RGBWW_user1.bin"
+    ],
+    "com.revogihome.websocket.apk": [
+        "smartlink_switch1.bin",
+        "smartlink_switch6.bin",
+        "easylink_switch4.bin",
+        "smartlink_switch1_9_location_1.bin"
+    ],
+    "co.sensara.appsense.apk": [
+        "bootloader.zip",
+        "ota.zip"
+    ],
+    "com.sonyericsson.extras.smartwirelessheadsetpro.apk": [
+        "firmware.bin"
+    ],
+    "com.leedarson.s008.apk": [
+        "dim_2.0.bin",
+        "RM_CCT_BLE_TSLR8267_NPA_LDS_NK_B10A8_F1_SVN40_V2.1.bin",
+        "light_8267_RGBW_V2.0.bin",
+        "light_8267_CCT_V2.0.bin",
+        "cct_21.bin",
+        "light_8267_DIM_V2.0.bin",
+        "dim-bulb.bin",
+        "cc-temp.bin",
+        "Light_CCT_BLE_TLSR8267_NPA_LDS_NK_B2DM_F1_SVN29_V2.1.bin"
+    ],
+    "com.digimax.digiinverter1.apk": [
+        "firmware.img",
+        "update.img",
+        "dp169_update_v11.img"
+    ],
+    "woojer.com.woojer.apk": [
+        "firmware.zip"
+    ],
+    "com.xenonsmart.app.apk": [
+        "mesh_ota_v1.2.bin"
+    ],
+    "com.abyxfit.abyxfitpro.apk": [
+        "RT729_device(V3.3.6.6.0).img",
+        "RT822_device(V4.3.6.6.0).img"
+    ],
+    "no.nordicsemi.android.nrftoolbox.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "com.asphaltlab.android.haiku.apk": [
+        "haiku.bin"
+    ],
+    "com.phiradar.fishfinder.apk": [
+        "demo.bin"
+    ],
+    "com.LOOKin.Hub.apk": [
+        "firmware.bin"
+    ],
+    "com.chylyng.gofit2.apk": [
+        "fw_zip"
+    ],
+    "com.mqcon.app.android.settingtool.onyx.apk": [
+        "W511_v1.8_20200731A.bin",
+        "W511_v1.8_20200731B.bin"
+    ],
+    "com.toncentsoft.ifootagemoco.apk": [
+        "Secret_X2_V_2.1.bin",
+        "Secret_X2_V_2.2beta1.bin",
+        "Secret_Slider_V_2.2beta1.bin",
+        "Secret_Slider_V_2.1.bin"
+    ],
+    "it.centrosistemi.niko.apk": [
+        "bt121-1.bin",
+        "bootsd.zip",
+        "init-r26501.zip"
+    ],
+    "com.trimble.trimblemobilemanager.apk": [
+        "Serializer_Release_0.9.98.img"
+    ],
+    "com.oband.obandapp.apk": [
+        "o2_v1.1.3.bin"
+    ],
+    "neuron.makeblock.com.apk": [
+        "013_64_02_appButton_20171222.bin",
+        "037_63_08_appSoilMoisture_20171222.bin",
+        "007_65_02_appRgbLed_20180105.bin",
+        "023_62_02_appDoubleDcMotor_20180105.bin",
+        "014_63_06_appAccelerometerGyro_20180104.bin",
+        "029_66_03_appVoiceeControl_20170510.bin",
+        "005_65_04_appColourLedMatrix_20180105.bin",
+        "035_63_0c_appPirMotionSensor_20171222.bin",
+        "004_64_01_appPotentiometer_20171222.bin",
+        "042_65_06_appCoolLight_20180105.bin",
+        "011_63_05_appColourSensor_20180105.bin",
+        "024_66_02_appBuzzer_20180105.bin",
+        "017_64_04_app4ChannelTouchKey_20171222.bin",
+        "032_64_07_appJoystick_20180105.bin",
+        "041_63_0d_appSoundSensor_20171222.bin",
+        "030_63_07_appTemperatureHumidity_20180105.bin",
+        "020_63_01_appTemperature_20171222.bin",
+        "008_62_03_app9gServo_20180105.bin",
+        "002_63_04_appLlineFollower_20171222.bin",
+        "025_65_05_appLcdDisplay_20180105.bin",
+        "016_65_03_appLightChain_20180105.bin",
+        "010_63_03_appUltrasonicSensor_20180105.bin",
+        "015_63_02_appLightSensor_20171222.bin"
+    ],
+    "com.emanuele.multi.apk": [
+        "multi.bin"
+    ],
+    "com.xtooltech.ui.apk": [
+        "itobd.bin",
+        "twobd.bin",
+        "ruobd.bin",
+        "plobd.bin",
+        "huobd.bin",
+        "jaobd.bin",
+        "iobd4.bin",
+        "ptobd.bin",
+        "cnobd.bin",
+        "frobd.bin",
+        "koobd.bin"
+    ],
+    "com.blesmart.columbia.apk": [
+        "anthero_gw_ota-1.11.bin",
+        "lightRGBYW_8266_s6.0.5_g.bin",
+        "BOFU_8266_V1.1.6_ForOTATest.bin",
+        "mesh_curtain_ctrl_s6.0.1.bin",
+        "BOFU_8266_module_V1.1.8.0.bin",
+        "lightRGBYW_8266_s6.0.5.bin",
+        "BOFU_8266_module_V1.1.6.0.bin",
+        "ota114.bin",
+        "8266_module_v1.1.4.bin",
+        "BOFU_8266_V1.1.2.bin",
+        "ota.bin"
+    ],
+    "bizbrolly.svarochiapp.apk": [
+        "light_update.bin"
+    ],
+    "com.gdut.topview.lemon.maxspect.icv6.apk": [
+        "LED1.6.bin",
+        "ICV6_1.8.bin",
+        "E51.8.bin",
+        "A11.3.bin",
+        "ICV6_1.7.bin",
+        "ICV6_WIFI_v2.11.bin"
+    ],
+    "com.xtooltech.iOBD2BMW.apk": [
+        "iOBD2c.bin",
+        "iOBD2b.bin",
+        "iOBD2.bin",
+        "iOBD2a.bin"
+    ],
+    "net.irobotfactory.pingpong.apk": [
+        "20190613_19_22_pingpong.1.0.1.68.zip",
+        "20230907_14_15_pingpong.1.0.4.76.zip"
+    ],
+    "com.fd036.lidl.apk": [
+        "img.img"
+    ],
+    "com.casio.babygconnected.apk": [
+        "MA2X5501-14-21.bin",
+        "MA2X3452-14-21.bin",
+        "CF01-01-20.bin",
+        "CF02-25-20.bin",
+        "SF01-0065-1.bin",
+        "SF02-0002-1.bin",
+        "SF01-0065-0.bin",
+        "SF02-0002-0.bin"
+    ],
+    "riftlabs.com.luxlicpapp.apk": [
+        "luxli_timpani_mkii_100.zip",
+        "luxli_fiddle_110.zip",
+        "luxli_timpani_mkii_101.zip",
+        "luxli_timpani_mkii_102.zip",
+        "luxli_cello_mkii_101.zip",
+        "luxli_timpani_mkii_103.zip",
+        "luxli_cello_mkii_110.zip",
+        "luxli_cello_mkii_100.zip",
+        "luxli_fiddle_100.zip"
+    ],
+    "cn.SmartHome.com.apk": [
+        "dockzb_100.bin",
+        "m4_100.bin",
+        "SmartLight.bin",
+        "dockzb.bin",
+        "HT100DSP.bin",
+        "THSensor.bin",
+        "HT100MCU.bin",
+        "SmartSocket.bin",
+        "m4.bin"
+    ],
+    "cn.carya.apk": [
+        "changeplay.bin"
+    ],
+    "com.berny.fit.apk": [
+        "update_p.zip"
+    ],
+    "com.swimmo.android.apk": [
+        "app.bin",
+        "main_boken.bin"
+    ],
+    "com.azoi.kito.healthyu.apk": [
+        "kitoplus_imgb.encrypted_22.bin",
+        "wello_imgb.encrypted_105.bin",
+        "firmware.bin"
+    ],
+    "com.chuzubao.landlord.apk": [
+        "changeplay.bin"
+    ],
+    "com.lenovohw.base.framework.apk": [
+        "ziku24_all.bin"
+    ],
+    "com.dexatek.ble.BleKey.apk": [
+        "keyguard2gen.bin"
+    ],
+    "com.SigmaCasa.SmartHome.apk": [
+        "shocksensor_v2_0_23_ota.zip",
+        "homedoor_v2_0_20_ota.zip",
+        "siren_v2_0_24_ota.zip"
+    ],
+    "tw.com.senlam.www.chum.apk": [
+        "trio_ab1211_v08b.zip"
+    ],
+    "com.incipio.incase.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "eu.sarunas.apps.android.racecar.apk": [
+        "mini-z-bldc-a-2016-01-27_23.49.48.293.bin",
+        "mini-z-b-2016-01-27_23.49.48.293.bin",
+        "dnano-a-2016-01-31_17.45.43.769.bin",
+        "mini-z-a-2016-01-27_23.49.48.293.bin",
+        "dnano-b-2016-01-31_17.45.43.769.bin",
+        "mini-z-bldc-b-2016-01-27_23.49.48.293.bin"
+    ],
+    "nz.co.syrp.genie2.apk": [
+        "GM2_GM02_V1.19.zip",
+        "GM_GM01_V4.39.zip",
+        "syrp_genie_mini_v4.44.zip",
+        "syrp_genie_one_v2.8.zip",
+        "G2_G03_V1.19.zip",
+        "syrp_genie_2_pan_tilt_v2.8.zip",
+        "syrp_genie_2_linear_v2.8.zip",
+        "syrp_genie_micro_v2.8.zip",
+        "G2_G02_V1.19.zip",
+        "syrp_genie_mini_2_v2.8.zip"
+    ],
+    "com.kingston.mobilelite.apk": [
+        "mlwG2_v2.0.0.6.bin"
+    ],
+    "acaia.co.firmwareupdatepearl.apk": [
+        "rt.bin",
+        "cL.bin",
+        "pearl20008_appstore_0718.bin"
+    ],
+    "com.rachio.iro.apk": [
+        "iro-prod-iro2-firmware-5-34-ota-signed.bin",
+        "iro-dev-iro2-firmware-5-34-ota-signed.bin"
+    ],
+    "com.behringer.android.control.app.livecontrol.apk": [
+        "BEHRINGER B15X V0.9.4.dfu",
+        "BEHRINGER B12X V0.9.4.dfu",
+        "BEHRINGER MPA200BT V0.8.5.dfu",
+        "BEHRINGER B15X V0.9.4#1.dfu",
+        "BEHRINGER B15X V0.9.3.dfu"
+    ],
+    "com.bpoint.bluetooth.osmart.apk": [
+        "20150819_bPointCap_ImgA.bin",
+        "20150819_bPointCap_ImgB.bin"
+    ],
+    "com.bozlun.bozhilun.android.apk": [
+        "w30_41_ota.zip"
+    ],
+    "com.antheroiot.blesmart.automation.apk": [
+        "anthero_gw_ota-1.11.bin",
+        "lightRGBYW_8266_s6.0.5_g.bin",
+        "BOFU_8266_V1.1.6_ForOTATest.bin",
+        "mesh_curtain_ctrl_s6.0.1.bin",
+        "BOFU_8266_module_V1.1.8.0.bin",
+        "lightRGBYW_8266_s6.0.5.bin",
+        "BOFU_8266_module_V1.1.6.0.bin",
+        "ota114.bin",
+        "8266_module_v1.1.4.bin",
+        "BOFU_8266_V1.1.2.bin",
+        "ota.bin"
+    ],
+    "com.dosime.dosime.apk": [
+        "Donner_0.19.4.bin",
+        "Donner_0.19.2.bin",
+        "Donner_0.19.5.bin",
+        "Cradle_0.13.11.bin",
+        "Donner_0.19.6.bin",
+        "Cradle_0.13.10.bin",
+        "Cradle_0.13.12.bin"
+    ],
+    "com.vison.macrochip.sh.rc.gps.apk": [
+        "2.9.2.zip"
+    ],
+    "com.vasner.app.android.heater.apk": [
+        "W312_v3.3_HW3.1_20161125B.bin",
+        "W312_v3.3_HW3.1_20161125A.bin",
+        "W311-02-H5.0_v4.1_20210322A.bin",
+        "W310_v3.3_HW3.0_20161125B.bin",
+        "W315-04_v3.7_20171123B.bin",
+        "W315-04_v3.7_20171123A.bin",
+        "W311T_v3.4_HW5.0_20170410B.bin",
+        "W314_v3.2_HW3.2_20160512B.bin",
+        "W311T_v3.4_HW5.0_20170410A.bin",
+        "W311-02-H5.0_v4.1_20210322B.bin",
+        "W314_v3.2_HW3.2_20160512A.bin",
+        "W315-01_v3.7_20171123B.bin",
+        "W310_v3.3_HW3.0_20161125A.bin",
+        "W315-01_v3.7_20171123A.bin"
+    ],
+    "com.jasco.mytouchsmartrc.apk": [
+        "BW8650_k48_v04.bin",
+        "GE_URC_v36.bin",
+        "GE_URC_v32.bin",
+        "New_Philips_SRP9020B_v44.bin",
+        "GE_URC_v35.bin",
+        "New_Philips_SRP8221S_27_v44.bin",
+        "GE_URC_v34.bin",
+        "New_GE_60339_v45.bin",
+        "Philips_SRP8221S_27_v42.bin",
+        "Philips_URC_v33.bin",
+        "New_GE_60339_v44.bin",
+        "GE_URC_sc_v35.bin",
+        "GE_URC_v40.bin",
+        "bw8611_v1.1.0.36.bin",
+        "Philips_URC_v35.bin",
+        "GE_URC_v37.bin",
+        "Philips_SRP4221B_v40.bin",
+        "GE_URC_v33.bin",
+        "New_Philips_SRP8221S_27_v45.bin",
+        "Philips_URC_v38.bin",
+        "GE_URC_v38.bin",
+        "Philips_URC_v36.bin",
+        "Philips_URC_v40.bin",
+        "New_Philips_URC_v44.bin",
+        "New_Philips_SRP4221B_v44.bin",
+        "Philips_SRP9020B_v40.bin",
+        "bw8611_v1.1.0.44.bin",
+        "New_Philips_URC_v45.bin",
+        "bw8611_v1.1.0.27.bin",
+        "GE_60339_v40.bin",
+        "Philips_URC_v32.bin",
+        "Philips_URC_sc_v35.bin",
+        "New_GE_URC_v45.bin",
+        "scene_v35.bin",
+        "New_Philips_SRP4221B_v45.bin",
+        "BW8611_v08.bin",
+        "New_GE_URC_v44.bin",
+        "Philips_URC_v37.bin",
+        "New_Philips_SRP9020B_v45.bin"
+    ],
+    "com.lift.efoil.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip",
+        "board_lftrcv01_bl_01_00_00.zip",
+        "remote_lftxmt01_bl_01_00_00.zip",
+        "board_lftrcv01_ap_03_01_00.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "board_lftrcv01_ap_03_00_00.zip",
+        "remote_lftxmt01_ap_03_03_00.zip",
+        "remote_lftxmt01_ap_02_00_00.zip"
+    ],
+    "com.test.prebell.apk": [
+        "4111234.bin",
+        "4111235.bin",
+        "4111226.bin",
+        "4111229.bin",
+        "4111230.bin",
+        "4111225.bin"
+    ],
+    "au.com.holmanindustries.igardener.apk": [
+        "dfu_0271_v9_ww.zip",
+        "dfu_0271_v9_RGB.zip",
+        "dfu_0271_v9_rgb.zip",
+        "dfu_0271_v9_WW.zip"
+    ],
+    "com.vison.macrochip.drc.pro.apk": [
+        "palm-full-op.bin",
+        "hand_lite-op.bin",
+        "blazeface.bin",
+        "2.9.2.zip"
+    ],
+    "com.linkhealth.armlet.apk": [
+        "up.bin",
+        "hd201501291105.bin",
+        "armband101.bin"
+    ],
+    "com.assaabloy.stg.msf.config.android.apk": [
+        "fwupgrade.bin",
+        "a.gz"
+    ],
+    "tw.com.bltc.BT_Light.apk": [
+        "light_8266_remote_control_v1.2_20190920_1146.bin",
+        "Light_8258_v0.9_20220803_1653.bin",
+        "FirebeeExt_8258_v0.9_20221017_1146.bin",
+        "TelinkMeshLight_v0.J_20191002_0927.bin",
+        "light_8266_remote_control_v1.5_20220912_1123.bin",
+        "TelinkMeshLight_v0.H_20190123_1338.bin",
+        "FireBee_8269_v0.O_20211014_1143.bin",
+        "TelinkMeshLight_v0.I_20190920_1151.bin",
+        "TelinkMeshLight_8258_v0.3_20190920_1139.bin",
+        "TelinkMeshLight_v0.L_20200211_1746.bin"
+    ],
+    "com.telink.bluetooth.mesh_lamp.apk": [
+        "light_8266_135.bin",
+        "light_8266_132.bin",
+        "light_8266_136.bin"
+    ],
+    "com.hstnet.dellwm527dfu.apk": [
+        "v080.zip"
+    ],
+    "com.ailianlian.bike.apk": [
+        "changeplay.bin"
+    ],
+    "com.skagen.connected.apk": [
+        "rmm_ota_33r_v2.bin",
+        "flash_firmware.bin",
+        "q_motion_ota_40r_v16.bin",
+        "sam_ota_13r_se1_uapp_v14_crc_encr.bin",
+        "flash_2_2_10.bin"
+    ],
+    "blacknote.amazfitmaster.apk": [
+        "watchface5.bin",
+        "watchface2.bin",
+        "watchface3.bin",
+        "watchface10.bin",
+        "watchface7.bin",
+        "watchface6.bin",
+        "watchface4.bin",
+        "watchface8.bin",
+        "watchface9.bin"
+    ],
+    "com.dheartcare.dheart.apk": [
+        "update.ota"
+    ],
+    "com.kaite.smart.apk": [
+        "mesh_ota_v1.2.bin"
+    ],
+    "com.logitech.uemegaboom.apk": [
+        "alexa.bin"
+    ],
+    "com.cammus.CsWindBooster.apk": [
+        "BluetoothAccelerator_V5APP.bin",
+        "GT-V6-220709.bin"
+    ],
+    "com.lifx.lifx.apk": [
+        "v4.03-20240103-RELEASE.zip",
+        "LMBV6-v2.1-20150618-RELEASE.zip",
+        "mesh-ota-220000.bin",
+        "v3.60-20191128-RC7-BULB.zip",
+        "lcmv4-v1.22-20170809-RC5.zip",
+        "v3.90-20221017-RELEASE-BULB-updated-28-10-2022.zip",
+        "v2.77-20181126-RC6.zip",
+        "v2.90-20221014-RELEASE.zip",
+        "v2.9-20161222-RC2.zip",
+        "v3.90-20220411-RELEASE-SWITCH.zip",
+        "mesh-ota-240000.bin",
+        "LMBG-v2.1-20150618-RELEASE.zip",
+        "v3.50-20190201-RC4-TILE.zip",
+        "wifi.bin"
+    ],
+    "com.lepu.lepucare.apk": [
+        "cep_pak.bin"
+    ],
+    "com.twentyfouri.easyicam.apk": [
+        "fw.bin"
+    ],
+    "com.tuner168.ble_bracelet_04.apk": [
+        "SimpleBLEPeripheral20150703.bin"
+    ],
+    "com.makewonder.cue.apk": [
+        "firmware.zip"
+    ],
+    "com.impossible.bondtouch.apk": [
+        "heart_dfu_v102.zip",
+        "dfu_v311_hw3g.zip",
+        "dfu_v260_hw203.zip",
+        "heart_dfu_v101.zip",
+        "dfu_v028_hw4g.zip",
+        "dfu_v279_hw2g.zip",
+        "dfu_v029_hw4g.zip"
+    ],
+    "com.xtooltech.iVCIX100D.apk": [
+        "vci3a.bin",
+        "vci38.bin"
+    ],
+    "com.bpoint.bluetooth.le.apk": [
+        "bPointPlug_190318_IMGA.bin",
+        "bPointComfort_190110_imgB.bin",
+        "bPointComfort_190110_imgA.bin",
+        "bPointPlug_190318_IMGB.bin"
+    ],
+    "com.dopplerlabs.hereactivelistening.apk": [
+        "here_app_pv_7.bin"
+    ],
+    "vanderveerengineering.haldexcontroller.apk": [
+        "firmware.bin",
+        "firmware_old.bin"
+    ],
+    "com.edimax.edismart.apk": [
+        "sp2101w_v2_3_00c_upg.bin",
+        "sp1101w_v2_3_00c_upg.bin",
+        "sp1101w_3_00c_upg.bin",
+        "sp2101w_3_00c_upg.bin"
+    ],
+    "com.imvne.safetyx.apk": [
+        "changeplay.bin"
+    ],
+    "com.seoby.bt_ext_vr.apk": [
+        "bte_nextgen_fw.bin"
+    ],
+    "com.artiwares.swim.apk": [
+        "oadbin.bin"
+    ],
+    "com.silvan.toolsanjh.apk": [
+        "orrin1.bin",
+        "orrin2.bin"
+    ],
+    "com.sma.smartv3.apk": [
+        "dial15.bin",
+        "dial10.bin",
+        "dial11.bin",
+        "dial33.bin",
+        "dial6.bin",
+        "dial1.bin",
+        "dial19.bin",
+        "dial5.bin",
+        "dial40.bin",
+        "dial34.bin",
+        "korean_lane.bin",
+        "dial25.bin",
+        "dial7.bin",
+        "dial22.bin",
+        "dial16.bin",
+        "dial2.bin",
+        "dial31.bin",
+        "dial21.bin",
+        "dial28.bin",
+        "dial9.bin",
+        "dial14.bin",
+        "dial3.bin",
+        "dial13.bin",
+        "dial23.bin",
+        "dial12.bin",
+        "dial32.bin",
+        "dial17.bin",
+        "dial8.bin",
+        "dial18.bin",
+        "dial29.bin",
+        "dial4.bin",
+        "dial24.bin",
+        "dial20.bin"
+    ],
+    "com.hdc.donnieli.mprofessional.apk": [
+        "MARIO_CN_SYS_01.01.06_PWR_01.02.05_ENS_01.02.02.bin",
+        "MARIO_SYS_02.02.14_PWR_01.04.09_ENS_01.04.03.bin",
+        "MARIO_CN_SYS_01.01.05_PWR_01.02.04_ENS_01.02.01.bin"
+    ],
+    "it.palazzetti.app.smartstoves.apk": [
+        "develop_unplug.bin",
+        "develop_plug.bin"
+    ],
+    "cn.hengbao.shaoxing.appscomm.pedometer.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "com.digifly.hifiman.apk": [
+        "HIFIman-R2R2000-1031_1006.bin"
+    ],
+    "com.ngmfit.heart.apk": [
+        "1.0.4.9-1.zip",
+        "1.0.1.28-1.img",
+        "I7DFU-HW2.3-SW1.0.4.1.zip",
+        "I7DFU-HW2.3-SW1.0.4.2.zip",
+        "V6_1.0.0.14.zip"
+    ],
+    "nu.eic.gammaGuard.apk": [
+        "Botspine.bin"
+    ],
+    "com.berny.sport.apk": [
+        "update_p.zip"
+    ],
+    "com.bodybike.bbsmartplus.apk": [
+        "bbsmart_fw_0.1.5.0.zip",
+        "bbsmart_fw_0.1.4.9.zip"
+    ],
+    "my.com.salutica.fobotire2.apk": [
+        "MLXAPP_R05.03.04.bin",
+        "FTR_ICU_R03.01.00B.bin",
+        "FBMSSR_R01.03.02.bin",
+        "MLXAPP_R01.03.02.bin",
+        "FBMSSR_R01.03.04.bin",
+        "MLXAPP_R01.03.04.bin"
+    ],
+    "com.sonyericsson.extras.smartwatch.apk": [
+        "firmware.bin"
+    ],
+    "com.mapmywalk.android2.apk": [
+        "ua_footpod129.bin",
+        "ua_footpod1310.bin"
+    ],
+    "www.smoveapp.stabilizer.apk": [
+        "PTR360R.bin",
+        "PTR360D.bin"
+    ],
+    "com.noke.loto.apk": [
+        "firmware4_22.zip",
+        "firmware4_24.zip"
+    ],
+    "megaf.mobicar2.apk": [
+        "HID.fw"
+    ],
+    "com.zepp.zgolf.apk": [
+        "16.5.10.bin",
+        "ZeppSensor_3_5_3.bin"
+    ],
+    "com.zehndergroup.evalvecontrol.apk": [
+        "T400_HMI_CRF_V1.8.3.btlefw",
+        "Gateway-1.5.115.fw",
+        "RF-Kit_R1.5.4.btlefw",
+        "Gateway-1.7.4.fw"
+    ],
+    "com.coolvi.kw50.apk": [
+        "ziku24_all.bin"
+    ],
+    "com.calm_health.sports.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip",
+        "Calm v1.4.zip"
+    ],
+    "com.dkny.connected.apk": [
+        "rmm_ota_33r_v2.bin",
+        "flash_firmware.bin",
+        "q_motion_ota_40r_v16.bin",
+        "sam_ota_13r_se1_uapp_v14_crc_encr.bin",
+        "flash_2_2_10.bin"
+    ],
+    "kr.ftlab.rd200pro.apk": [
+        "RD200PRO_MAIN_V103.bin",
+        "RD200PRO_MAIN_V104.bin",
+        "RD200PRO_MAIN_V104_o.bin",
+        "RD200PRO_MAIN_V1.0.3.bin"
+    ],
+    "com.nomi.home.apk": [
+        "smartlink_switch6.bin",
+        "smartlink_switch1.bin",
+        "easylink_switch6.bin",
+        "easylink_switch4.bin",
+        "easylink_smart_strip.bin",
+        "easylink_smart_bulb.bin"
+    ],
+    "it.resis.mysolarenergy.apk": [
+        "Elios4YouTop_ATXMega256a3_V1283b137.bin",
+        "Elios4You3PHBottom_V1026b11.bin",
+        "4NoksHA_EM357_ZC_GW_4N152_(V1b231-20160115).bin",
+        "Elios4YouTop_ATXMega128a3_V1281b11.bin",
+        "Elios4YouTop_ATXMega256a3_V1293b164.bin"
+    ],
+    "com.ble.eic.botspine2.apk": [
+        "SensorTagImgB.bin",
+        "SensorTagImgA.bin"
+    ],
+    "com.sutron.linkcomm.apk": [
+        "5545030293_01001_el1000.bin",
+        "5545030293_01014_el1000.bin"
+    ],
+    "beflex.droid.soul.apk": [
+        "rfpb_v1.zip"
+    ],
+    "com.linkfit.heart.apk": [
+        "I7DFU-HW2.3-SW1.0.4.1.zip",
+        "I7DFU-HW2.3-SW1.0.4.2.zip",
+        "V6_1.0.0.14.zip"
+    ],
+    "com.sony.songpal.ledbulbspeaker.apk": [
+        "UPDATE_LSPX102E26_Aloe.bin",
+        "UPDATE_LSPX101E26_Basil.bin",
+        "UPDATE_LSPX103E26_Jasmine.bin"
+    ],
+    "com.swei.fileplace.apk": [
+        "s1.2.0.bin"
+    ],
+    "io.qihack.free.apk": [
+        "bms017024022.bin",
+        "mc005019000.bin",
+        "mc005019000cf.bin"
+    ],
+    "com.huihecloud.sunvalley.apk": [
+        "Clever Socket0802.zip",
+        "00000000000000000000000050750000.zip",
+        "Clever Plug0802.zip",
+        "0000000000000000000000004f750000.zip",
+        "0000000000000000000000004e750000.zip"
+    ],
+    "com.meross.meross.apk": [
+        "mss310-us-v1-rc0115.bin",
+        "mss110-us-v1-rc0126.bin",
+        "msl120d-jp-v4-rc0105.bin",
+        "msh300-un-v2-rc0117.bin",
+        "mss210-us-v1-rc0110.bin",
+        "msl120d-eu-v4-rc0108.bin",
+        "mss425-us-v1-rc0110.bin",
+        "msl120d-us-v4-rc0110.bin",
+        "mss420f-us-v2-rc0105.bin",
+        "msl210-jp-v2-rc0119.bin",
+        "mss425f-fr-v1-rc0105.bin",
+        "mss510-us-v1-rc0112.bin",
+        "mss710-us-v3-rc0103.bin",
+        "mss426f-us-v2-rc0102.bin",
+        "msl120j-eu-v3-rc0104.bin",
+        "msh300-un-v4-rc0114.bin"
+    ],
+    "com.oppo.wearable.apk": [
+        "Baidu-OPPO-1.0.6.bin"
+    ],
+    "agm.com.apk": [
+        "firmware200.zip",
+        "firmware2117.zip",
+        "firmware134.zip",
+        "firmware2018.zip"
+    ],
+    "com.wowwee.chip.apk": [
+        "dogbodyboard_ble_v28_2017052301.zip",
+        "dogheadboard_575_aprom_en_0x009bc6f5_2017052201.bin",
+        "dogheadboard_575_aprom_cn_0x00a4b88f_2016102701.bin",
+        "dogbodyboard_ble_v25_2017032301.zip",
+        "dogbodyboard_ble_v29_2018051602.zip",
+        "chip_sd100_bl06.zip",
+        "dogbodyboard_ble_v16_102501.zip",
+        "dogbodyboard_ble_v16_102602.zip",
+        "dogheadboard_575_aprom_jp_0x00a05075_2016102701.bin",
+        "dogbodyboard_ble_v17_102701.zip",
+        "dogheadboard_575_aprom_sp_0x00a3f2d0_2016102701.bin",
+        "dogbodyboard_ble_v21_120802.zip",
+        "dogbodyboard_ble_v16_102502.zip",
+        "dogbodyboard_ble_v22_2017012501.zip",
+        "dogheadboard_575_aprom_fr_0x00a5ea02_2016102701.bin",
+        "dogheadboard_575_aprom_en_0x009ef253_2016102701.bin",
+        "dogheadboard_575_aprom_0x009b6573_090501.bin",
+        "dogbodyboard_ble_v16_102603.zip",
+        "dogheadboard_575_aprom_jp_0x009cbfd1_2016092301.bin",
+        "dogbodyboard_ble_v20_120601.zip",
+        "dogheadboard_575_aprom_ge_0x00a42ee6_2016102701.bin",
+        "dogbodyboard_ble_v27_2017040301.zip",
+        "dogheadboard_575_aprom_en_0x009e6336_2016102401.bin",
+        "dogbodyboard_ble_v16_101401.zip",
+        "chip_sd100_bl09.zip",
+        "chip_sd100_bl08.zip",
+        "dogbodyboard_ble_v19_112301.zip"
+    ],
+    "com.desay.fitband.apk": [
+        "ziku24_all.bin"
+    ],
+    "com.google.vr.vrcore.apk": [
+        "prod_1.3.5.img",
+        "prod_1.0.27.img",
+        "test_1.0.27.img",
+        "prod_1.3.7.img"
+    ],
+    "com.coreiot.conditionmonitoring.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "com.lumiunited.aqarahome.apk": [
+        "android-lumi.switch.b1nc01-1.0.1.zip",
+        "android-lumi.motion.ac01-1.0.1.zip",
+        "android-lumi.remote.cagl02-1.0.1.zip"
+    ],
+    "com.ifit.sleep.apk": [
+        "EarlySense-1.6.0-ES-ImgB.bin",
+        "EarlySense-1.6.0-ES-ImgA.bin"
+    ],
+    "com.enjoyfly.uav.apk": [
+        "obtain-v4.4-2018.7.24.bin",
+        "dream-v3.5-2018.7.27.bin",
+        "dream-v3.6-2018.7.28.bin",
+        "px4fmu-v4_APM_obtain.bin"
+    ],
+    "com.shirajo.ctfit.apk": [
+        "RT729_device(V3.3.6.6.0).img",
+        "RT822_device(V4.3.6.6.0).img"
+    ],
+    "com.biosignals.bio2.apk": [
+        "new_hd.bin",
+        "new_lg.bin"
+    ],
+    "com.stekop.dione_manipulator.apk": [
+        "firmware.bin"
+    ],
+    "com.pavlok.breakingbadhabits.apk": [
+        "pavlok_dfu_test_2.zip",
+        "update.ota",
+        "pavlok_dfu_test_1.zip",
+        "custom_update.ota"
+    ],
+    "smart.iblue.apk": [
+        "bulb_rgb_v10.img",
+        "switch_v7.img",
+        "plug_v7.img",
+        "mplug_v3.img",
+        "soc_v4.img",
+        "pir_v1.img",
+        "ir_v9.img",
+        "gateway_v8.img",
+        "bulb_w_v10.img"
+    ],
+    "chipolo.net.v3.apk": [
+        "Img5B_r3a.bin",
+        "Img7A_r4.bin",
+        "d2.img",
+        "Img7A_r5.bin",
+        "d3.img",
+        "Img7B_r5.bin",
+        "dfu_pkg_n3.zip",
+        "Img7B_r4.bin",
+        "d4.img",
+        "Img3A_r3b2.bin",
+        "dfu_pkg_n2.zip",
+        "Img7A_r3b2.bin",
+        "Img5B_r3b.bin",
+        "dfu_pkg_n1.zip",
+        "Img7B_r3b2.bin",
+        "Img3A_r3a.bin",
+        "Img3A_r3b.bin"
+    ],
+    "com.pre.smarthome.apk": [
+        "gateway.bin"
+    ],
+    "com.fuzdesigns.noke.apk": [
+        "fob29bin.bin",
+        "padlock3p210bin.bin"
+    ],
+    "com.qx.qgbox.apk": [
+        "dfu.zip"
+    ],
+    "ru.goal.vms.apk": [
+        "det2.bin",
+        "det3.bin",
+        "det1.bin"
+    ],
+    "com.cylan.jiafeigou.zhongxing.apk": [
+        "JFG1W-2.4.6.35.bin"
+    ],
+    "com.skytone.KasaBLE.apk": [
+        "plugin_uex_elbtsdk_upgrade27.bin",
+        "plugin_uex_elbtsdk_upgrade23.bin",
+        "plugin_uex_elbtsdk_upgrade.bin",
+        "plugin_uex_elbtsdk_upgrade1.bin",
+        "plugin_uex_elbtsdk_upgrade3.bin",
+        "plugin_uex_elbtsdk_upgrade0.bin"
+    ],
+    "com.huami.midong.apk": [
+        "BF2.fw",
+        "Mili_d156.fw",
+        "HB1S.fw",
+        "JHMPro.fw",
+        "JHM.fw",
+        "AF.fw",
+        "SCALE2.fw",
+        "AF_9.fw",
+        "Bodyfat.fw",
+        "HBS2.fw",
+        "ARC.fw",
+        "BF.fw",
+        "Mili_d156_9.fw",
+        "HB.fw"
+    ],
+    "com.ancel.bd310.apk": [
+        "ExtFlashDat.bin"
+    ],
+    "de.gymwatch.android.apk": [
+        "SensorFirmware_1.98_fixInitScript.bin",
+        "SensorSoftware1.95_r.bin"
+    ],
+    "com.energetics.tracker.apk": [
+        "w307s_reflex_v908909.zip",
+        "w307s_reflexv9047.zip",
+        "w307k_reflex2c_hc_v909803.zip",
+        "w307s_reflex_v9089.zip",
+        "w307s_reflexv9045.zip",
+        "w307s_reflex_v9096.zip",
+        "w311b_beat_rdn_v9161.zip",
+        "w307s_reflexv9046.zip",
+        "w307s_reflexv9067.zip",
+        "w307_ref_autosleep_v9104.zip",
+        "w311n_beat_v9112.zip",
+        "w307s_reflex_v9091.zip",
+        "w307_fastrack_v9091.zip",
+        "w307s_reflexv9084.zip",
+        "w307s_reflexv9087.zip",
+        "w311n_mc.bin",
+        "w307s_reflexv9064.zip",
+        "w311n_beat_v9104.zip",
+        "W311N_MC_V86.00.bin",
+        "w311n_hama.bin",
+        "w307_reflex_ekin_v9090.zip",
+        "w307s_reflex_v9102.zip",
+        "w311n_beat_rel_v9124.zip"
+    ],
+    "com.nuvoair.aria.apk": [
+        "nG.bin",
+        "nuvoair_spiro_ble_1_0.bin",
+        "nuvoair_spiro_ble_1_25.bin",
+        "4u.bin"
+    ],
+    "com.zxc.qianzibaixiu.apk": [
+        "update.bin"
+    ],
+    "com.philips.lighting.huebridgev1.apk": [
+        "bsb001_prod_01043155.fw"
+    ],
+    "store.gooseberry.smartbuckle.apk": [
+        "v105_v213_20170828.zip"
+    ],
+    "com.vchecker.hudnav.apk": [
+        "changeplay.bin"
+    ],
+    "com.czm.saiband.apk": [
+        "NS02_v1.3.43.zip",
+        "NS10_v2.0.4.zip"
+    ],
+    "com.august.app.apk": [
+        "august-arm-rc4.bin"
+    ],
+    "com.jjkeller.kmb.apk": [
+        "eobr_gen2_6.88.154.bin",
+        "eobr_gen2_6.88.165.bin"
+    ],
+    "com.jbt.brilliant.apk": [
+        "Spectrum_v5.6.2(g161112).bin"
+    ],
+    "com.sunheat.heater.apk": [
+        "W312_v3.3_HW3.1_20161125B.bin",
+        "W312_v3.3_HW3.1_20161125A.bin",
+        "W311-02-H5.0_v4.1_20210322A.bin",
+        "W310_v3.3_HW3.0_20161125B.bin",
+        "W315-04_v3.7_20171123B.bin",
+        "W315-04_v3.7_20171123A.bin",
+        "W311T_v3.4_HW5.0_20170410B.bin",
+        "W314_v3.2_HW3.2_20160512B.bin",
+        "W311T_v3.4_HW5.0_20170410A.bin",
+        "W311-02-H5.0_v4.1_20210322B.bin",
+        "W314_v3.2_HW3.2_20160512A.bin",
+        "W315-01_v3.7_20171123B.bin",
+        "W310_v3.3_HW3.0_20161125A.bin",
+        "W315-01_v3.7_20171123A.bin"
+    ],
+    "com.sopen.youbu.apk": [
+        "SimpleBLEPeripheral.bin",
+        "SimpleBLEPeripheralAv2.bin",
+        "TimeApp.bin",
+        "TimeAppB.bin",
+        "SimpleBLEPeripheralBv4.bin",
+        "SimpleBLEPeripheralA.bin",
+        "test.bin"
+    ],
+    "com.audeara.apk": [
+        "upgrade_full_42.bin"
+    ],
+    "com.dashrobotics.kamigamiJW.apk": [
+        "firmware_bundle.zip"
+    ],
+    "com.miraclepulse.ui.bracelet.apk": [
+        "ns_bracelet_click.bin"
+    ],
+    "com.ltech.lbus.apk": [
+        "WIFI-108.bin"
+    ],
+    "com.martinloren.hscope.apk": [
+        "vds1022.bin",
+        "hscope-lcsoft.fw",
+        "oscA02.fw",
+        "hscope-instrustar-isds205.fw",
+        "VDS1022_FPGAV3_gaoyun.bin",
+        "VDS1022_FPGAV5_gaoyun.bin",
+        "hscope-hantek-pso2020.fw",
+        "VDS1022_FPGAV4_gaoyun.bin",
+        "oscH02.fw",
+        "hscope-hantek-6022be.fw",
+        "hscope-armfly-axpro.fw",
+        "hscope-sainsmart-dds120.fw",
+        "hscope-mdso-la.fw",
+        "VDS1022_FPGAV2_V4.1.bin",
+        "VDS1022_FPGAV1_V3.9.bin",
+        "VDS2052_FPGA_v1.0.8.bin",
+        "hscope-hantek-6022bl.fw",
+        "osc802.fw"
+    ],
+    "com.comfortsun.heater.apk": [
+        "W312_v3.3_HW3.1_20161125B.bin",
+        "W312_v3.3_HW3.1_20161125A.bin",
+        "W311-02-H5.0_v4.1_20210322A.bin",
+        "W310_v3.3_HW3.0_20161125B.bin",
+        "W315-04_v3.7_20171123B.bin",
+        "W315-04_v3.7_20171123A.bin",
+        "W311T_v3.4_HW5.0_20170410B.bin",
+        "W314_v3.2_HW3.2_20160512B.bin",
+        "W311T_v3.4_HW5.0_20170410A.bin",
+        "W311-02-H5.0_v4.1_20210322B.bin",
+        "W314_v3.2_HW3.2_20160512A.bin",
+        "W315-01_v3.7_20171123B.bin",
+        "W310_v3.3_HW3.0_20161125A.bin",
+        "W315-01_v3.7_20171123A.bin"
+    ],
+    "batterie.monitor.apk": [
+        "SensorTagImgB.bin",
+        "SensorTagImgA.bin"
+    ],
+    "jbl.stc.com.apk": [
+        "t125_patch_0.0.1188.0-e2439a7bc187ebcd399e6dca71617cf9.bin",
+        "t215_patch_0.0.1183.0-d895c66c3e205f65703e108778b22cdd.bin"
+    ],
+    "com.robo.directcontrol.apk": [
+        "update.bin",
+        "update2.bin",
+        "update3.bin"
+    ],
+    "com.ooono.app.apk": [
+        "firmware_h1_v26.zip",
+        "firmware_h3_v330.zip",
+        "firmware_h2_v211.zip",
+        "firmware_h3_v323.zip",
+        "firmware_h2_v222.zip",
+        "firmware_h2_v213.zip",
+        "firmware_h2_v216.zip",
+        "pro_firmware_v1_0.zip"
+    ],
+    "com.feetguider.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "xdnj.towerlock2.apk": [
+        "changeplay.bin",
+        "1.0.1.zip"
+    ],
+    "com.ScanMyOpelLite.Main.apk": [
+        "at_easy_fi.bin",
+        "Sim71_en.bin",
+        "AT_1317_KW_pl.bin",
+        "Multec_H_hu.bin",
+        "AT_ar2535_kw_pl.bin",
+        "multijet_fi.bin",
+        "me155_ru.bin",
+        "psg16_ru.bin",
+        "Sim71_hu.bin",
+        "sim70_ru.bin",
+        "mot311_en.bin",
+        "edc15c7_fi.bin",
+        "psg16_fi.bin",
+        "airbag_sab8x_kw_pl.bin",
+        "bcm_KWP_en.bin",
+        "gmpt_e15_pl.bin",
+        "AT_1317_KW_de.bin",
+        "HDRC_en.bin",
+        "Multec_SF_en.bin",
+        "AT_1317_KW_en.bin",
+        "mot311_ru.bin",
+        "me155_de.bin",
+        "HDRC_pl.bin",
+        "ABS53_hu.bin",
+        "AcT_MotronicME155_en.bin",
+        "psg16_pl.bin",
+        "multijet_ru.bin",
+        "mot311_fi.bin",
+        "psg16_en.bin",
+        "Edc_15M_hu.bin",
+        "edc15c7_hu.bin",
+        "DEC30_fi.bin",
+        "at_5l40e_pl.bin",
+        "ABS53_fi.bin",
+        "ABS430_fi.bin",
+        "mot761_pl.bin",
+        "ABS53_pl.bin",
+        "Multec_H_de.bin",
+        "gmpt_e15_de.bin",
+        "Sim71_ru.bin",
+        "Sim565_en.bin",
+        "ABS430_hu.bin",
+        "sim70_pl.bin",
+        "gmpt_e15_hu.bin",
+        "ABS430_de.bin",
+        "Sim71_pl.bin",
+        "Multec_SF_pl.bin",
+        "bcm_KWP_hu.bin",
+        "at_easy_en.bin",
+        "Multec_SF_fi.bin",
+        "at_5l40e_de.bin",
+        "Sim565_hu.bin",
+        "Multec_SF_de.bin",
+        "gmpt_e15_fi.bin",
+        "at_5l40e_fi.bin",
+        "mot761_hu.bin",
+        "AcT_MotronicME155_ru.bin",
+        "mot761_en.bin",
+        "sim70_en.bin",
+        "Edc_15M_de.bin",
+        "Mot283_hu.bin",
+        "Edc_15M_fi.bin",
+        "psg16_hu.bin",
+        "bcm_KWP_fi.bin",
+        "HDRC_ru.bin",
+        "me155_pl.bin",
+        "mot761_ru.bin",
+        "Multec_H_ru.bin",
+        "at_easy_ru.bin",
+        "HDRC_hu.bin",
+        "airbag_sab8x_kw_hu.bin",
+        "Mot283_fi.bin",
+        "me155_hu.bin",
+        "bcm_KWP_pl.bin",
+        "at_easy_hu.bin",
+        "mot311_pl.bin",
+        "ABS430_en.bin",
+        "Multec_H_en.bin",
+        "AT_1317_KW_hu.bin",
+        "Multec_SF_hu.bin",
+        "sim70_hu.bin",
+        "Edc_15M_pl.bin",
+        "DEC30_hu.bin",
+        "ABS53_en.bin",
+        "sim70_fi.bin",
+        "sim70_de.bin",
+        "AT_ar2535_kw_fi.bin",
+        "multijet_pl.bin",
+        "multijet_hu.bin",
+        "Mot283_pl.bin",
+        "AT_ar2535_kw_hu.bin",
+        "Sim71_fi.bin",
+        "at_5l40e_hu.bin",
+        "Mot283_de.bin",
+        "me155_fi.bin",
+        "Sim565_de.bin",
+        "Sim565_fi.bin",
+        "bcm_KWP_ru.bin",
+        "ABS430_pl.bin",
+        "airbag_sab8x_kw_en.bin",
+        "Edc_15M_en.bin",
+        "multec_H_fi.bin",
+        "mot761_de.bin",
+        "me155_en.bin",
+        "HDRC_fi.bin",
+        "psg16_de.bin",
+        "mot761_fi.bin",
+        "Edc_15M_ru.bin",
+        "Mot283_en.bin",
+        "mot311_de.bin",
+        "airbag_sab8x_kw_fi.bin",
+        "mot311_hu.bin",
+        "airbag_sab8x_kw_de.bin",
+        "at_easy_pl.bin",
+        "bcm_KWP_de.bin",
+        "gmpt_e15_en.bin",
+        "AT_ar2535_kw_de.bin",
+        "Sim565_pl.bin",
+        "Multec_H_pl.bin",
+        "Sim71_de.bin",
+        "Mot283_ru.bin",
+        "AT_1317_KW_fi.bin",
+        "gmpt_e15_ru.bin",
+        "ABS53_de.bin",
+        "at_5l40e_en.bin"
+    ],
+    "com.gpower.idea.apk": [
+        "C-Life_Dongle_0114.bin",
+        "light_8267_ota.bin",
+        "C-Sleep_Dongle_0114.bin"
+    ],
+    "cn.appscomm.avitor.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "com.carephone.home.apk": [
+        "hf_switch1_v3.bin",
+        "hf_switch6_v3.bin",
+        "plc_switch6.bin",
+        "plc_switch1.bin"
+    ],
+    "com.fagerhult.esensetune.apk": [
+        "fw_master.bin",
+        "fw_follower.bin",
+        "fw_ble.bin"
+    ],
+    "com.mcc.ul.example.cin.demo.apk": [
+        "USB_DIO32HS.bin"
+    ],
+    "com.isport.hu_tracker.apk": [
+        "w307s_reflex_v9089.zip",
+        "w307s_reflexv9045.zip",
+        "w307s_reflex_v9096.zip",
+        "w307s_reflexv9046.zip",
+        "w307s_reflexv9067.zip",
+        "w311n_beat_v9112.zip",
+        "w307s_reflexv9084.zip",
+        "w307s_reflexv9087.zip",
+        "w311n_mc.bin",
+        "w307s_reflexv9064.zip",
+        "w311n_beat_v9104.zip",
+        "W311N_MC_V86.00.bin",
+        "w311n_hama.bin",
+        "w307s_reflex_v9102.zip",
+        "w311n_beat_rel_v9124.zip"
+    ],
+    "com.robomow.robomow.apk": [
+        "RC.bin"
+    ],
+    "updater.one.vr.apk": [
+        "fwupdate.zip"
+    ],
+    "it.centrosistemi.nemh2o.apk": [
+        "init-r29169.zip"
+    ],
+    "stancebeam.quicklogi.com.cricketApp.apk": [
+        "000313.zip",
+        "VVDN_STBI_SSTD_FW.zip"
+    ],
+    "com.mattel.hwrocketleague.apk": [
+        "FWP45_App_SIGNED_MCPP_DFU_1.2.1.zip"
+    ],
+    "com.bracelet.app.vyvo.apk": [
+        "cep_pak.bin"
+    ],
+    "com.samsung.roomspeaker.apk": [
+        "SS_BHUB_v2.2.12.bin"
+    ],
+    "com.sugrsugr.ivyapp.sugrsmartivy.apk": [
+        "update_binary_apollo2_kwd.bin"
+    ],
+    "com.moko.fitpolo.apk": [
+        "0007_0001_0015_DFU.zip",
+        "EE_01_33.bin",
+        "0005_0001_0014_DFU.zip",
+        "CC_01_32.bin",
+        "0005_0001_0012.bin",
+        "0009_0001_0006_DFU.zip",
+        "0006_0001_000A_DFU.zip",
+        "CC_00_32.bin"
+    ],
+    "com.lightwavetechnology.carlink.apk": [
+        "LWT_OTA_TEST.zip",
+        "HHU_OTA_1_11.bin",
+        "IVU_BLE_OTA_1_11.bin",
+        "LWT_OTA.zip"
+    ],
+    "cn.threeplus.appscomm.pedometer.apk": [
+        "L38I_3PLUS_F3.4_Update.zip"
+    ],
+    "scan.dtc.obd.readcode.elm327.oht.carsys.apk": [
+        "bin01.bin"
+    ],
+    "com.warpfuture.wfiot.apk": [
+        "iot.zip"
+    ],
+    "com.SanyaKV.NXConnect.apk": [
+        "firmware_v1_4_update.bin"
+    ],
+    "com.harman.hkconnect.apk": [
+        "HK_Connectmk2.bin"
+    ],
+    "gira.system3000.apk": [
+        "application_01_0_1.zip",
+        "stm32_image_v01_04_00.zip",
+        "bootloader_V00.04.08_Beta1.8.zip",
+        "application_45077603_V00.03.06_Beta_1.6_R1.3.zip",
+        "bootloader_45075508_V00.05.13_Beta8.0_R1.4.zip",
+        "application_45085908_V00.05.13_Beta8.0_R1.4.zip",
+        "bootloader_45077603_V00.03.06_Beta_1.6_R1.3.zip",
+        "bootloader_45085908_V00.05.13_Beta8.0_R1.4.zip",
+        "bootloader_01_0_1.zip",
+        "stm32_image_v01_02_02.zip",
+        "application_45077608_V00.04.13_Beta_8.0_R1.4.zip",
+        "application_45075508_V00.05.13_Beta8.0_R1.4.zip",
+        "application_V00.04.08_Beta1.8.zip",
+        "bootloader_45077608_V00.04.13_Beta_8.0_R1.4.zip"
+    ],
+    "cn.technaxx.appscomm.pedometer.l38i.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "eu.daikin.remoapp.apk": [
+        "dkacstm-wlan-F-3_3_9.bin",
+        "DKWL3G_OTA_TS_V1_2_42.bin",
+        "dkacstm-wlan-F-3_3_1.bin",
+        "DKWL3G_OTA_CS_V1_2_54.bin",
+        "dkacstm-wlan-F-ts-3_2_7.bin",
+        "dkacstm-lan-F-3_3_9.bin",
+        "DKWL3G_OTA_CS_V1_2_48.bin"
+    ],
+    "com.testing.appl.apk": [
+        "mesh_ota_v1.2.bin"
+    ],
+    "com.ubctech.tennis.apk": [
+        "MAIN_BIN_3.bin",
+        "MAIN_BIN.bin"
+    ],
+    "com.sigsauer.bdx.apk": [
+        "kilo6k10x_ota.zip",
+        "sierra3_app_only_8X.zip",
+        "kilo5k_ota_14.058.zip",
+        "K2200_toled_ota.zip",
+        "kilo5k_ota_14.059.zip",
+        "kilo_app_sd_boot.zip",
+        "kilo10k_ota.zip",
+        "kilo_3000BE_ota.zip",
+        "K1000_bank1.bin",
+        "kilo_raytac_ota.zip",
+        "sierra3_app_only_20X.zip",
+        "kilo8k_ota.zip",
+        "echo3_esp32.bin",
+        "sierra3_app_only_10X.zip",
+        "k3k_mono_17.020.zip",
+        "K2400.bin",
+        "K1600_bank1.bin",
+        "kilo6k10x_ota_27.019.zip",
+        "kilo8k_ota_11.115.zip",
+        "K1400.bin",
+        "sierra3_app_only_14X.zip",
+        "kilo8k_ota_11.118.zip",
+        "k3k_mono_17.018.zip",
+        "K1600_toled_ota.zip",
+        "kilo4k_ota_24.027.zip",
+        "K3000.bin",
+        "kilo8k_ota_11.117.zip",
+        "k6000_ota_16.027.zip",
+        "K2200.bin",
+        "K1000.bin",
+        "kilo5k_ota.zip",
+        "K1000_bank2.bin",
+        "kilo6k10x_ota_27.021.zip",
+        "K2800_toled_ota.zip",
+        "k1600.bin",
+        "K1800.bin",
+        "kilo10k_ota_13.117.zip",
+        "k6000_ota_16.026.zip",
+        "kilo10k_ota_13.118.zip",
+        "k3k_mono_17.019.zip",
+        "kilo10k_ota_13.115.zip",
+        "k6000_ota_16.028.zip",
+        "k6000_ota.zip",
+        "K1600_bank2.bin",
+        "K22LR.bin",
+        "kilo3k_ota.zip",
+        "kilo4k_ota.zip",
+        "kilo4k_ota_24.028.zip"
+    ],
+    "com.szkct.fundobracelet.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "com.goodman.configurator.apk": [
+        "tempsensor.bin",
+        "servicepack.bin"
+    ],
+    "com.lucielabs.apps_android_furygan_ui.apk": [
+        "bootloader_updater_0036_00_V_0_05_RC3.bin",
+        "fw_z2_0036_04_v_1_01_rc1.bin",
+        "bootloader_updater_0036_01_V_0_05_RC3.bin",
+        "fw_rec_0036_04_v_1_02_rc1.bin",
+        "fw_z1_0036_04_v_1_01_rc2.bin",
+        "fw_rec_0036_02_v_0_09_rc4.bin",
+        "fw_z2_0036_04_v_0_09_rc7.bin",
+        "fw_rec_0036_04_v_1_00_rc2.bin",
+        "fw_z1_0036_04_v_1_01_rc1.bin",
+        "fw_z2_0036_04_v_1_04_rc1.bin",
+        "fw_z1_0036_04_v_1_03_rc1.bin",
+        "fw_z2_0036_04_v_1_01_rc2.bin",
+        "bootloader_updater_0036_00_V_0_05_RC4.bin",
+        "fw_z2_0036_04_v_1_00_rc1.bin",
+        "bootloader_updater_0036_01_V_0_04_RC5.bin",
+        "fw_rec_0036_04_v_0_08_rc1.bin",
+        "fw_z1_0036_04_test_center.bin",
+        "fw_rec_0036_04_v_1_03_rc1.bin",
+        "fw_z2_0036_04_v_1_03_rc1.bin",
+        "firmware_0036_00_V_0_05_RC5.bin",
+        "fw_rec_0036_02_v_0_09_rc6.bin",
+        "fw_z2_0036_04_v_1_02_rc1.bin",
+        "fw_rec_0036_04_v_1_04_rc1.bin",
+        "fw_z2_0036_04_v_1_05_rc1.bin",
+        "fw_z1_0036_04_v_0_08_rc1.bin",
+        "bootloader_updater_0036_01_V_0_05_RC5.bin",
+        "bootloader_updater_0036_01_V_0_05_RC4.bin",
+        "firmware_0036_01_V_0_05_RC4.bin",
+        "fw_z2_0036_04_v_0_07_rc3.bin",
+        "fw_z2_0036_02_v_0_08_rc1.bin",
+        "fw_z1_0036_04_v_1_00_rc3.bin",
+        "fw_rec_0036_04_v_0_09_rc6.bin",
+        "bootloader_0036_01_V_0_05_RC4.bin",
+        "fw_z2_0036_04_v_0_09_rc8.bin",
+        "firmware_0036_00_V_0_04_RC5.bin",
+        "fw_z2_0036_04_v_0_08_rc1.bin",
+        "firmware_0036_00_V_0_05_RC3.bin",
+        "fw_rec_0036_02_v_0_07_rc3.bin",
+        "fw_z1_0036_04_v_0_07_rc3.bin",
+        "firmware_0036_01_V_0_04_RC5.bin",
+        "fw_rec_0036_04_test_center.bin",
+        "fw_z1_0036_02_v_0_07_rc3.bin",
+        "fw_z1_0036_04_v_1_05_rc1.bin",
+        "fw_z2_0036_04_v_0_09_rc4.bin",
+        "fw_z1_0036_04_v_1_04_rc2.bin",
+        "fw_rec_0036_04_v_1_04_rc2.bin",
+        "fw_rec_0036_04_v_0_09_rc8.bin",
+        "fw_rec_0036_04_v_0_09_rc7.bin",
+        "fw_rec_0036_04_v_1_01_rc1.bin",
+        "fw_z1_0036_02_v_0_08_rc1.bin",
+        "fw_rec_0036_04_v_0_09_rc4.bin",
+        "fw_z2_0036_04_v_1_06_rc1.bin",
+        "fw_z2_0036_02_v_0_07_rc3.bin",
+        "fw_z2_0036_04_v_1_04_rc2.bin",
+        "fw_rec_0036_02_v_0_09_rc8.bin",
+        "fw_z2_0036_02_v_0_09_rc4.bin",
+        "fw_z1_0036_02_v_0_09_rc7.bin",
+        "fw_rec_0036_02_v_0_08_rc1.bin",
+        "fw_rec_0036_04_v_1_05_rc1.bin",
+        "firmware_0036_00_V_0_05_RC4.bin",
+        "bootloader_0036_01_V_0_05_RC5.bin",
+        "fw_z1_0036_02_v_0_09_rc8.bin",
+        "fw_z1_0036_04_v_0_09_rc8.bin",
+        "bootloader_updater_0036_00_V_0_05_RC5.bin",
+        "fw_z1_0036_04_v_0_09_rc4.bin",
+        "fw_z1_0036_02_v_0_09_rc6.bin",
+        "bootloader_0036_00_V_0_05_RC3.bin",
+        "fw_z1_0036_04_v_0_09_rc7.bin",
+        "fw_z1_0036_04_v_0_09_rc6.bin",
+        "fw_z1_0036_04_v_1_00_rc2.bin",
+        "bootloader_0036_00_V_0_04_RC5.bin",
+        "fw_z1_0036_04_v_1_00_rc1.bin",
+        "fw_z2_0036_02_v_0_09_rc6.bin",
+        "firmware_0036_01_V_0_05_RC3.bin",
+        "fw_z1_0036_04_v_1_02_rc1.bin",
+        "bootloader_0036_00_V_0_05_RC5.bin",
+        "fw_z1_0036_04_v_1_04_rc1.bin",
+        "fw_z2_0036_04_v_0_09_rc6.bin",
+        "bootloader_0036_00_V_0_05_RC4.bin",
+        "fw_z2_0036_02_v_0_09_rc8.bin",
+        "fw_z2_0036_04_test_center.bin",
+        "fw_rec_0036_02_v_0_09_rc7.bin",
+        "fw_rec_0036_04_v_1_01_rc2.bin",
+        "bootloader_0036_01_V_0_04_RC5.bin",
+        "fw_z1_0036_02_v_0_09_rc4.bin",
+        "fw_rec_0036_04_v_1_00_rc3.bin",
+        "fw_z2_0036_04_v_1_00_rc2.bin",
+        "bootloader_updater_0036_00_V_0_04_RC5.bin",
+        "fw_z2_0036_02_v_0_09_rc7.bin",
+        "firmware_0036_01_V_0_05_RC5.bin",
+        "bootloader_0036_01_V_0_05_RC3.bin",
+        "fw_rec_0036_04_v_0_07_rc3.bin",
+        "fw_rec_0036_04_v_1_06_rc1.bin",
+        "fw_z1_0036_04_v_1_06_rc1.bin",
+        "fw_rec_0036_04_v_1_00_rc1.bin",
+        "fw_z2_0036_04_v_1_00_rc3.bin"
+    ],
+    "com.ce.smart.apk": [
+        "mesh_ota_v1.2.bin"
+    ],
+    "com.doctorviva.app.apk": [
+        "cep_pak.bin",
+        "CS20X_20200707_6.0.0.43.zip"
+    ],
+    "com.timewarnercable.wififinder.apk": [
+        "FW_TWC.bin"
+    ],
+    "com.watchkong.app.apk": [
+        "ebnfr.0.0.10.bin",
+        "ebnfc.0.0.10.bin"
+    ],
+    "com.iSetWatch.application.apk": [
+        "iSet-CC0104.bin",
+        "iSet-CC0102.bin"
+    ],
+    "tt.butterfly.amicus.apk": [
+        "prime_7_1.bin",
+        "Amicus_5_17.bin"
+    ],
+    "com.bitaxon.app.ew001.wizard.freebuds.apk": [
+        "ew001_left.bin",
+        "ew001_box.bin",
+        "ew001_right.bin"
+    ],
+    "com.xtooltech.Anyscan.apk": [
+        "vci81.bin",
+        "vci8c.bin",
+        "vci88.bin",
+        "vci9a.bin",
+        "iOBD2b.bin",
+        "vci8e.bin",
+        "vci3e.bin",
+        "vci9d.bin",
+        "vci22.bin",
+        "iOBD2.bin",
+        "iOBD2c.bin",
+        "iOBD2a.bin",
+        "vci78.bin",
+        "vci84.bin",
+        "vci18.bin",
+        "xvci.bin",
+        "vci89.bin",
+        "vci82.bin",
+        "vci3c.bin",
+        "vci9c.bin",
+        "vci91.bin",
+        "vci8b.bin",
+        "vci87.bin",
+        "vci38.bin",
+        "vci7a.bin",
+        "vci4a.bin",
+        "vci85.bin",
+        "vci7c.bin",
+        "mcu2.bin",
+        "vci.bin",
+        "vci3a.bin",
+        "vci8a.bin",
+        "vci83.bin",
+        "vci40.bin"
+    ],
+    "com.circlemedia.circlehome.apk": [
+        "firmware-apid-updater.bin"
+    ],
+    "com.generic.home.apk": [
+        "E3Light_EB60_0x9201_V4_2_(牧场定时器30分钟循环临时全部组用_策略0)_v00.03.03.00.bin"
+    ],
+    "com.smalife.watch.apk": [
+        "ble07_8002_v11.zip",
+        "ble07_v25.zip",
+        "ble05_v15.zip",
+        "sma05_hz.bin",
+        "sma05_v1.7.bin",
+        "sma05_v1.6.bin"
+    ],
+    "com.slightech.mynt.apk": [
+        "20161129_27.bin",
+        "20160816_26.bin",
+        "GPS_170811_1.bin",
+        "17070711_29.bin",
+        "ES_180629_4.img",
+        "PLUS_180508.bin",
+        "ES_180611_3.img",
+        "20160418_25.bin",
+        "A15061718.bin",
+        "Beta_170614_46.bin",
+        "B15061718.bin"
+    ],
+    "com.bluerailtrains.traincontrol.apk": [
+        "ble_app_bcw_s110_xxaa.bin"
+    ],
+    "com.bluino.switchiot.apk": [
+        "firmware-switchiot-esp8285.ino.bin",
+        "firmware-switchiot-esp8266.ino.bin"
+    ],
+    "com.aquaillumination.prime.apk": [
+        "prime-2.5.1-75.bin",
+        "prime-mt7688-2.0.0-7.bin",
+        "prime-2.2.0-44.bin"
+    ],
+    "com.bosch.uDrive.apk": [
+        "ble_dfu_2_0_0.zip",
+        "ble_dfu_d5_4_0.zip"
+    ],
+    "com.dlink.mydlinkmyhome.apk": [
+        "DCHS150A2_FW122B06.bin",
+        "DCHS160A2_FW122B03.bin",
+        "DSPW110A2_FW122B03.bin",
+        "DSPW215A1_FW123B05.bin",
+        "DSPW215B2_FW222B05.bin",
+        "DCHS220A2_FW122B03.bin",
+        "DCHG020A2_FW_v124b02.bin"
+    ],
+    "jp.pioneer.carsync.apk": [
+        "Applause3_1.bin",
+        "Applause3_2.bin",
+        "Applause2_1.bin",
+        "Applause7_3.bin",
+        "Applause5_3.bin",
+        "Applause7_1.bin",
+        "Applause2_0.bin",
+        "Applause3_3.bin",
+        "Applause5_1.bin",
+        "Applause7_2.bin",
+        "Applause2_2.bin",
+        "Applause4_3.bin",
+        "Applause7_0.bin",
+        "Applause6_3.bin",
+        "Applause5_2.bin",
+        "Applause4_0.bin",
+        "Applause6_0.bin",
+        "Applause4_2.bin",
+        "Applause5_0.bin",
+        "Applause3_0.bin",
+        "Applause2_3.bin",
+        "Applause6_1.bin",
+        "Applause6_2.bin",
+        "Applause4_1.bin"
+    ],
+    "com.blueskyhomesales.cube.apk": [
+        "cub_gps_v10_b_cha_183.zip",
+        "cube1_019.img",
+        "gps-531_v069.img",
+        "cubepro_531_025.img",
+        "cube_gps_v10_b_usa_n50_cube.zip",
+        "cube1_023.img",
+        "CUBE GPS PRO_v011.bin",
+        "cube_gps_v10_b_cha.zip",
+        "shadow_009.img",
+        "cube_gps_v10_a_usa.zip",
+        "cube_gps_531_v024.zip",
+        "cube_gps_v10_c_cha_t_186.zip",
+        "cube531_019.img",
+        "cube_gps_v10_b_cha_test.zip",
+        "cube_gps_v10_b_truphone_186.zip",
+        "gps_531_v027.zip",
+        "CUBE GPS OBD_HW_01_v002.bin",
+        "cube_gps_v10_b_truphone.zip",
+        "cube_gps_v10_b_truphone_podp.zip",
+        "cube_gps_v10_b_truphone_185.zip",
+        "cube_531_012.img",
+        "CUBE GPS PRO_v015.bin",
+        "cube_gps_v10_b_cha_186.zip",
+        "cube_gps_v10_lb_usa.zip",
+        "cube2_012.img",
+        "ble_simple_peripheral.bin",
+        "cube_gps_v10_b_cha_181.zip",
+        "cube_gps_v10_b_truphone_182.zip",
+        "cube_gps_v10_a_cha.zip"
+    ],
+    "com.svane.svaneremote.apk": [
+        "LinONPI_rev16_11.zip",
+        "LinOnPro10RC8adj.zip",
+        "LinONPI_rev16_5.zip",
+        "LinOnPro10RC8adjb.zip",
+        "LinOnPro1_0RC18.zip",
+        "LinOnPro1_0RC10.zip"
+    ],
+    "com.xm.csee.debug.apk": [
+        "faceRec.bin"
+    ],
+    "com.latitude.smartband.apk": [
+        "imageA_2540_v07.bin",
+        "imageA_2541_v07.bin"
+    ],
+    "com.bluino.esp8266wifirobotcar.apk": [
+        "Object_Follower_L298N.bin",
+        "Line_Follower.bin",
+        "Obstacle_Avoidance.bin",
+        "Obstacle_Avoidance_L298N.bin",
+        "Remote_Control.bin",
+        "Remote_Control_L298N.bin",
+        "Line_Follower_L298N.bin"
+    ],
+    "com.mapmyfitness.android2.apk": [
+        "ua_footpod129.bin",
+        "ua_footpod1310.bin"
+    ],
+    "com.blacktentdev.inpeakmanager.apk": [
+        "test_dfu.zip",
+        "powercrank_v9.zip"
+    ],
+    "com.blustream.app.apk": [
+        "taylor303.img",
+        "humiditrak302.img",
+        "blustream302.img",
+        "tkl302.img"
+    ],
+    "com.dc.yatudc.apk": [
+        "changeplay.bin"
+    ],
+    "com.f4c.base.framework.apk": [
+        "ziku24_all.bin"
+    ],
+    "com.polk.playfi.apk": [
+        "onkyo1.zip",
+        "helo1.zip"
+    ],
+    "com.alltek.android.smarthome.apk": [
+        "smart_plug-320b101.ota.bin"
+    ],
+    "com.zhuazhua.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "com.isport.tracker.apk": [
+        "w307s_reflex_v9096.zip",
+        "w311n_hama.bin",
+        "w311n_mc.bin",
+        "w307s_reflexv9045.zip",
+        "w311n_beat_rel_v9124.zip",
+        "w307s_reflex_v9102.zip",
+        "W311N_MC_V86.00.bin",
+        "w311n_beat_v9112.zip",
+        "w311n_beat_v9104.zip",
+        "w307s_reflex_v9089.zip",
+        "w307s_reflexv9064.zip"
+    ],
+    "com.smarthvac.apk": [
+        "fw_module.bin"
+    ],
+    "com.asaelectronics.ncs50app.apk": [
+        "bcm.bin"
+    ],
+    "com.elpla.remoteClassical.apk": [
+        "file.bin"
+    ],
+    "com.coveiot.android.titanwe.apk": [
+        "smartwatch_v1.1024.img",
+        "Clove_v1.6.039MP_RCX.img"
+    ],
+    "com.nuanlan.warman.apk": [
+        "qts_nrf51822_sdk11_warman_app_ota_v006.zip"
+    ],
+    "com.duotin.car.apk": [
+        "duotin_car_firmware_2.3.3.bin"
+    ],
+    "com.st.STBlueDFU.apk": [
+        "BlueNRG1_BLE_SensorDemo_Use_OTA_ServiceManager_v300.bin",
+        "WESU_DEMO_1.1.0.bin",
+        "BlueNRG2_BLE_SensorDemo_Use_OTA_ServiceManager_v300.bin",
+        "WESU_SENSOR_READ_1.1.0.bin",
+        "WESU_EXAMPLES_1.0.01.bin",
+        "WESU_DEMO_1.0.01.bin"
+    ],
+    "cn.appscomm.nivada.apk": [
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v8_0.zip",
+        "ble_app_hrs_dfu_all_in_one_sdk_v9_0.zip",
+        "ble_app_hrs_dfu_s110_v8_0_0_sdk_v9_0.zip"
+    ],
+    "com.bachmanntrains.ezapp.apk": [
+        "ble_app_bcw_s110_xxaa.bin",
+        "hE.bin"
+    ],
+    "com.medtronic.mcls_ous.apk": [
+        "sw_update_component_file.bin"
+    ],
+    "com.belon.electronwheel.apk": [
+        "ble_fimware.ota",
+        "lpc_firmware2.ota",
+        "lpc_firmware.ota"
+    ],
+    "au.com.setec.rvmaster.jayco.mobile.apk": [
+        "jayco_rvmn101_signed_3.3.0-0-g7e83966c_dfu.bin",
+        "jayco_rvmn101_signed_1.8.1-0-ge5395312_dfu.bin",
+        "jayco_rvmn5x_signed_3.3.0-0-g7e83966c_dfu.bin",
+        "jayco_rvmn101_signed_2.10.0-0-g7e6e6c72_dfu.bin"
+    ],
+    "com.connected.watch.apk": [
+        "01_04_0009.bin",
+        "OAD_01_06_0023.bin"
+    ],
+    "nu.eic.RadonSniffer.apk": [
+        "Botspine.bin"
+    ],
+    "com.oplayer.avonsmart.apk": [
+        "time_bottom_1.bin",
+        "3_time_bottom.bin",
+        "clockzd.bin",
+        "240280_YX_top.bin",
+        "time_left_1.bin",
+        "squarescreen.bin",
+        "time_right_2.bin",
+        "time_left_2.bin",
+        "3_time_top.bin",
+        "240280_YX_left.bin",
+        "240280_YX_bottom.bin",
+        "240240_YX_left.bin",
+        "time_right_1.bin",
+        "240240_YX_bottom.bin",
+        "240240_YX_right.bin",
+        "240280_YX_right.bin",
+        "ota_test.bin",
+        "240240_YX_top.bin",
+        "roundscreen.bin",
+        "A501FF0010001.bin"
+    ],
+    "com.digicare.digicaremobile.apk": [
+        "eriswcamera.bin",
+        "airsw.bin",
+        "erisw.bin",
+        "bb07.bin"
+    ],
+    "com.blustream.humiditrak.apk": [
+        "98.img",
+        "tkl302.img",
+        "Qu.img",
+        "blustream302.img",
+        "taylor303.img",
+        "humiditrak302.img"
+    ],
+    "com.coveiot.android.titanwallet.apk": [
+        "v_1.1.21.img"
+    ],
+    "com.linkot.widim.apk": [
+        "lot_dongle.bin",
+        "lot_sunshade_i2c.bin",
+        "lot_dongle_evb.bin",
+        "lot_switch_evb.bin",
+        "lot_cctdim_evb.bin",
+        "lot_switch_ac.bin",
+        "lot_dimmer_evb.bin",
+        "lot_dimmer_i2c.bin",
+        "lot_switch_i2c.bin",
+        "lot_plug_ac.bin"
+    ],
+    "com.dashrobotics.kamigamiapp.apk": [
+        "firmware_bundle.zip"
+    ],
+    "amwayindia.nutrilitewow.apk": [
+        "InLab2MS-A036.bin",
+        "InBandMS-A062.bin"
+    ],
+    "tw.com.knot.www.apk": [
+        "knot_a06a.zip",
+        "knot_a04a.zip"
+    ],
+    "com.exitec.smartlock.apk": [
+        "smart_handle_v1_1_5.zip"
+    ],
+    "com.misfit.link.apk": [
+        "fw_flash_2_2_8r.bin"
+    ],
+    "com.burda.heater.apk": [
+        "W312_v3.3_HW3.1_20161125B.bin",
+        "W312_v3.3_HW3.1_20161125A.bin",
+        "W311-02-H5.0_v4.1_20210322A.bin",
+        "W310_v3.3_HW3.0_20161125B.bin",
+        "W315-04_v3.7_20171123B.bin",
+        "W315-04_v3.7_20171123A.bin",
+        "W314_v3.2_HW3.2_20160512B.bin",
+        "W311_v3.3_HW5.0_20161125B.bin",
+        "W311_v3.3_HW5.0_20161125A.bin",
+        "W311-02-H5.0_v4.1_20210322B.bin",
+        "W314_v3.2_HW3.2_20160512A.bin",
+        "W315-01_v3.7_20171123B.bin",
+        "W310_v3.3_HW3.0_20161125A.bin",
+        "W315-01_v3.7_20171123A.bin"
+    ],
+    "com.zepp.baseball.apk": [
+        "ZeppSensor_3_5_3.bin",
+        "16.3.17.bin",
+        "16.5.10.bin"
+    ],
+    "co.xoss.apk": [
+        "V1.57.zip",
+        "dfu_sprint_2_6.zip"
+    ],
+    "com.rtrk.obloblueplug.apk": [
+        "BLEplug v2.5.bin"
+    ],
+    "com.magefitness.app.oversea.apk": [
+        "mc_13_3_99_99_99_20190530.bin",
+        "MG03_03_1_0_460_20190618.zip"
+    ],
+    "com.dimrus.sensormanager.apk": [
+        "lora.bin",
+        "fdm.bin"
+    ],
+    "com.idevicesllc.connected.apk": [
+        "US_INWALL_SWITCH_ota_1.9.9.bin",
+        "US_INWALL_OUTLET_ota_ext_1.7.16.bin",
+        "US_OUTDOOR_SWITCH_ota_ext_1.6.21.bin",
+        "US_INWALL_SWITCH_ota_1.9.11.bin",
+        "US_OUTDOOR_SWITCH_ota_1.9.9.bin",
+        "US_SOCKET_ota_1.9.11.bin",
+        "US_THERMOSTAT_ota_ext_1.7.16.bin",
+        "US_INWALL_OUTLET_ota_1.9.11.bin",
+        "US_SWITCH_ota_1.9.11.bin",
+        "US_INWALL_OUTLET_ota_1.9.9.bin",
+        "US_SOCKET_ota_1.9.9.bin",
+        "US_SWITCH_ota_ext_1.6.21.bin",
+        "US_INWALL_DIMMER_ota_1.9.11.bin",
+        "US_OUTDOOR_SWITCH_ota_1.9.11.bin",
+        "US_THERMOSTAT_ota_1.8.7.bin",
+        "US_THERMOSTAT_ota_1.8.9.bin",
+        "US_INWALL_DIMMER_ota_1.9.9.bin",
+        "US_INWALL_SWITCH_ota_ext_1.7.17.bin",
+        "US_SWITCH_ota_1.9.9.bin",
+        "US_SOCKET_ota_ext_1.6.21.bin"
+    ],
+    "com.huawei.cmh1c.oversea.apk": [
+        "ew002_right.bin",
+        "ew002_left.bin"
+    ],
+    "us.nonda.ihere.apk": [
+        "iHere3_5_update_FWV0908_OTA.img",
+        "ihere_update_OTA_FW0605.img",
+        "iHere3_5_update_FWV0930_OTA.img",
+        "iHereOta0504.img"
+    ],
+    "com.eurom.heater.apk": [
+        "W312_v3.3_HW3.1_20161125B.bin",
+        "W312_v3.3_HW3.1_20161125A.bin",
+        "W311-02-H5.0_v4.1_20210322A.bin",
+        "W310_v3.3_HW3.0_20161125B.bin",
+        "W315-04_v3.7_20171123B.bin",
+        "W315-04_v3.7_20171123A.bin",
+        "W311T_v3.4_HW5.0_20170410B.bin",
+        "W314_v3.2_HW3.2_20160512B.bin",
+        "W311T_v3.4_HW5.0_20170410A.bin",
+        "W311-02-H5.0_v4.1_20210322B.bin",
+        "W314_v3.2_HW3.2_20160512A.bin",
+        "W315-01_v3.7_20171123B.bin",
+        "W310_v3.3_HW3.0_20161125A.bin",
+        "W315-01_v3.7_20171123A.bin"
+    ],
+    "com.vio.android.g3.apk": [
+        "G3_light.bin"
+    ],
+    "com.xkloader.falcon.apk": [
+        "PRG1000_Package_2.2.0.zip"
+    ],
+    "com.samsung.android.app.atracker.apk": [
+        "ei_an900a_nb04_1100_bin.bin"
+    ],
+    "fr.outilswolf.wolfapp.apk": [
+        "init-r26555.zip"
+    ],
+    "com.koopower.mesh.apk": [
+        "01_0050.bin",
+        "01_004E.bin",
+        "02_004E.bin",
+        "2B_0002.bin",
+        "FC_0004.bin",
+        "09_000A.bin",
+        "09_000C.bin",
+        "0B_000B.bin",
+        "2C_0002.bin",
+        "02_0050.bin",
+        "22_0002.bin",
+        "15_001A.bin"
+    ],
+    "com.Laerdal.QCPRinstructor.apk": [
+        "fw_little_junior_main_1_4_2_134.zip",
+        "fw_can_app_28_resuscipower_1_1_0_25.zip",
+        "fw_can_app_28_resuscipower_1_0_0_22.zip",
+        "fw_resusci_family_main_1_2_0_56.zip",
+        "fw_can_app_4_aedlink_1_1_0_19.zip",
+        "fw_resusci_family_main_1_5_0_97.zip",
+        "fw_can_app_4_aedlink_1_2_1_24.zip",
+        "fw_resusci_family_main_1_3_0_79.zip",
+        "fw_resusci_family_ble_1_3_0_77.zip",
+        "fw_little_junior_main_1_4_2_159.zip",
+        "fw_resusci_family_ble_1_4_0_86.zip",
+        "fw_resusci_family_ble_1_5_0_89.zip",
+        "qcprplugin_application_1_4_1_127_dfu.zip",
+        "fw_little_junior_main_1_2_1_109.zip",
+        "fw_little_anne_main_1_4_1_124.zip",
+        "fw_little_anne_main_1_4_2_165.zip",
+        "fw_resusci_family_ble_1_2_2_55.zip",
+        "fw_can_app_23_cprrainterface_1_0_0_13.zip",
+        "qcprplugin_application_1_4_2_165_dfu.zip",
+        "fw_little_anne_main_1_4_1_127.zip",
+        "fw_can_app_8_cpr_1_0_0_14.zip",
+        "fw_can_app_23_cprrainterface_1_2_0_21.zip",
+        "fw_little_anne_main_1_4_2_146.zip"
+    ],
+    "com.sionyx.apk": [
+        "firmware.bin"
+    ],
+    "com.schneider_electric.wiserone.apk": [
+        "APP_READY_CH_TIMER_SAMD20_IMAGE_V1_5_0.bin",
+        "APP_READY_OAD_IMAGE_CC2640_V1_5_0.bin"
+    ],
+    "tw.com.globalsat.android.LW360.apk": [
+        "f_0hr_12_1711151a.img",
+        "f_0hr_12_1711161b.img"
+    ],
+    "com.bravebot.apps.mikeellis.apk": [
+        "mei_v03d.zip"
+    ],
+    "com.dji.vision.apk": [
+        "sysupgrade.bin"
+    ],
+    "eu.senseable.companion.apk": [
+        "spark.bin"
+    ],
+    "com.p67world.lptcontrol.apk": [
+        "lptm2_emb.bin"
+    ],
+    "org.mpowerd.luci.apk": [
+        "firmware_v_1.0.23.img",
+        "luci_ota_v_1.1.3.img",
+        "luci_explore_ota_v_2.0.23.img",
+        "luci_explore_ota_v_2.0.29.img"
+    ],
+    "com.nevowatch.nevo.apk": [
+        "iMaze_v18.bin"
+    ],
+    "com.bluemintlabs.bixi.apk": [
+        "project_turtle_0_3_5_0_16_06_16_20_04.bin",
+        "project_turtle.bin",
+        "bixi_FW_latest.bin",
+        "project_turtle_old.bin"
+    ],
+    "com.rainbird.apk": [
+        "kI.bin",
+        "me3_2_4.bin",
+        "8U.bin",
+        "sU.bin",
+        "me3_bl1_0_24.bin",
+        "Ih.bin"
+    ],
+    "com.switchmate.apk": [
+        "switchmate_ota_v2323.zip",
+        "switchmate_ota_v221.zip"
+    ],
+    "com.leisuretelematics.caracontrol.apk": [
+        "fw.bin",
+        "fw_v3.bin",
+        "fw_nordic.bin",
+        "fw_new.bin"
+    ],
+    "com.charmcare.healthcare.apk": [
+        "H2_BLE_FWU_20160721_0x18.bin"
+    ],
+    "com.apptionlabs.meater_app.apk": [
+        "MEATER_Plus_OTA_v1.4.0.0_dd068f4_0xCAC3.bin",
+        "MEATER_SE2652_OTA_v0.0.2.57_3c66c42_0xCF8F.bin",
+        "ssv6060-enc-v-1_0_16_2.bin",
+        "ssv6060-enc-v-3_0_3_1-live.bin",
+        "MEATER_Plus_OTA_P2652P_v0.2.2.39_a5c4f88_0x3034.bin",
+        "MEATER_Plus_OTA_v1.6.0.73_b43c1eb_0x5309.bin"
+    ],
+    "com.spectrumdt.glyph.apk": [
+        "product_ota-duffman-1-g0c06905.bin"
+    ],
+    "com.wonderfie.wali.apk": [
+        "PTR360R.bin",
+        "PTR360D.bin"
+    ],
+    "com.sonymobile.hostapp.bsp60.apk": [
+        "firmware.fota"
+    ],
+    "com.kmc.smart.apk": [
+        "mesh_ota_v1.2.bin"
+    ],
+    "com.bluino.switchiot4ch.apk": [
+        "firmware-switchiot4ch-esp8266.ino.bin"
+    ],
+    "ifac.td.taxi.apk": [
+        "bt40ah.bin",
+        "bt40.bin",
+        "skyg.bin",
+        "bt40_ah.bin",
+        "tx76v2.bin",
+        "tl70.bin"
+    ],
+    "com.daimlertrucksnorthamerica.DTNAeLink.apk": [
+        "blmini.bin"
+    ],
+    "air.com.venstar.skyport.apk": [
+        "PTIM-VST02-01-21018-000000.img",
+        "RLIB-VST01-05-17869-000009.img",
+        "FC9000_RTOS-VST01-05-21053-000009_venstar_ss.img",
+        "RLIB-VST02-01-17869-000000.img",
+        "PTIM-VST01-05-20875-000000.img",
+        "FC9000_RTOS-VST02-01-21050-000000_venstar_ss.img",
+        "servicepack.bin"
+    ],
+    "com.cubii.apk": [
+        "go_plus_v104.bin",
+        "v1_26_dev.zip"
+    ],
+    "com.abb.spider.apk": [
+        "00010000_ACS580_ASCC2.bin"
+    ],
+    "com.mobvoi.companion.aw.apk": [
+        "notification_utepic.bin"
+    ],
+    "com.picooc.international.apk": [
+        "ble_019.bin",
+        "S3-2_v1.2_773FH.bin"
+    ],
+    "com.generalcomp.kittyhok.apk": [
+        "srnet.bin"
+    ],
+    "pl.efento.cloud.apk": [
+        "app.bin"
+    ],
+    "uk.ventaxia.connect.apk": [
+        "MZCU_Update.bin",
+        "Sensors_Update.bin",
+        "411260_MVHR_HMI_Update_V1.04.00.bin",
+        "mev_update.bin",
+        "wifi_ble_esp32_Update_V1.03.04.bin",
+        "FCU_Update.bin",
+        "411262_MVHR-KA_Update_V1.04.00.bin"
+    ],
+    "com.smart.gome.apk": [
+        "uplug8710BNAC4.4.10_R_4.0.00_ota_e_2.6.90.bin",
+        "uPlug8710BNGP4.5.0_R_4.0.00_ota_all_e_2.7.02.bin",
+        "uPlug8710BNGP4.5.0_R_4.0.00_ota_all_e_2.7.01.bin",
+        "uPlug8711AF_AC3.5.0_R_1.0.00_ota_e_2.6.30.bin",
+        "uPlug8711AF_GP3.5.0_R_1.0.00_ota_e_2.6.30.bin"
+    ],
+    "com.vison.macrochip.vs.fpv.pro.apk": [
+        "hand_lite-op.bin",
+        "palm-full-op.bin",
+        "blazeface.bin"
+    ],
+    "eos_lp.com.igrow.apk": [
+        "eos_igrow_janus.bin",
+        "eos_igrow_s104.bin"
+    ],
+    "com.foolography.unleashed.apk": [
+        "bootloader_3_3_1.zip",
+        "stm_3_4_2.zip",
+        "transition_bootloader_2_4_1.zip"
+    ],
+    "com.cubcadet.app.apk": [
+        "RC.bin"
+    ],
+    "com.beurer.connect.healthmanager.apk": [
+        "quintic.bin",
+        "Core_Tenx.bin",
+        "Core_Quntic.bin"
+    ],
+    "com.ecartek.en.kd.apk": [
+        "BYD_ALLLOST_V20230113.bin",
+        "202aj_copy_tst_v4.bin",
+        "KEYDIY_APP2OBD_VW_0006.bin",
+        "BYD_ALLLOST_RELEASE_315_v20230112.bin",
+        "202aj_copy_0402_v1.bin"
+    ],
+    "com.ezonwatch.android4g2.apk": [
+        "RESS_DYC_PIC_A001.bin",
+        "RESS_BLE_A014.bin",
+        "RESS_BLE_A001.bin",
+        "RESS_FW_A070.bin",
+        "EZM818_009_000_20190813.zip"
+    ],
+    "com.meecast.casttv.apk": [
+        "jsb.bin",
+        "ajs.bin"
+    ],
+    "com.hualai.apk": [
+        "wyze_ota_10100.bin"
+    ],
+    "com.jaga.ibraceletplus.smartwristband3.apk": [
+        "Bv.bin",
+        "sU.bin"
+    ],
+    "com.lander.app.apk": [
+        "STM32G070CBT6_V3.20200516.102409.bin"
+    ],
+    "com.master.eld.apk": [
+        "ELDv2-349.bin",
+        "ELDv2-315.bin",
+        "ELDv2-321.bin",
+        "ELDv2-318.bin",
+        "ELDv2-345.bin",
+        "ELDv2-320.bin",
+        "ELDv2-348.bin"
+    ],
+    "com.ruud.contractor.apk": [
+        "RH-BLE1-01-00-77_key_002.zip"
+    ],
+    "com.grundfos.go.apk": [
+        "T_RELEASE_20210928_MI301mk2_CC2652_OAD_v6.0.0.bin",
+        "T_RELEASE_20210928_MI301mk2_CC2652_OAD_v6.0.1.bin",
+        "T_RELEASE_20210928_MI301mk2_Renesas_v6.0.0.bin",
+        "T_RELEASE_20210928_MI301mk2_Renesas_v6.0.1.bin"
+    ],
+    "com.ks2corp.batdisp.apk": [
+        "STM32_BDSP_app_4.0.2.bin",
+        "BT_LFPD_2.2.0.zip",
+        "BT_NRF_BDSP_2.2.0.zip"
+    ],
+    "com.themeatstick.app.apk": [
+        "Hr.bin",
+        "7R.bin",
+        "aS.bin"
+    ],
+    "com.cielo.app.cielohome.apk": [
+        "fW.bin"
+    ],
+    "com.danfoss.sonoapp.apk": [
+        "a.gz"
+    ],
+    "com.revogi.meterplug.apk": [
+        "bk3432_ble_app_app.bin"
+    ],
+    "dk.schneiderelectric.igssmobile.apk": [
+        "a.gz"
+    ],
+    "com.generalcomp.ismkit.apk": [
+        "srnet.bin"
+    ],
+    "com.inbody2014.inbody.apk": [
+        "ble5_project_zero_cc26x2r1lp_app_FlashROM_Release_oad.bin"
+    ],
+    "com.jtkj.led1248.apk": [
+        "coolledu.bin"
+    ],
+    "com.blueair.blueairandroid.apk": [
+        "fw_icp_ble_1_0_0_ed480f77.zip",
+        "fw_icp_ble_1_0_0_5e7f1627.zip"
+    ],
+    "com.smrtprjcts.mijiabt.apk": [
+        "qw.bin",
+        "Ly.bin",
+        "7H.bin",
+        "Dv.bin",
+        "WI.bin",
+        "ZI.bin",
+        "K-.bin",
+        "tp.bin",
+        "mT.bin",
+        "Uu.bin",
+        "Zy.bin",
+        "Co.bin",
+        "iW.bin"
+    ],
+    "com.frederique.constant.new.app.apk": [
+        "firmware_v43_7_5_41.zip",
+        "firmware_v39_7_5_41.zip",
+        "firmware_v40_7_5_41.zip",
+        "firmware_v38_7_5_41.zip"
+    ],
+    "com.descase.breather.apk": [
+        "descase-nordic.bin"
+    ],
+    "com.cogosense.bsafemobile.apk": [
+        "cogobeacon-nrf52-S132-Release-sa_v2.0.28-usb_2.zip",
+        "cogobeacon-nrf52-S132-Release-bsa_v2.0.28-usb_2.zip",
+        "bsafebeacon-S110-Release-sa_1.1.7-cigar_1.zip",
+        "bsafebeacon-S110-Release-bsa_1.1.7-usb_1.zip",
+        "cogobeacon-nrf52-S132-Release-bsa_v2.0.28-obd_2.zip",
+        "cogobeacon-nrf52-S132-Release-bsa_v2.0.28-cigar_2.zip",
+        "cogobeacon-nrf52-S132-Release-sa_v2.0.28-pebble_2.zip",
+        "bsafebeacon-S110-Release-sa_1.1.7-obd_1.zip",
+        "cogobeacon-nrf52-S132-Release-sa_v2.0.28-obd_2.zip",
+        "bsafebeacon-S110-Release-sa_1.1.7-usb_1.zip",
+        "cogobeacon-nrf52-S132-Release-a_v2.0.28-usb_2.zip",
+        "cogobeacon-nrf52-S132-Release-a_v2.0.28-pebble_2.zip",
+        "cogobeacon-nrf52-S132-Release-a_v2.0.28-cigar_2.zip",
+        "bsafebeacon-S110-Release-bsa_1.1.7-obd_1.zip",
+        "cogobeacon-nrf52-S132-Release-sa_v2.0.28-cigar_2.zip",
+        "bsafebeacon-S110-Release-a_1.1.7-usb_1.zip",
+        "bsafebeacon-S110-Release-a_1.1.7-obd_1.zip",
+        "bsafebeacon-S110-Release-a_1.1.7-cigar_1.zip",
+        "cogobeacon-nrf52-S132-Release-bsa_v2.0.28-pebble_2.zip",
+        "bsafebeacon-S110-Release-bsa_1.1.7-cigar_1.zip",
+        "cogobeacon-nrf52-S132-Release-a_v2.0.28-obd_2.zip"
+    ],
+    "kr.ftlab.radon_eye.apk": [
+        "RadonEye_New1.bin",
+        "RadonEye_New0.bin"
+    ],
+    "com.gcc.smartparking.attender.apk": [
+        "dev.bin"
+    ],
+    "digifit.virtuagym.client.android.apk": [
+        "J1638_02_N_V097_5_20240612.zip"
+    ],
+    "com.cei.meter.apk": [
+        "bk3432_ble_app_app22.bin",
+        "cei800147.bin",
+        "bk3432_ble_app_app.bin"
+    ],
+    "com.computherm.heat.apk": [
+        "Encrypt_DV325X_HCL176_WIFI1218_00014002.bin"
+    ],
+    "com.cousins_sears.beaconthermometer.apk": [
+        "ble5_project_zero_cc26x2r1lp_app_FlashROM_Release_oad.bin"
+    ],
+    "app.com.lightwavetechnology.connected_smartcontrol.apk": [
+        "LWT_OTA_TEST.zip",
+        "HHU_OTA_1_11.bin",
+        "IVU_BLE_OTA_1_11.bin",
+        "LWT_OTA.zip"
+    ],
+    "com.czw.freefit.apk": [
+        "sun.bin",
+        "upgrade.zip",
+        "update.ufw"
+    ],
+    "com.hicling.cling.apk": [
+        "uG.bin",
+        "lT.bin"
+    ],
+    "com.iseo.android.argo.apk": [
+        "MH14K071.zip",
+        "MH14J030.zip"
+    ],
+    "com.ttigroup.gencontrol.apk": [
+        "TTI_Powerbox_40V_BT1_NRF5201_APP_V00.01.05.zip",
+        "TTI_Powerbox_48V_BT1_NRF5201_APP_V00.01.01.zip"
+    ],
+    "com.mysteryvibe.mysteryvibe.apk": [
+        "MV2Application_V6_0R_WB.bin",
+        "MV1Application_V6_0R_WB.bin",
+        "TenutotMV1Application_V0_4T_WB.bin"
+    ],
+    "com.custom.jfeye.apk": [
+        "faceRec.bin"
+    ],
+    "com.walabot.vayyar.ai.plumbing.apk": [
+        "ota.bin"
+    ],
+    "m2000bt.Android.apk": [
+        "sdk17_sd_app_boot.zip",
+        "sdk12_17_boot.zip",
+        "firmware_unik.zip",
+        "firmware_m2000.zip"
+    ],
+    "com.kwikset.blewifi.apk": [
+        "ble5_project_zero_cc26x2r1lp_app_FlashROM_Release_oad.bin"
+    ],
+    "com.divoom.Divoom.apk": [
+        "FontLib_16_DFPop91.bin",
+        "divoom_fond16_huawenxinwei.bin"
+    ],
+    "com.iflyrec.tjapp.apk": [
+        "mlp_div_cdj.bin",
+        "mlp_pf_cdj.bin",
+        "mlp_pf_cdj_43mm.bin",
+        "mlp_sp_2mic_cdj.bin",
+        "mlp_div_cdj_43mm.bin"
+    ],
+    "com.trifo.trifohome.apk": [
+        "a.gz"
+    ],
+    "com.oraimo.joywear2.apk": [
+        "Bv.bin",
+        "sU.bin"
+    ],
+    "com.airthings.airthings.apk": [
+        "COR9001A-1703301.bin",
+        "G-BLE-1.1.2.bin",
+        "G-BLE-1.2.1-beta+1.bin",
+        "G-BLE-1.0.0.15.bin",
+        "G-SUB-0.7.0.bin",
+        "msp_office_OAD_181210.bin",
+        "ble5_airthings_node_app_OAD_ImageA.bin",
+        "G-MSP-1.1.0.bin",
+        "msp_office_OAD.bin",
+        "G-MSP-1.1.1-beta+1.bin",
+        "G-MSP-1.0.1-beta+1.bin",
+        "M-BLE-0.9.20.bin",
+        "G-BLE-1.2.0.bin",
+        "G-BLE-1.1.2-beta+1.bin",
+        "ble5_airthings_node_app_OAD_ImageB.bin",
+        "G-SUB1-1.0.0.1.bin",
+        "M-SUB-0.6.5.bin",
+        "G-MSP-1.0.0.81204.bin",
+        "G-MSP-1.0.3.bin"
+    ],
+    "com.bluino.bluinoloader.apk": [
+        "Pro_Mini_3V3.zip",
+        "Pro_Mini_5V.zip"
+    ],
+    "com.assaabloy.stg.cliq.go.android.apk": [
+        "CliqBLEOAD_2_5_0.bin"
+    ],
+    "com.matrix_digi.ma_remote.apk": [
+        "HiFiEffect441.bin",
+        "HiFiEffect96.bin"
+    ],
+    "com.bactrack.bactrackviewtest.enterprise.apk": [
+        "skyn_dfu_package_4_12_0.zip"
+    ],
+    "com.nextouch.nextwatchapp.apk": [
+        "DW_v206(0024)_zh.zip",
+        "DW_v206(0024)_es.zip",
+        "DW_v206(0024)_cs.zip",
+        "DW_v206(0024)_de.zip",
+        "DW_v206(0024)_ru.zip",
+        "DW_v206(0024)_ko.zip",
+        "DW_v206(0024)_fr.zip",
+        "DW_v206(0024)_vi.zip",
+        "DW_v206(0024)_en.zip",
+        "DW_v206(0024)_ar.zip"
+    ],
+    "com.huami.watch.hmwatchmanager.apk": [
+        "weight_bfs_h.fw",
+        "Mili_hr.fw",
+        "Mili_pro_tph_indian.fw",
+        "Mili_amazfit_kx.fw",
+        "Mili_pro_i.fw",
+        "Mili_rocky.fw",
+        "Mili_wuhan.fw",
+        "Mili_1a.fw",
+        "Mili_pro_tph.fw",
+        "Mili_qinling.fw",
+        "Mili_pro_53.fw",
+        "HM08.fw",
+        "Mili_wuhan_tr.fw",
+        "Huaihe_OTA.bin",
+        "Mili_amazfit.fw",
+        "HM07.fw",
+        "Mili_chongqing.fw",
+        "Mili.fw",
+        "weight_scale2.fw",
+        "HM0D.fw",
+        "HM03.fw",
+        "HuaShan.fw",
+        "Mili_pro.fw",
+        "HM05.fw",
+        "weight.fw",
+        "Mili_pro_tph_as7000.fw",
+        "weight_bfs.fw",
+        "Mili_hankou.fw"
+    ],
+    "com.midea.ai.appliances.apk": [
+        "srnet.bin"
+    ],
+    "com.pronavmarine.pronavangler.apk": [
+        "pronav_conn_hub_firmware_v0_0_1.zip",
+        "pronav_conn_hub_firmware_v0_0_6.zip",
+        "pronav_conn_hub_firmware_v0_0_5.zip",
+        "pronav_remote_firmware_v1_0_1.zip",
+        "pronav_remote_firmware_v1_0_3.zip"
+    ],
+    "com.autophix.obdmate.apk": [
+        "McuCode100.bin",
+        "ExtFlashDat.bin",
+        "McuCode.bin"
+    ],
+    "com.powervision.gcs.apk": [
+        "demo.bin",
+        "powereye_v1_9.bin"
+    ],
+    "co.dreamon.sleep.apk": [
+        "firmware_2_0_0.zip",
+        "patch.zip",
+        "firmware_2_0_1.zip",
+        "firmware_2_0_2.zip",
+        "firmware_2_0_3.zip"
+    ],
+    "com.hunterdouglas.powerview.apk": [
+        "PowerBlue_WC_v210.zip",
+        "PB_Remote_v50.zip"
+    ],
+    "com.sunricher.easyhome.ble.apk": [
+        "zF.bin",
+        "5r.bin",
+        "zE.bin",
+        "Oc.bin"
+    ],
+    "com.golife.fit.apk": [
+        "GOLiFE_CARE2HR_149.bin"
+    ],
+    "fitness.mevofit.fitnesstracker.bestfitnessbands.fitnesstrackerforwalkingandjogging.apk": [
+        "mevoair.bin"
+    ],
+    "com.logitech.ueboom.apk": [
+        "Os.bin",
+        "cL.bin",
+        "qT.bin"
+    ],
+    "et.song.fpv.wifi.app.air.h264.apk": [
+        "hand_lite-op.bin",
+        "palm-full-op.bin",
+        "blazeface.bin"
+    ],
+    "com.mobile.myeye.apk": [
+        "faceRec.bin"
+    ],
+    "co.gofar.gofar.apk": [
+        "a.gz"
+    ],
+    "com.tandd.android.thermoweb.apk": [
+        "tr32b_newest_firm.bin",
+        "tr4a_psoc_firm.bin",
+        "tr4a_newest_firm.bin",
+        "tr4_ble_firm.bin",
+        "tr4_newest_firm.bin"
+    ],
+    "com.digitaltag.tag8.tracker.apk": [
+        "lock_update.zip"
+    ],
+    "io.waterwatch.android.apk": [
+        "waterwatch_ota_v92_cel_4.bin",
+        "waterwatch_ota_v92_cel_5.bin",
+        "waterwatch_ota_v92_cel_8.bin"
+    ],
+    "com.mobike.mobikeapp.apk": [
+        "det2.bin"
+    ],
+    "com.dc.dreamcatcherlife.apk": [
+        "FwData.bin"
+    ],
+    "com.smart.iseehome.apk": [
+        "srnet.bin"
+    ],
+    "com.midea.ai.overseas.apk": [
+        "srnet.bin"
+    ],
+    "com.yingsheng.nadai.apk": [
+        "sifli.bin"
+    ],
+    "com.yingsheng.hayloufun_v3.4.8_2265.com.apk": [
+        "sifli.bin"
+    ],
+    "com.hle.china.smarthome.xiaohe.apk": [
+        "ota_data.bin"
+    ],
+    "com.ileja.iot.apk": [
+        "dds.bin"
+    ]
+}
