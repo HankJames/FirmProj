@@ -29,8 +29,8 @@ def function_split(APP_dir):  # APP_dir=APP/APP1
     with open(prompt_dir + '/prompt3.txt', 'r', encoding='utf-8') as file3:  # http格式化 3
         prompt3 = file3.read()
     client = OpenAI(
-        api_key="sk-r42s0LzOFAEn5kxaB61c645bE7B840DaA56fF36bB81aF191",
-        base_url="https://chatapi.nloli.xyz/v1",
+        api_key="KEY",
+        base_url="URL",
     )
     # 遍历query文件
     for filename in os.listdir(query_dir):

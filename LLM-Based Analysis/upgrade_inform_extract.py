@@ -13,8 +13,8 @@ def upgrade_inform_extract(APP_dir):  # APP_dir=APP/APP1
     with open(prompt_dir + '/prompt.txt', 'r', encoding='utf-8') as file:
         prompt = file.read()
     client = OpenAI(
-        api_key="sk-r42s0LzOFAEn5kxaB61c645bE7B840DaA56fF36bB81aF191",
-        base_url="https://chatapi.nloli.xyz/v1"
+        api_key="KEY",
+        base_url="URL"
     )
     # 遍历所有待处理文件
     for filename in os.listdir(query_dir):

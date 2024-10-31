@@ -149,21 +149,8 @@ class Request_multi:
 if __name__ == "__main__":
     # Successful GET request example
     request_multi = Request_multi()
-    result = request_multi.make_request_multi(0, ["http://bo.ruochanit.com:6088/v1/versioninfos"],
-                                              headers={'User-Agent': 'Python Request'},
-                                              parameter={'name': 'AndroidDeviceConfigDebug'})
-    print("GET result:", result)
-
     # Successful POST request example
     post_data = {'key1': 'value1', 'key2': 'value2'}
     result = request_multi.make_request_multi(1, ["https://httpbin.org/post"], parameter=post_data)
     print("POST result:", result)
 
-    # File download example
-    result = request_multi.make_request_multi(0, ["http://avpro.global.yamaha.com/hpep/Yamaha_EP-E30A_0100.bin"])
-    print("File download result:", result)
-
-    # Error response example
-    result = request_multi.make_request_multi(0, [
-        "http://api.ruochanit.com:6090/v1/files/3034b1306f0511e9ba29cd7183803e53"])
-    print("Error response result:", result)

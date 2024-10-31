@@ -6,8 +6,8 @@ from request import Request_multi
 import ast
 import os
 
-os.environ['ALL_PROXY'] = 'http://127.0.0.1:7888'
-os.environ['all_proxy'] = 'http://127.0.0.1:7888'
+os.environ['ALL_PROXY'] = ''
+os.environ['all_proxy'] = ''
 openai.proxy = None
 
 visited = []
@@ -19,8 +19,8 @@ def funccall_download(APP_dir):  # APP_dir=APP/APP1
     answer_dir = APP_dir + '/3_LLM_answer'
     download_dir = APP_dir + '/3_LLM_answer' + '/download'
     client = OpenAI(
-        api_key="sk-r42s0LzOFAEn5kxaB61c645bE7B840DaA56fF36bB81aF191",
-        base_url="https://chatapi.nloli.xyz/v1"
+        api_key="KEY",
+        base_url="URL"
     )
 
     if not os.path.exists(query_dir):
@@ -229,7 +229,7 @@ def startDownload(res, request_multi, client, prompt_downloadLink, function_args
 
 # Example usage
 if __name__ == "__main__":
-    funccall_download('/data/wenzhi/Result/IoT-VER/com.hubbleconnected.vervelife.apk')
+    funccall_download('')
     # 输入'APP/APP1/2_LLM_answer/com.dc.dreamcatcherlife.json'
     # 输出'APP/APP1/'3_LLM_answer'，其中：
     # download_dir：放置下载文件
